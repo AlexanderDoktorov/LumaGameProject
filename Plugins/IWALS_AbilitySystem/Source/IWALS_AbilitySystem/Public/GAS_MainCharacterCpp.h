@@ -4,11 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
-#include "AbilitySystemComponent.h"
 #include "IWALS_BaseAttributeSet.h"
 #include "IWALS_GameplayAbilitySet.h"
 #include "Abilities/GameplayAbility.h"
-#include <GameplayEffectTypes.h>
 #include "GameplayTagContainer.h"
 #include "GameFramework/Character.h"
 #include "GAS_MainCharacterCpp.generated.h"
@@ -122,5 +120,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Pawn|Input", meta = (DisplayName = "Try Create Inputs Binds For GAS", Keywords = "Inputs Player"))
 		virtual void TryCreateInputsGAS();
-
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetCanBeDetected(bool bNewCanBeDetected) { bCanBeDetected = bNewCanBeDetected; }
+	UFUNCTION(BlueprintPure)
+	bool CanBeDetected() const { return bCanBeDetected; }
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Stealth)
+	bool bCanBeDetected = true;
 };

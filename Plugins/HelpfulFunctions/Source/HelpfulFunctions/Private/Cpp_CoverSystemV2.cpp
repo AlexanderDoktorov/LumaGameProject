@@ -40,8 +40,12 @@ bool UCpp_CoverSystemV2::TryStartCoverSystemC(FHitResult& ReturnWall, int DebugI
 	//Configure Base Trace Settings
 	TArray<AActor*> ToIgnore; ToIgnore.Add(CharC);
 	EDrawDebugTrace::Type TraceType = EDrawDebugTrace::None;
-	if (DebugIndex == 1) TraceType = EDrawDebugTrace::ForOneFrame;
-	else if (DebugIndex == 2) TraceType = EDrawDebugTrace::ForDuration;
+	
+	if (DebugIndex == 1)
+		TraceType = EDrawDebugTrace::ForOneFrame;
+	else if (DebugIndex == 2)
+		TraceType = EDrawDebugTrace::ForDuration;
+	
 	ETraceTypeQuery Channel = UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_Visibility);
 
 	for (int i = 0; i <= 1; i++)

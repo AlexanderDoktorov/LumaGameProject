@@ -212,7 +212,7 @@ public:
 		static void ClassToActorsArray(const UObject* WorldContextObject, TArray<UClass*> ActorsClass, TArray<AActor*> SingleActorToIgnore, TArray<AActor*>& ReturnArray);
 
 	//ENG: The function's task is to add an offset to the target point so as to eliminate the collision with other AI controllers. It may happen that several controllers will reach to one point. This function tries to eliminate this situation.
-	//PL : Zadaniem funckji jest dodanie przesuniÍcia wzglÍdem punktu celu, tak aby wyeliminowaÊ kolizjÍ wzglÍdemi innych kontrolerÛw AI.Moøe siÍ zdaøyÊ taka sytuacja øe kilka kotrolerÛw bÍdzie doøyÊ do jednego punktu.Ta funkcja stara siÍ wyeliminowaÊ takπ sytuacjÍ.
+	//PL : Zadaniem funckji jest dodanie przesuni–∫cia wzgl–∫dem punktu celu, tak aby wyeliminowa–∂ kolizj–∫ wzgl–∫demi innych kontroler—Éw AI.Mo—óe si–∫ zda—óy–∂ taka sytuacja —óe kilka kotroler—Éw b–∫dzie do—óy–∂ do jednego punktu.Ta funkcja stara si–∫ wyeliminowa–∂ tak‚Ññ sytuacj–∫.
 	UFUNCTION(BlueprintPure, Category = "JakubW_FunctionsLibrary| Navigation", meta = (WorldContext = "WorldContextObject", DisplayName = "Fix Move Point When Is Busy ", Keywords = "AI Navigation"))
 		static FVector FixMovePointWhenIs(UObject* WorldContextObject, FVector TargetPoint, ACharacter* TargetCharacter, UClass* CharactersArray, float OffsetRadius=60, int MaxIteractions=6, float MinAccetableDistance=25);
 

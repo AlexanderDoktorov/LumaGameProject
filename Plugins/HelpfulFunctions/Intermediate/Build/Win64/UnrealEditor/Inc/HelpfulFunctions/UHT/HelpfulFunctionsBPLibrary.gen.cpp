@@ -3415,14 +3415,14 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<FVelocityBlendCpp>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_FixMovePointWhenIs_Statics::Function_MetaDataParams[] = {
 		{ "Category", "JakubW_FunctionsLibrary| Navigation" },
-		{ "Comment", "//ENG: The function's task is to add an offset to the target point so as to eliminate the collision with other AI controllers. It may happen that several controllers will reach to one point. This function tries to eliminate this situation.\n//PL : Zadaniem funckji jest dodanie przesuni\xef\xbf\xbd""cia wzgl\xef\xbf\xbd""dem punktu celu, tak aby wyeliminowa\xef\xbf\xbd kolizj\xef\xbf\xbd wzgl\xef\xbf\xbd""demi innych kontroler\xef\xbf\xbdw AI.Mo\xef\xbf\xbd""e si\xef\xbf\xbd zda\xef\xbf\xbdy\xef\xbf\xbd taka sytuacja \xef\xbf\xbd""e kilka kotroler\xef\xbf\xbdw b\xef\xbf\xbd""dzie do\xef\xbf\xbdy\xef\xbf\xbd do jednego punktu.Ta funkcja stara si\xef\xbf\xbd wyeliminowa\xef\xbf\xbd tak\xef\xbf\xbd sytuacj\xef\xbf\xbd.\n" },
+		{ "Comment", "//ENG: The function's task is to add an offset to the target point so as to eliminate the collision with other AI controllers. It may happen that several controllers will reach to one point. This function tries to eliminate this situation.\n//PL : Zadaniem funckji jest dodanie przesuni\xd0\xba""cia wzgl\xd0\xba""dem punktu celu, tak aby wyeliminowa\xd0\xb6 kolizj\xd0\xba wzgl\xd0\xba""demi innych kontroler\xd1\x83w AI.Mo\xd1\x97""e si\xd0\xba zda\xd1\x97y\xd0\xb6 taka sytuacja \xd1\x97""e kilka kotroler\xd1\x83w b\xd0\xba""dzie do\xd1\x97y\xd0\xb6 do jednego punktu.Ta funkcja stara si\xd0\xba wyeliminowa\xd0\xb6 tak\xe2\x84\x96 sytuacj\xd0\xba.\n" },
 		{ "CPP_Default_MaxIteractions", "6" },
 		{ "CPP_Default_MinAccetableDistance", "25.000000" },
 		{ "CPP_Default_OffsetRadius", "60.000000" },
 		{ "DisplayName", "Fix Move Point When Is Busy" },
 		{ "Keywords", "AI Navigation" },
 		{ "ModuleRelativePath", "Public/HelpfulFunctionsBPLibrary.h" },
-		{ "ToolTip", "ENG: The function's task is to add an offset to the target point so as to eliminate the collision with other AI controllers. It may happen that several controllers will reach to one point. This function tries to eliminate this situation.\nPL : Zadaniem funckji jest dodanie przesuni\xef\xbf\xbd""cia wzgl\xef\xbf\xbd""dem punktu celu, tak aby wyeliminowa\xef\xbf\xbd kolizj\xef\xbf\xbd wzgl\xef\xbf\xbd""demi innych kontroler\xef\xbf\xbdw AI.Mo\xef\xbf\xbd""e si\xef\xbf\xbd zda\xef\xbf\xbdy\xef\xbf\xbd taka sytuacja \xef\xbf\xbd""e kilka kotroler\xef\xbf\xbdw b\xef\xbf\xbd""dzie do\xef\xbf\xbdy\xef\xbf\xbd do jednego punktu.Ta funkcja stara si\xef\xbf\xbd wyeliminowa\xef\xbf\xbd tak\xef\xbf\xbd sytuacj\xef\xbf\xbd." },
+		{ "ToolTip", "ENG: The function's task is to add an offset to the target point so as to eliminate the collision with other AI controllers. It may happen that several controllers will reach to one point. This function tries to eliminate this situation.\nPL : Zadaniem funckji jest dodanie przesuni\xd0\xba""cia wzgl\xd0\xba""dem punktu celu, tak aby wyeliminowa\xd0\xb6 kolizj\xd0\xba wzgl\xd0\xba""demi innych kontroler\xd1\x83w AI.Mo\xd1\x97""e si\xd0\xba zda\xd1\x97y\xd0\xb6 taka sytuacja \xd1\x97""e kilka kotroler\xd1\x83w b\xd0\xba""dzie do\xd1\x97y\xd0\xb6 do jednego punktu.Ta funkcja stara si\xd0\xba wyeliminowa\xd0\xb6 tak\xe2\x84\x96 sytuacj\xd0\xba." },
 		{ "WorldContext", "WorldContextObject" },
 	};
 #endif
@@ -5494,7 +5494,7 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<FVelocityBlendCpp>()
 		{ &Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_FindLedgePointStructure, "FindLedgePointStructure" }, // 2320857156
 		{ &Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_FindNearestCollisionByCylinder, "FindNearestCollisionByCylinder" }, // 2082756893
 		{ &Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_FindNearPointToWallSurface, "FindNearPointToWallSurface" }, // 3608052514
-		{ &Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_FixMovePointWhenIs, "FixMovePointWhenIs" }, // 476093252
+		{ &Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_FixMovePointWhenIs, "FixMovePointWhenIs" }, // 2681387392
 		{ &Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_ForceDestroyComponent, "ForceDestroyComponent" }, // 136906675
 		{ &Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_GetAngleBetween, "GetAngleBetween" }, // 3458291075
 		{ &Z_Construct_UFunction_UHelpfulFunctionsBPLibrary_GetClampedCurveValue, "GetClampedCurveValue" }, // 3781013479
@@ -5574,9 +5574,9 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<FVelocityBlendCpp>()
 		{ FVelocityBlendCpp::StaticStruct, Z_Construct_UScriptStruct_FVelocityBlendCpp_Statics::NewStructOps, TEXT("VelocityBlendCpp"), &Z_Registration_Info_UScriptStruct_VelocityBlendCpp, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FVelocityBlendCpp), 3415435016U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UHelpfulFunctionsBPLibrary, UHelpfulFunctionsBPLibrary::StaticClass, TEXT("UHelpfulFunctionsBPLibrary"), &Z_Registration_Info_UClass_UHelpfulFunctionsBPLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UHelpfulFunctionsBPLibrary), 457473927U) },
+		{ Z_Construct_UClass_UHelpfulFunctionsBPLibrary, UHelpfulFunctionsBPLibrary::StaticClass, TEXT("UHelpfulFunctionsBPLibrary"), &Z_Registration_Info_UClass_UHelpfulFunctionsBPLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UHelpfulFunctionsBPLibrary), 3948219490U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_1904915702(TEXT("/Script/HelpfulFunctions"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_3074072663(TEXT("/Script/HelpfulFunctions"),
 		Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_Statics::ScriptStructInfo),
 		Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_HelpfulFunctionsBPLibrary_h_Statics::EnumInfo));

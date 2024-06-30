@@ -1,0 +1,7 @@
+{
+	"SourceFiles": [
+		"G:\\Unreal Projects\\LumaGame\\LumaGameProject\\Plugins\\JakubAnimNodes\\Rebuild\\HostProject\\Plugins\\JakubAnimNodes\\Source\\JakubAnimNodes\\JakubAnimNodes.Build.cs",
+		"G:\\Unreal Projects\\LumaGame\\LumaGameProject\\Plugins\\JakubAnimNodes\\Rebuild\\HostProject\\Plugins\\JakubAnimNodes\\Source\\JakubAnimNodesTool\\JakubAnimNodesTool.Build.cs"
+	],
+	"EngineVersion": "5.2.1"
+}

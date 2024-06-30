@@ -512,7 +512,7 @@ void AALS_HumanAI_ControllerCpp::SetFocusActorTransformFast(AActor* FocusActor, 
 			GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Cyan, FVector(0, MappedSpeed, 0).ToString());
 		}
 		FTransform TargetTransform = UKismetMathLibrary::TInterpTo(FocusActor->GetActorTransform(), NewTransform, UGameplayStatics::GetWorldDeltaSeconds(Self), 
-									 UKismetMathLibrary::MapRangeClamped(MappedSpeed,0.1,1,InterpSpeedA,InterpSpeedB));
+									 UKismetMathLibrary::MapRangeUnclamped(MappedSpeed,0.1,1,InterpSpeedA,InterpSpeedB));
 		FocusActor->SetActorTransform(TargetTransform, false);
 	}
 	else

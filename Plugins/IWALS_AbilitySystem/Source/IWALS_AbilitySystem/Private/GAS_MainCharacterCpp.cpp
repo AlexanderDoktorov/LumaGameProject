@@ -1,6 +1,3 @@
-
-
-
 #include "GAS_MainCharacterCpp.h"
 #include "GameplayTagsManager.h"
 
@@ -42,13 +39,13 @@ FString AGAS_MainCharacterCpp::GetSubTag(const FGameplayTag& Tag, int32 DesiredD
 	TArray<FString> SplitTags;
 	FullTagName.ParseIntoArray(SplitTags, TEXT("."));
 
-	// Jeúli DesiredDepth przekracza iloúÊ segmentÛw lub jest ujemny, zwrÛÊ pusty string.
+	// Je—öli DesiredDepth przekracza ilo—ö–∂ segment—Éw lub jest ujemny, zwr—É–∂ pusty string.
 	if (DesiredDepth < 0 || DesiredDepth >= SplitTags.Num())
 	{
 		return FString();
 	}
 
-	// Znajdü odpowiedniπ g≥ÍbokoúÊ od koÒca.
+	// Znajd—ü odpowiedni‚Ññ g—ñ–∫boko—ö–∂ od ko—Åca.
 	int32 IndexFromEnd = SplitTags.Num() - DesiredDepth - 1;
 	if (IndexFromEnd >= 0 && IndexFromEnd < SplitTags.Num())
 	{
@@ -206,7 +203,6 @@ void AGAS_MainCharacterCpp::PossessedBy(AController* NewController)
 
 	InitializeAttributes();
 	GiveAbilities();
-
 }
 
 void AGAS_MainCharacterCpp::OnRep_PlayerState()

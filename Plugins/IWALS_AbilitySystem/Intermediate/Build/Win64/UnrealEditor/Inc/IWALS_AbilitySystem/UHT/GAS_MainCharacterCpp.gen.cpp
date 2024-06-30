@@ -26,6 +26,21 @@ void EmptyLinkFunctionForGeneratedCodeGAS_MainCharacterCpp() {}
 	IWALS_ABILITYSYSTEM_API UClass* Z_Construct_UClass_UIWALS_GameplayAbilitySet_NoRegister();
 	UPackage* Z_Construct_UPackage__Script_IWALS_AbilitySystem();
 // End Cross Module References
+	DEFINE_FUNCTION(AGAS_MainCharacterCpp::execCanBeDetected)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(bool*)Z_Param__Result=P_THIS->CanBeDetected();
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(AGAS_MainCharacterCpp::execSetCanBeDetected)
+	{
+		P_GET_UBOOL(Z_Param_bNewCanBeDetected);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->SetCanBeDetected(Z_Param_bNewCanBeDetected);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AGAS_MainCharacterCpp::execTryCreateInputsGAS)
 	{
 		P_FINISH;
@@ -79,14 +94,53 @@ void EmptyLinkFunctionForGeneratedCodeGAS_MainCharacterCpp() {}
 	{
 		UClass* Class = AGAS_MainCharacterCpp::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
+			{ "CanBeDetected", &AGAS_MainCharacterCpp::execCanBeDetected },
 			{ "ConvertLiteralNameToTag", &AGAS_MainCharacterCpp::execConvertLiteralNameToTag },
 			{ "GetSubTag", &AGAS_MainCharacterCpp::execGetSubTag },
 			{ "IsTagLeaf", &AGAS_MainCharacterCpp::execIsTagLeaf },
+			{ "SetCanBeDetected", &AGAS_MainCharacterCpp::execSetCanBeDetected },
 			{ "SwitchOnOwnedTags", &AGAS_MainCharacterCpp::execSwitchOnOwnedTags },
 			{ "SwitchOnOwnedTagsWithIgnore", &AGAS_MainCharacterCpp::execSwitchOnOwnedTagsWithIgnore },
 			{ "TryCreateInputsGAS", &AGAS_MainCharacterCpp::execTryCreateInputsGAS },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics
+	{
+		struct GAS_MainCharacterCpp_eventCanBeDetected_Parms
+		{
+			bool ReturnValue;
+		};
+		static void NewProp_ReturnValue_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	void Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+	{
+		((GAS_MainCharacterCpp_eventCanBeDetected_Parms*)Obj)->ReturnValue = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(GAS_MainCharacterCpp_eventCanBeDetected_Parms), &Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/GAS_MainCharacterCpp.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AGAS_MainCharacterCpp, nullptr, "CanBeDetected", nullptr, nullptr, sizeof(Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::GAS_MainCharacterCpp_eventCanBeDetected_Parms), Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_AGAS_MainCharacterCpp_ConvertLiteralNameToTag_Statics
 	{
@@ -227,6 +281,43 @@ void EmptyLinkFunctionForGeneratedCodeGAS_MainCharacterCpp() {}
 		if (!ReturnFunction)
 		{
 			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AGAS_MainCharacterCpp_IsTagLeaf_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics
+	{
+		struct GAS_MainCharacterCpp_eventSetCanBeDetected_Parms
+		{
+			bool bNewCanBeDetected;
+		};
+		static void NewProp_bNewCanBeDetected_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bNewCanBeDetected;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	void Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::NewProp_bNewCanBeDetected_SetBit(void* Obj)
+	{
+		((GAS_MainCharacterCpp_eventSetCanBeDetected_Parms*)Obj)->bNewCanBeDetected = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::NewProp_bNewCanBeDetected = { "bNewCanBeDetected", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(GAS_MainCharacterCpp_eventSetCanBeDetected_Parms), &Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::NewProp_bNewCanBeDetected_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::NewProp_bNewCanBeDetected,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/GAS_MainCharacterCpp.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AGAS_MainCharacterCpp, nullptr, "SetCanBeDetected", nullptr, nullptr, sizeof(Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::GAS_MainCharacterCpp_eventSetCanBeDetected_Parms), Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -474,6 +565,11 @@ void EmptyLinkFunctionForGeneratedCodeGAS_MainCharacterCpp() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_Attributes_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_Attributes;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_bCanBeDetected_MetaData[];
+#endif
+		static void NewProp_bCanBeDetected_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bCanBeDetected;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const UECodeGen_Private::FImplementedInterfaceParams InterfaceParams[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
@@ -484,9 +580,11 @@ void EmptyLinkFunctionForGeneratedCodeGAS_MainCharacterCpp() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_IWALS_AbilitySystem,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_AGAS_MainCharacterCpp_CanBeDetected, "CanBeDetected" }, // 2690945972
 		{ &Z_Construct_UFunction_AGAS_MainCharacterCpp_ConvertLiteralNameToTag, "ConvertLiteralNameToTag" }, // 3599006595
 		{ &Z_Construct_UFunction_AGAS_MainCharacterCpp_GetSubTag, "GetSubTag" }, // 3152098124
 		{ &Z_Construct_UFunction_AGAS_MainCharacterCpp_IsTagLeaf, "IsTagLeaf" }, // 2959495166
+		{ &Z_Construct_UFunction_AGAS_MainCharacterCpp_SetCanBeDetected, "SetCanBeDetected" }, // 2195917840
 		{ &Z_Construct_UFunction_AGAS_MainCharacterCpp_SwitchOnOwnedTags, "SwitchOnOwnedTags" }, // 2053334291
 		{ &Z_Construct_UFunction_AGAS_MainCharacterCpp_SwitchOnOwnedTagsWithIgnore, "SwitchOnOwnedTagsWithIgnore" }, // 1033617953
 		{ &Z_Construct_UFunction_AGAS_MainCharacterCpp_TryCreateInputsGAS, "TryCreateInputsGAS" }, // 1780420672
@@ -695,6 +793,17 @@ void EmptyLinkFunctionForGeneratedCodeGAS_MainCharacterCpp() {}
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_Attributes = { "Attributes", nullptr, (EPropertyFlags)0x0010000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(AGAS_MainCharacterCpp, Attributes), Z_Construct_UClass_UIWALS_BaseAttributeSet_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_Attributes_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_Attributes_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_bCanBeDetected_MetaData[] = {
+		{ "Category", "Stealth" },
+		{ "ModuleRelativePath", "Public/GAS_MainCharacterCpp.h" },
+	};
+#endif
+	void Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_bCanBeDetected_SetBit(void* Obj)
+	{
+		((AGAS_MainCharacterCpp*)Obj)->bCanBeDetected = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_bCanBeDetected = { "bCanBeDetected", nullptr, (EPropertyFlags)0x0020080000020005, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(AGAS_MainCharacterCpp), &Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_bCanBeDetected_SetBit, METADATA_PARAMS(Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_bCanBeDetected_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_bCanBeDetected_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_IsMovingC,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_HasMovementInputC,
@@ -717,6 +826,7 @@ void EmptyLinkFunctionForGeneratedCodeGAS_MainCharacterCpp() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_AbilitiesData,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_DefaultAttributeEffect,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_Attributes,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::NewProp_bCanBeDetected,
 	};
 		const UECodeGen_Private::FImplementedInterfaceParams Z_Construct_UClass_AGAS_MainCharacterCpp_Statics::InterfaceParams[] = {
 			{ Z_Construct_UClass_UAbilitySystemInterface_NoRegister, (int32)VTABLE_OFFSET(AGAS_MainCharacterCpp, IAbilitySystemInterface), false },  // 220555618
@@ -758,9 +868,9 @@ void EmptyLinkFunctionForGeneratedCodeGAS_MainCharacterCpp() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_GAS_MainCharacterCpp_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_AGAS_MainCharacterCpp, AGAS_MainCharacterCpp::StaticClass, TEXT("AGAS_MainCharacterCpp"), &Z_Registration_Info_UClass_AGAS_MainCharacterCpp, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AGAS_MainCharacterCpp), 2524521756U) },
+		{ Z_Construct_UClass_AGAS_MainCharacterCpp, AGAS_MainCharacterCpp::StaticClass, TEXT("AGAS_MainCharacterCpp"), &Z_Registration_Info_UClass_AGAS_MainCharacterCpp, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AGAS_MainCharacterCpp), 3173242850U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_GAS_MainCharacterCpp_h_3041185473(TEXT("/Script/IWALS_AbilitySystem"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_GAS_MainCharacterCpp_h_2351011037(TEXT("/Script/IWALS_AbilitySystem"),
 		Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_GAS_MainCharacterCpp_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_GAS_MainCharacterCpp_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
