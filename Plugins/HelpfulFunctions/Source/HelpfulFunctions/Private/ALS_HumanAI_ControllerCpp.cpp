@@ -327,14 +327,6 @@ void AALS_HumanAI_ControllerCpp::GetBestEnemyFromSight(float PlayerDetectionPrio
 				ReturnValid = IsValid(ReturnCharacter);
 				return; // Finish Function
 			} //---------------------------------------------------------------------------------
-			else
-			{
-				return;
-				const float ArrayIndexFloat = UKismetMathLibrary::Lerp(BestCharIndex * 1.0f, LocalCharactersArray.Find(PlayerCharacter) * 1.0f, PlayerDetectionPriority);
-				ReturnCharacter = LocalCharactersArray[UKismetMathLibrary::ClampInt64(UKismetMathLibrary::Round(ArrayIndexFloat), 0, LocalCharactersArray.Num())];
-				ReturnValid = IsValid(ReturnCharacter);
-				return; // Finish Function
-			} //---------------------------------------------------------------------------------
 		}
 		else
 		{
@@ -358,7 +350,6 @@ bool AALS_HumanAI_ControllerCpp::CheckIsInFoliage(ACharacter* EnemyCharacter)
 	}
 	else
 	{ return false; }
-	return false;
 }
 
 bool AALS_HumanAI_ControllerCpp::UseTraceSightPercept()
@@ -512,7 +503,7 @@ void AALS_HumanAI_ControllerCpp::SetFocusActorTransformFast(AActor* FocusActor, 
 			GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Cyan, FVector(0, MappedSpeed, 0).ToString());
 		}
 		FTransform TargetTransform = UKismetMathLibrary::TInterpTo(FocusActor->GetActorTransform(), NewTransform, UGameplayStatics::GetWorldDeltaSeconds(Self), 
-									 UKismetMathLibrary::MapRangeUnclamped(MappedSpeed,0.1,1,InterpSpeedA,InterpSpeedB));
+									 UKismetMathLibrary::MapRangeClamped(MappedSpeed,0.1,1,InterpSpeedA,InterpSpeedB));
 		FocusActor->SetActorTransform(TargetTransform, false);
 	}
 	else

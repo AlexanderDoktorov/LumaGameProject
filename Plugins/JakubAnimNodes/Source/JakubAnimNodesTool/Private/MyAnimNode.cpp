@@ -61,7 +61,7 @@ void FAnimNode_LayeredBone::UpdateCachedBoneData(const FBoneContainer& RequiredB
 	{
 		return;
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 6, FColor::Blue, FVector(CurrentBoneBlendWeights.Num(), DesiredBoneBlendWeights.Num(), 0).ToString()); //Print Lenght
+
 	if (!ArePerBoneBlendWeightsValid(Skeleton))
 	{
 		RebuildPerBoneBlendWeights(Skeleton);
@@ -77,8 +77,6 @@ void FAnimNode_LayeredBone::UpdateCachedBoneData(const FBoneContainer& RequiredB
 		if (ensure(SkeletonBoneIndex != INDEX_NONE))
 		{
 			DesiredBoneBlendWeights[RequiredBoneIndex] = PerBoneBlendWeights[SkeletonBoneIndex];
-			//GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan, FVector(RequiredBoneIndex, SkeletonBoneIndex, 0).ToString());
-			//ta funkcja wykonuje sie podczas BeginPlay oraz zawiera wszystkie indeksy kosci (podstawowo 79) Required == Skeleton index
 		}
 	}
 
@@ -88,45 +86,26 @@ void FAnimNode_LayeredBone::UpdateCachedBoneData(const FBoneContainer& RequiredB
 	//Reinitialize bone blend weights now that we have cleared them
 	FAnimationRuntime::UpdateDesiredBoneWeight(DesiredBoneBlendWeights, CurrentBoneBlendWeights, BlendWeights);
 
-	TArray<uint16> const& CurveUIDFinder = RequiredBones.GetUIDToArrayLookupTable();
-	const int32 CurveUIDCount = CurveUIDFinder.Num();
-	const int32 TotalCount = FBlendedCurve::GetValidElementCount(&CurveUIDFinder);
-	if (TotalCount > 0)
+	// Build curve source indices
 	{
-		CurvePoseSourceIndices.Reset(TotalCount);
-		// initialize with FF - which is default
-		CurvePoseSourceIndices.Init(DEFAULT_SOURCEINDEX, TotalCount);
+		CurvePoseSourceIndices.Empty();
+		CurvePoseSourceIndices.Reserve(Skeleton->GetNumCurveMetaData());
 
-		// now go through point to correct source indices. Curve only picks one source index
-		for (int32 UIDIndex = 0; UIDIndex < CurveUIDCount; ++UIDIndex)
-		{
-			int32 CurrentPoseIndex = CurveUIDFinder[UIDIndex];
-			if (CurrentPoseIndex != MAX_uint16)
+		Skeleton->ForEachCurveMetaData([this, &RequiredBones](const FName& InCurveName, const FCurveMetaData& InMetaData)
 			{
-				SmartName::UID_Type CurveUID = (SmartName::UID_Type)UIDIndex;
-
-				const FCurveMetaData* CurveMetaData = Skeleton->GetCurveMetaData(CurveUID);
-				if (CurveMetaData)
+				for (const FBoneReference& LinkedBone : InMetaData.LinkedBones)
 				{
-					const TArray<FBoneReference>& LinkedBones = CurveMetaData->LinkedBones;
-					for (int32 LinkedBoneIndex = 0; LinkedBoneIndex < LinkedBones.Num(); ++LinkedBoneIndex)
+					FCompactPoseBoneIndex CompactPoseIndex = LinkedBone.GetCompactPoseIndex(RequiredBones);
+					if (CompactPoseIndex != INDEX_NONE)
 					{
-						FCompactPoseBoneIndex CompactPoseIndex = LinkedBones[LinkedBoneIndex].GetCompactPoseIndex(RequiredBones);
-						if (CompactPoseIndex != INDEX_NONE)
+						if (DesiredBoneBlendWeights[CompactPoseIndex.GetInt()].BlendWeight > 0.f)
 						{
-							if (DesiredBoneBlendWeights[CompactPoseIndex.GetInt()].BlendWeight > 0.f)
-							{
-								CurvePoseSourceIndices[CurrentPoseIndex] = DesiredBoneBlendWeights[CompactPoseIndex.GetInt()].SourceIndex;
-							}
+							CurvePoseSourceIndices.Add(InCurveName, DesiredBoneBlendWeights[CompactPoseIndex.GetInt()].SourceIndex);
+							break;
 						}
 					}
 				}
-			}
-		}
-	}
-	else
-	{
-		CurvePoseSourceIndices.Reset();
+			});
 	}
 
 	RequiredBonesSerialNumber = RequiredBones.GetSerialNumber();
@@ -142,10 +121,11 @@ void FAnimNode_LayeredBone::CacheBones_AnyThread(const FAnimationCacheBonesConte
 	{
 		BlendPoses[ChildIndex].CacheBones(Context);
 	}
+
+	UpdateCachedBoneData(Context.AnimInstanceProxy->GetRequiredBones(), Context.AnimInstanceProxy->GetSkeleton());
 	//GEngine->AddOnScreenDebugMessage(-1, 6, FColor::Red, FVector(LayerSetup.Num(), LayerSetup[0].BranchFilters[0].BlendDepth, 10000).ToString() + (LayerSetup[0].BranchFilters[0].BoneName).ToString()); //Print Lenght
 	//GEngine->AddOnScreenDebugMessage(-1, 6, FColor::Red, FVector(CurrentBoneBlendWeights.Num(), DesiredBoneBlendWeights.Num(), RequiredBonesSerialNumber).ToString()); //Print Lenght
 	//GEngine->AddOnScreenDebugMessage(-1, 6, FColor::Orange, FVector(CurvePoseSourceIndices.Num(), PerBoneBlendWeights.Num(), RequiredBonesSerialNumber).ToString()); //Print Lenght
-	UpdateCachedBoneData(Context.AnimInstanceProxy->GetRequiredBones(), Context.AnimInstanceProxy->GetSkeleton());
 
 	AnimInst = Cast<UAnimInstance>(Context.AnimInstanceProxy->GetAnimInstanceObject());
 	//GEngine->AddOnScreenDebugMessage(-1, 6, FColor::Green, FVector(CurrentBoneBlendWeights.Num(), DesiredBoneBlendWeights.Num(), RequiredBonesSerialNumber).ToString()); //Print Lenght
@@ -159,31 +139,6 @@ void FAnimNode_LayeredBone::Update_AnyThread(const FAnimationUpdateContext& Cont
 	int32 RootMotionBlendPose = -1;
 	float RootMotionWeight = 0.f;
 	const float RootMotionClearWeight = bBlendRootMotionBasedOnRootBone ? 0.f : 1.f;
-	Skel = Context.AnimInstanceProxy->GetSkeleton();
-
-
-
-	int ii = 0;
-	FString t;
-	for (FPerBoneBlendWeight& BoneWeight : DesiredBoneBlendWeights)
-	{
-
-		if (IsValid(AnimInst) == true && BoneWeight.BlendWeight > 0)
-		{
-			t = AnimInst->GetOwningComponent()->GetBoneName(ii).ToString();
-			t = t + TEXT(" = ") + FVector(BoneWeight.SourceIndex, BoneWeight.BlendWeight, 0).ToString();
-			GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Red, t);
-		}
-		ii = ii + 1;
-	}
-
-
-
-
-
-
-
-
 
 	if (IsLODEnabled(Context.AnimInstanceProxy))
 	{
@@ -196,15 +151,14 @@ void FAnimNode_LayeredBone::Update_AnyThread(const FAnimationUpdateContext& Cont
 			{
 				if (bHasRelevantPoses == false)
 				{
-					//Update cached data now we know we might be valid
-					//UpdateCachedBoneData(Context.AnimInstanceProxy->GetRequiredBones(), Context.AnimInstanceProxy->GetSkeleton());
-					//DesiredBoneBlendWeights.SetNum(0);
+					// Update cached data now we know we might be valid
+					UpdateCachedBoneData(Context.AnimInstanceProxy->GetRequiredBones(), Context.AnimInstanceProxy->GetSkeleton());
+
 					// Update weights
 					FAnimationRuntime::UpdateDesiredBoneWeight(DesiredBoneBlendWeights, CurrentBoneBlendWeights, BlendWeights);
 					bHasRelevantPoses = true;
-					//GEngine->AddOnScreenDebugMessage(-1, 0.0, FColor::White, FVector(BlendWeights.Num(), DesiredBoneBlendWeights.Num(), BlendPoses.Num()).ToString()); //Print Lenght
 
-					if (bBlendRootMotionBasedOnRootBone)
+					if (bBlendRootMotionBasedOnRootBone && !CurrentBoneBlendWeights.IsEmpty())
 					{
 						const float NewRootMotionWeight = CurrentBoneBlendWeights[0].BlendWeight;
 						if (NewRootMotionWeight > ZERO_ANIMWEIGHT_THRESH)
@@ -217,16 +171,9 @@ void FAnimNode_LayeredBone::Update_AnyThread(const FAnimationUpdateContext& Cont
 
 				const float ThisPoseRootMotionWeight = (ChildIndex == RootMotionBlendPose) ? RootMotionWeight : RootMotionClearWeight;
 				BlendPoses[ChildIndex].Update(Context.FractionalWeightAndRootMotion(ChildWeight, ThisPoseRootMotionWeight));
-				//GEngine->AddOnScreenDebugMessage(-1, 0.0, FColor::White, FVector(ChildWeight, ThisPoseRootMotionWeight, 100000).ToString()); //Print Lenght
 			}
 		}
 	}
-	else
-	{
-		// Clear BlendWeights if disabled by LODThreshold.
-		BlendWeights.Init(0.f, BlendWeights.Num());
-	}
-
 
 	// initialize children
 	const float BaseRootMotionWeight = 1.f - RootMotionWeight;
@@ -286,42 +233,24 @@ void FAnimNode_LayeredBone::Evaluate_AnyThread(FPoseContext& Output)
 				TargetBlendCurves[ChildIndex].InitFrom(Output.Curve);
 			}
 		}
-		FName CurveName;
-		SmartName::UID_Type NameUID = Skel->GetUIDByName(USkeleton::AnimCurveMappingName, CurveName);
 
+		// filter to make sure it only includes curves that are linked to the correct bone filter
+		UE::Anim::FNamedValueArrayUtils::RemoveByPredicate(BasePoseContext.Curve, CurvePoseSourceIndices,
+			[](const UE::Anim::FCurveElement& InOutBasePoseElement, const UE::Anim::FCurveElementIndexed& InSourceIndexElement)
+			{
+				// if source index is set, remove base pose curve value
+				return (InSourceIndexElement.Index != INDEX_NONE);
+			});
 
-		// filter to make sure it only includes curves that is linked to the correct bone filter
-		TArray<uint16> const* CurveUIDFinder = Output.Curve.UIDToArrayIndexLUT;
-		const int32 TotalCount = Output.Curve.NumValidCurveCount;
-		// now go through point to correct source indices. Curve only picks one source index
-		for (int32 UIDIndex = 0; UIDIndex < CurveUIDFinder->Num(); ++UIDIndex)
+		// Filter child pose curves
+		for (int32 ChildIndex = 0; ChildIndex < NumPoses; ++ChildIndex)
 		{
-			int32 CurvePoseIndex = Output.Curve.GetArrayIndexByUID(UIDIndex);
-			if (IsValid(Skel) == true)
-			{
-				CurveName = TEXT("Layering_Arm_R_Add");
-				NameUID = Skel->GetUIDByName(USkeleton::AnimCurveMappingName, CurveName);
-				//GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Red, FVector(CurvePoseIndex, BasePoseContext.Curve.Get(UIDIndex), 0).ToString());
-			}
-
-			if (CurvePoseSourceIndices.IsValidIndex(CurvePoseIndex))
-			{
-				int32 SourceIndex = CurvePoseSourceIndices[CurvePoseIndex];
-				if (SourceIndex != DEFAULT_SOURCEINDEX)
+			UE::Anim::FNamedValueArrayUtils::RemoveByPredicate(TargetBlendCurves[ChildIndex], CurvePoseSourceIndices,
+				[ChildIndex](const UE::Anim::FCurveElement& InOutBasePoseElement, const UE::Anim::FCurveElementIndexed& InSourceIndexElement)
 				{
-					// if source index is set, clear base pose curve value
-					BasePoseContext.Curve.Set(UIDIndex, 0.f);
-					GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Red, FVector(CurvePoseIndex, BasePoseContext.Curve.Get(UIDIndex), 0).ToString());
-					for (int32 ChildIndex = 0; ChildIndex < NumPoses; ++ChildIndex)
-					{
-						if (SourceIndex != ChildIndex)
-						{
-							// if not source, clear it
-							TargetBlendCurves[ChildIndex].Set(UIDIndex, 0.f);
-						}
-					}
-				}
-			}
+					// if not source, remove it
+					return (InSourceIndexElement.Index != INDEX_NONE) && (InSourceIndexElement.Index != ChildIndex);
+				});
 		}
 
 		FAnimationRuntime::EBlendPosesPerBoneFilterFlags BlendFlags = FAnimationRuntime::EBlendPosesPerBoneFilterFlags::None;
@@ -333,21 +262,7 @@ void FAnimNode_LayeredBone::Evaluate_AnyThread(FPoseContext& Output)
 		{
 			BlendFlags |= FAnimationRuntime::EBlendPosesPerBoneFilterFlags::MeshSpaceScale;
 		}
-		int ii = 0;
-		FString t;
-		GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Yellow, FVector(CurrentBoneBlendWeights.Num(), RequiredBonesSerialNumber, TargetBlendCurves.Num()).ToString());
-		for (FPerBoneBlendWeight& BoneWeight : CurrentBoneBlendWeights)
-		{
 
-			if (IsValid(AnimInst) == true && BoneWeight.BlendWeight > 0 && 1==0)
-			{
-				t = AnimInst->GetOwningComponent()->GetBoneName(ii).ToString();
-				t = t + TEXT(" = ") + FVector(BoneWeight.SourceIndex, BoneWeight.BlendWeight, 0).ToString();
-				GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Cyan, t);
-			}
-			ii = ii + 1;
-		}
-		
 		FAnimationPoseData AnimationPoseData(Output);
 		FAnimationRuntime::BlendPosesPerBoneFilter(BasePoseContext.Pose, TargetBlendPoses, BasePoseContext.Curve, TargetBlendCurves, BasePoseContext.CustomAttributes, TargetBlendAttributes, AnimationPoseData, CurrentBoneBlendWeights, BlendFlags, CurveBlendOption);
 	}
@@ -369,4 +284,15 @@ void FAnimNode_LayeredBone::GatherDebugData(FNodeDebugData& DebugData)
 	{
 		BlendPoses[ChildIndex].GatherDebugData(DebugData.BranchFlow(BlendWeights[ChildIndex]));
 	}
+}
+
+void FAnimNode_LayeredBone::SetBlendMask(int32 InPoseIndex, UBlendProfile* InBlendMask)
+{
+	check(BlendMode == ELayeredBlendMode::BlendMask);
+	check(BlendPoses.IsValidIndex(InPoseIndex));
+	check(BlendMasks.IsValidIndex(InPoseIndex));
+
+	BlendMasks[InPoseIndex] = InBlendMask;
+
+	InvalidatePerBoneBlendWeights();
 }

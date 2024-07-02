@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define JAKUBANIMNODESTOOL_MyAnimNode_generated_h
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_MyAnimNode_h_24_GENERATED_BODY \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_MyAnimNode_h_24_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FAnimNode_LayeredBone_Statics; \
 	static class UScriptStruct* StaticStruct(); \
 	typedef FAnimNode_Base Super;
@@ -23,7 +23,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 template<> JAKUBANIMNODESTOOL_API UScriptStruct* StaticStruct<struct FAnimNode_LayeredBone>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_MyAnimNode_h
+#define CURRENT_FILE_ID FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_MyAnimNode_h
 
 
 #define FOREACH_ENUM_ELAYEREDBLENDMODE(op) \

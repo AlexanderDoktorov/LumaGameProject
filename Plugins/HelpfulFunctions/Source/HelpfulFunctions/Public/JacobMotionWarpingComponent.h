@@ -9,12 +9,12 @@
 #include "JacobMotionWarpingComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class HELPFULFUNCTIONS_API UJacobMotionWarpingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UJacobMotionWarpingComponent();
 
@@ -25,46 +25,46 @@ protected:
 	//Create Base Variables
 	//References (Public)
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True", Category = "References", DisplayName = "Character"))
-		ACharacter* CharacterC = nullptr;
+	ACharacter* CharacterC = nullptr;
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True", Category = "References", DisplayName = "WarpingTarget"))
-		AActor* WarpingTarget = nullptr;
+	AActor* WarpingTarget = nullptr;
 	//Config Variables (Public)
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True", Category = "Config", DisplayName = "DevMode"))
-		bool DevMode = false;
+	bool DevMode = false;
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True", Category = "Config", DisplayName = "LockWapringActor"))
-		bool LockWarpingActor = false;
+	bool LockWarpingActor = false;
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True", Category = "Config", DisplayName = "ExcludeRootMotion"))
-		bool ExcludeRootMotionV = false;
+	bool ExcludeRootMotionV = false;
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True", Category = "Config", DisplayName = "DeltaOffset"))
-		FVector DeltaOffset = FVector(0, 0, 0);
+	FVector DeltaOffset = FVector(0, 0, 0);
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True", Category = "Config", DisplayName = "TargetActorLocation"))
-		FVector TargetActorLocation = FVector(0, 0, 0);
+	FVector TargetActorLocation = FVector(0, 0, 0);
 	//Variables (Not Visible Via Blueprint)
 	UPROPERTY(Transient)
-		float BlendingDuration = 0;
+	float BlendingDuration = 0;
 	UPROPERTY(Transient)
-		float AlphaByTimeline = 0;
+	float AlphaByTimeline = 0;
 	UPROPERTY(Transient) //VECTOR
-		FVector ConstOffset = FVector(0,0,0);
+		FVector ConstOffset = FVector(0, 0, 0);
 	UPROPERTY(Transient) //VECTOR
 		FVector ExcludedRootValue = FVector(0, 0, 0);
 	UPROPERTY(Transient)
-		FRotator SavedWarpActorRot = FRotator(0, 0, 0);
+	FRotator SavedWarpActorRot = FRotator(0, 0, 0);
 	UPROPERTY(Transient)
-		FRotator RotationOffset = FRotator(0, 0, 0);
+	FRotator RotationOffset = FRotator(0, 0, 0);
 	UPROPERTY(Transient)
-		TArray<FName> CurvesName = {};
+	TArray<FName> CurvesName = {};
 	UPROPERTY(Transient)
-		TArray<FName> WarpKeys = {};
+	TArray<FName> WarpKeys = {};
 	UPROPERTY(Transient)
-		FCALS_ComponentAndTransform TargetActorLocationLS = {};
+	FCALS_ComponentAndTransform TargetActorLocationLS = {};
 	UPROPERTY(Transient)
-		UPrimitiveComponent* FloorComponent = nullptr;
+	UPrimitiveComponent* FloorComponent = nullptr;
 
 	//Function Library - PUBLIC (CAN BE EXECUTED BY BLUEPRINT)
 	//Reset MotionWarping Variables
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", DisplayName = "Reset Values", Keywords = "MotionWarping"))
-		virtual void ResetValues();
+	virtual void ResetValues();
 
 	// PL: 
 	// Ustaw punkt relacji pomiedzy MotionWarping a TargetActor. Za ka¿dym razem kiedy bêdzie u¿ywany MotionWarping, zostanie pobrana aktualna 
@@ -81,23 +81,23 @@ protected:
 	virtual void SetMotionWarpingTarget(FName WarpTargetName, AActor* TargetActor, FVector ConstantOffset, FRotator ConstRotOffset, bool ExcludeRootMotion);
 
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", DisplayName = "Stop Updating Warp Point", Keywords = "MotionWarping"))
-		virtual void StopUpdatingWarpPoint(bool StopUpdating = true);
+	virtual void StopUpdatingWarpPoint(bool StopUpdating = true);
 
 	//Main Function - Executed By AnimNotify PerFrame
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", DisplayName = "Warping Update", Keywords = "MotionWarping"))
-		virtual void WarpingUpdate(FName X = FName(TEXT("Root")), FName Y = FName(TEXT("Root")), FName Z = FName(TEXT("Root")), FName R = FName(TEXT("Root")), bool UseUpAxis = false, 
+	virtual void WarpingUpdate(FName X = FName(TEXT("Root")), FName Y = FName(TEXT("Root")), FName Z = FName(TEXT("Root")), FName R = FName(TEXT("Root")), bool UseUpAxis = false,
 		bool WithSweep = true, bool WarpRotation = true, float StrengthAlpha = 1.0, FName ConstAlphaCurve = FName(TEXT("ss")));
 
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", DisplayName = "Predicted Single Motion Position", Keywords = "MotionWarping", NoExport))
-		void PredictedSingleMotionPosition(bool& Valid, bool& HaveRoom, FVector& ReturnLocation, ACharacter* WarpTargetActor, FVector ConstantOffset, float NormalizedTime,
+	void PredictedSingleMotionPosition(bool& Valid, bool& HaveRoom, FVector& ReturnLocation, ACharacter* WarpTargetActor, FVector ConstantOffset, float NormalizedTime,
 		UCurveVector* RootMotionChar, UCurveVector* RootMotionWarpRot, bool ExcludeWarpActorRoot, bool UseUpAxis, FRotator ApplyCustomRotator);
 
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject", DisplayName = "Predicted Single Motion Position Auto", Keywords = "MotionWarping", NoExport))
-		void PredictedSingleMotionPositionAuto(bool& Valid, bool& HaveRoom, FVector& ReturnLocation, ACharacter* WarpTargetActor, UAnimSequence* AnimSeqAtt, UAnimSequence* AnimSeqVic, 
-			FVector WarpingOrigin, FVector ConstantOffset, float NormalizedTime, bool ExcludeWarpActorRoot, bool UseUpAxis, FRotator ApplyCustomRotator, bool InvertAxis);
+	void PredictedSingleMotionPositionAuto(bool& Valid, bool& HaveRoom, FVector& ReturnLocation, ACharacter* WarpTargetActor, UAnimSequence* AnimSeqAtt, UAnimSequence* AnimSeqVic,
+		FVector WarpingOrigin, FVector ConstantOffset, float NormalizedTime, bool ExcludeWarpActorRoot, bool UseUpAxis, FRotator ApplyCustomRotator, bool InvertAxis);
 
 
-public:	
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -117,7 +117,7 @@ protected:
 
 	void GetWarpTagetCurveValue(float& X, float& Y, float& Z);
 
-	FVector TryFixZPosition(bool Use = true, FVector CharLocation = FVector(0,0,0));
+	FVector TryFixZPosition(bool Use = true, FVector CharLocation = FVector(0, 0, 0));
 
 	FCALS_ComponentAndTransform TryConvertToRelative(FVector VectorWS);
 

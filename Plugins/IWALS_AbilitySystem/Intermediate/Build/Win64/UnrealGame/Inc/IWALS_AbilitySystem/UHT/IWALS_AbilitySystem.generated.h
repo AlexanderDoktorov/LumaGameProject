@@ -5,8 +5,9 @@
 ===========================================================================*/
 
 // IWYU pragma: private, include "IWALS_AbilitySystem.h"
+#include "Templates/IsUEnumClass.h"
 #include "UObject/ObjectMacros.h"
-#include "UObject/ScriptMacros.h"
+#include "UObject/ReflectedTypeAccessors.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #ifdef IWALS_ABILITYSYSTEM_IWALS_AbilitySystem_generated_h
@@ -15,7 +16,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define IWALS_ABILITYSYSTEM_IWALS_AbilitySystem_generated_h
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_AbilitySystem_h
+#define CURRENT_FILE_ID FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_AbilitySystem_h
 
 
 #define FOREACH_ENUM_EGASABILITYINPUTID(op) \

@@ -7,8 +7,9 @@ public class JakubCableComponent : ModuleRules
 	public JakubCableComponent(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		PublicIncludePaths.AddRange(
+        CppStandard = CppStandardVersion.Latest;
+
+        PublicIncludePaths.AddRange(
 			new string[] {
 
 			}

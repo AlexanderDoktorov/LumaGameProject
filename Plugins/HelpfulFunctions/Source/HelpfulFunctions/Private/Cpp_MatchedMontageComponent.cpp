@@ -319,7 +319,6 @@ float UCpp_MatchedMontageComponent::GetRotationCurve(int CurveIndex)
 		else
 		{ return UKismetMathLibrary::SelectFloat(UKismetMathLibrary::MapRangeClamped(T, 0.0, 0.8, 0, 1), 1.0, T < 0.8); }
 	}
-	return 0.0f;
 }
 
 // CONVERT WORLD TRANSFORM TO LOCAL - BUT ONLY WHEN CONDITION IS TRUE

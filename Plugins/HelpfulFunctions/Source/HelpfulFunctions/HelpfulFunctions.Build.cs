@@ -7,12 +7,13 @@ public class HelpfulFunctions : ModuleRules
 	public HelpfulFunctions(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		CppStandard = CppStandardVersion.Latest;
 		
 		PublicIncludePaths.AddRange(
 			new string[] 
 			{
-                "JakubCableComponent/Public",
-                "JakubCableComponent/Classes",
+                //"JakubCableComponent/Public",
+                //"JakubCableComponent/Classes",
             }
 			);
 				
@@ -39,7 +40,7 @@ public class HelpfulFunctions : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"Slate",
-				"SlateCore", 
+				"SlateCore",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

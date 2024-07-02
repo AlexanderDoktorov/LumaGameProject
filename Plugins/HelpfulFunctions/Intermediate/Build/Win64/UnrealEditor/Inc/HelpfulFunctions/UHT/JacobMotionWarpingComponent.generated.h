@@ -18,22 +18,7 @@ class UCurveVector;
 #endif
 #define HELPFULFUNCTIONS_JacobMotionWarpingComponent_generated_h
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_RPC_WRAPPERS \
- \
-	DECLARE_FUNCTION(execTimelineBlendIn); \
-	DECLARE_FUNCTION(execGetTargetAxis); \
-	DECLARE_FUNCTION(execGetOriginPosition); \
-	DECLARE_FUNCTION(execPredictedSingleMotionPositionAuto); \
-	DECLARE_FUNCTION(execPredictedSingleMotionPosition); \
-	DECLARE_FUNCTION(execWarpingUpdate); \
-	DECLARE_FUNCTION(execStopUpdatingWarpPoint); \
-	DECLARE_FUNCTION(execSetMotionWarpingTarget); \
-	DECLARE_FUNCTION(execResetValues);
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
- \
 	DECLARE_FUNCTION(execTimelineBlendIn); \
 	DECLARE_FUNCTION(execGetTargetAxis); \
 	DECLARE_FUNCTION(execGetOriginPosition); \
@@ -45,7 +30,6 @@ class UCurveVector;
 	DECLARE_FUNCTION(execResetValues);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_ACCESSORS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUJacobMotionWarpingComponent(); \
@@ -55,34 +39,11 @@ public: \
 	DECLARE_SERIALIZER(UJacobMotionWarpingComponent)
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_INCLASS \
-private: \
-	static void StaticRegisterNativesUJacobMotionWarpingComponent(); \
-	friend struct Z_Construct_UClass_UJacobMotionWarpingComponent_Statics; \
-public: \
-	DECLARE_CLASS(UJacobMotionWarpingComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HelpfulFunctions"), NO_API) \
-	DECLARE_SERIALIZER(UJacobMotionWarpingComponent)
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_STANDARD_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UJacobMotionWarpingComponent(const FObjectInitializer& ObjectInitializer); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UJacobMotionWarpingComponent) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UJacobMotionWarpingComponent); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UJacobMotionWarpingComponent); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UJacobMotionWarpingComponent(UJacobMotionWarpingComponent&&); \
-	NO_API UJacobMotionWarpingComponent(const UJacobMotionWarpingComponent&); \
-public: \
-	NO_API virtual ~UJacobMotionWarpingComponent();
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UJacobMotionWarpingComponent(UJacobMotionWarpingComponent&&); \
-	NO_API UJacobMotionWarpingComponent(const UJacobMotionWarpingComponent&); \
+	UJacobMotionWarpingComponent(UJacobMotionWarpingComponent&&); \
+	UJacobMotionWarpingComponent(const UJacobMotionWarpingComponent&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UJacobMotionWarpingComponent); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UJacobMotionWarpingComponent); \
@@ -91,24 +52,10 @@ public: \
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_12_PROLOG
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_GENERATED_BODY_LEGACY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_INCLASS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_STANDARD_CONSTRUCTORS \
-public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_SPARSE_DATA \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_INCLASS_NO_PURE_DECLS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JacobMotionWarpingComponent_h_15_ENHANCED_CONSTRUCTORS \
 private: \

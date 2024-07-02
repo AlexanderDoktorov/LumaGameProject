@@ -8,8 +8,9 @@ public class JakubAnimNodesTool : ModuleRules
 	public JakubAnimNodesTool(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		PublicIncludePaths.AddRange(
+        CppStandard = CppStandardVersion.Latest;
+
+        PublicIncludePaths.AddRange(
 			new string[] {
 				// ... add public include paths required here ...
 			}

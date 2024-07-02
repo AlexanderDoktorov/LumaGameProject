@@ -32,25 +32,9 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCharMovement
 
 template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FSlidingConditionData>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_RPC_WRAPPERS \
-	virtual void PrepareToSlidingC_Implementation(bool CanStart); \
-	virtual bool SlidingConditionC_Implementation(); \
- \
-	DECLARE_FUNCTION(execPrepareToSlidingC); \
-	DECLARE_FUNCTION(execSlidingConditionC); \
-	DECLARE_FUNCTION(execCheckCanMantleOnEdge); \
-	DECLARE_FUNCTION(execUpdateAngleCorrectDurningSliding); \
-	DECLARE_FUNCTION(execUpdateCharWalkAngleDurningSliding); \
-	DECLARE_FUNCTION(execUpdateCharFrictionDurningSliding); \
-	DECLARE_FUNCTION(execCheckCanStartSlidingC); \
-	DECLARE_FUNCTION(execSimpleTrajectoryC);
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_RPC_WRAPPERS_NO_PURE_DECLS \
 	virtual void PrepareToSlidingC_Implementation(bool CanStart); \
 	virtual bool SlidingConditionC_Implementation(); \
- \
 	DECLARE_FUNCTION(execPrepareToSlidingC); \
 	DECLARE_FUNCTION(execSlidingConditionC); \
 	DECLARE_FUNCTION(execCheckCanMantleOnEdge); \
@@ -61,7 +45,6 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FSlidingCondi
 	DECLARE_FUNCTION(execSimpleTrajectoryC);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_ACCESSORS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_CALLBACK_WRAPPERS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_INCLASS_NO_PURE_DECLS \
 private: \
@@ -72,34 +55,11 @@ public: \
 	DECLARE_SERIALIZER(UCpp_FallDamageAndSliding)
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_INCLASS \
-private: \
-	static void StaticRegisterNativesUCpp_FallDamageAndSliding(); \
-	friend struct Z_Construct_UClass_UCpp_FallDamageAndSliding_Statics; \
-public: \
-	DECLARE_CLASS(UCpp_FallDamageAndSliding, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HelpfulFunctions"), NO_API) \
-	DECLARE_SERIALIZER(UCpp_FallDamageAndSliding)
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_STANDARD_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UCpp_FallDamageAndSliding(const FObjectInitializer& ObjectInitializer); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UCpp_FallDamageAndSliding) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UCpp_FallDamageAndSliding); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UCpp_FallDamageAndSliding); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UCpp_FallDamageAndSliding(UCpp_FallDamageAndSliding&&); \
-	NO_API UCpp_FallDamageAndSliding(const UCpp_FallDamageAndSliding&); \
-public: \
-	NO_API virtual ~UCpp_FallDamageAndSliding();
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UCpp_FallDamageAndSliding(UCpp_FallDamageAndSliding&&); \
-	NO_API UCpp_FallDamageAndSliding(const UCpp_FallDamageAndSliding&); \
+	UCpp_FallDamageAndSliding(UCpp_FallDamageAndSliding&&); \
+	UCpp_FallDamageAndSliding(const UCpp_FallDamageAndSliding&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UCpp_FallDamageAndSliding); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UCpp_FallDamageAndSliding); \
@@ -108,25 +68,10 @@ public: \
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_41_PROLOG
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_GENERATED_BODY_LEGACY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_CALLBACK_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_INCLASS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_STANDARD_CONSTRUCTORS \
-public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_SPARSE_DATA \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_CALLBACK_WRAPPERS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_INCLASS_NO_PURE_DECLS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_FallDamageAndSliding_h_44_ENHANCED_CONSTRUCTORS \

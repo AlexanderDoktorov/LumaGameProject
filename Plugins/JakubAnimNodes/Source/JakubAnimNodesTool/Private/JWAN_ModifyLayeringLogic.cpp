@@ -31,27 +31,22 @@ void FAnimNode_ModifyLayering::Evaluate_AnyThread(FPoseContext& Output)
 	SourcePose.Evaluate(SourceData);
 	Output = SourceData;
 
-	USkeleton* Skeleton = Output.AnimInstanceProxy->GetSkeleton(); //Get Skeleton
-
-	// Process curve map if available.
+	// Nie potrzebujesz ju¿ USkeleton do pobrania UID krzywej.
 	for (FLayeringCurvesData& CurveNameValue : CurvesStructure)
 	{
-		FString ENumToName;
-		UEnum::GetValueAsString(CurveNameValue.CurveName, ENumToName); //Convet Enum To String
-		ENumToName = ENumToName.Replace(TEXT("ELayeringCurvesName::"), TEXT(""), ESearchCase::IgnoreCase);
-		SmartName::UID_Type NameUID = Skeleton->GetUIDByName(USkeleton::AnimCurveMappingName, FName(ENumToName)); //Get Curve UID by name
-		//GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Red, ENumToName);
-		if (NameUID != SmartName::MaxUID)
-		{
-			float CurrentValue = Output.Curve.Get(NameUID);
-			float NewValue = CurveNameValue.Value;
-			ProcessCurveOperation(CurveNameValue.BlendMode, Output, NameUID, CurrentValue, NewValue);
-		}
+		FString EnumToName;
+		UEnum::GetValueAsString(CurveNameValue.CurveName, EnumToName);
+		EnumToName = EnumToName.Replace(TEXT("ELayeringCurvesName::"), TEXT(""), ESearchCase::IgnoreCase);
+
+		// Przetwarzanie krzywej.
+		float CurrentValue = Output.Curve.Get(FName(*EnumToName));
+		float NewValue = CurveNameValue.Value;
+		ProcessCurveOperation(CurveNameValue.BlendMode, Output, FName(*EnumToName), CurrentValue, NewValue);
 	}
 
 }
 
-void FAnimNode_ModifyLayering::ProcessCurveOperation(const EModifyLayeringApplyMode& InApplyMode, FPoseContext& Output, const SmartName::UID_Type& NameUID, float CurrentValue, float NewValue)
+void FAnimNode_ModifyLayering::ProcessCurveOperation(const EModifyLayeringApplyMode& InApplyMode, FPoseContext& Output, const FName& CurveName, float CurrentValue, float NewValue)
 {
 	float UseNewValue = CurrentValue;
 
@@ -75,18 +70,9 @@ void FAnimNode_ModifyLayering::ProcessCurveOperation(const EModifyLayeringApplyM
 	}
 
 	float UseAlpha = FMath::Clamp(InternalBlendAlpha, 0.f, 1.f);
-	Output.Curve.Set(NameUID, FMath::Lerp(CurrentValue, UseNewValue, UseAlpha));
+	Output.Curve.Set(CurveName, FMath::Lerp(CurrentValue, UseNewValue, UseAlpha));
 }
 
-
-void FAnimNode_ModifyLayering::ProcessCurveWMAOperation(FPoseContext& Output, const SmartName::UID_Type& NameUID, float CurrentValue, float NewValue, float& InOutLastValue)
-{
-	const float WAvg = FMath::WeightedMovingAverage(CurrentValue, InOutLastValue, InternalBlendAlpha);
-	// Update the last curve value for next run
-	InOutLastValue = WAvg;
-
-	Output.Curve.Set(NameUID, WAvg);
-}
 
 void FAnimNode_ModifyLayering::Update_AnyThread(const FAnimationUpdateContext& Context)
 {

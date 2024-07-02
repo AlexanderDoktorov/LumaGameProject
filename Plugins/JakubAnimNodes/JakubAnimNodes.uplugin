@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "3.1",
+	"VersionName": "1.0",
 	"FriendlyName": "JakubAnimNodes",
 	"Description": "",
 	"Category": "Other",
@@ -19,7 +19,7 @@
 			"Name": "JakubAnimNodesTool",
 			"Type": "Runtime",
 			"LoadingPhase": "PreDefault",
-			"PlatformAllowList": [
+			"WhitelistPlatforms": [
 				"Win64",
 				"Linux"
 			]
@@ -28,7 +28,7 @@
 			"Name": "JakubAnimNodes",
 			"Type": "UncookedOnly",
 			"LoadingPhase": "PreDefault",
-			"PlatformAllowList": [
+			"WhitelistPlatforms": [
 				"Win64",
 				"Linux"
 			]

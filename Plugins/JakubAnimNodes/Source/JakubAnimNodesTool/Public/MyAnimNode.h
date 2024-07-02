@@ -100,7 +100,8 @@ protected:
 	// this array changes based on required bones
 	TArray<FPerBoneBlendWeight> DesiredBoneBlendWeights;
 	TArray<FPerBoneBlendWeight> CurrentBoneBlendWeights;
-	TArray<uint8> CurvePoseSourceIndices;
+	// Per-curve source pose index
+	TBaseBlendedCurve<FDefaultAllocator, UE::Anim::FCurveElementIndexed> CurvePoseSourceIndices;
 
 	UAnimInstance* AnimInst;
 
@@ -152,6 +153,9 @@ public:
 
 	// Invalidates the cached bone data so it is recalculated the next time this node is updated
 	void InvalidateCachedBoneData() { RequiredBonesSerialNumber = 0; }
+
+	// Set the blend mask for the specified input pose
+	void SetBlendMask(int32 InPoseIndex, UBlendProfile* InBlendMask);
 
 private:
 	// Rebuild cache per bone blend weights from the skeleton

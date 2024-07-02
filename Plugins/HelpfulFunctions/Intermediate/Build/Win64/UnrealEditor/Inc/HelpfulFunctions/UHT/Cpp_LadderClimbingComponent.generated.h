@@ -25,29 +25,6 @@ struct FCALS_ComponentAndTransform;
 
 template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCALS_LadderAnimData>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_RPC_WRAPPERS \
-	virtual int32 ChooseMainPosesIndex_Implementation(FVector InitLocation, FRotator InitRotation); \
-	virtual bool SetMainValues_Implementation(bool StartedLadderClimb, FCALS_ComponentAndTransform TargetPositionWS, AActor* LadderActor, UPrimitiveComponent* RungComp); \
-	virtual bool GetMainValues_Implementation(bool& StartedLadderClimb, FCALS_ComponentAndTransform& TargetPositionWS, AActor*& LadderActor, UPrimitiveComponent*& RungComp); \
-	virtual bool InitComponent_Implementation(); \
-	virtual bool TryStartLadderClimbWhenHoldLedge_Implementation(FCALS_ComponentAndTransform TargetPositionWS, AActor* LadderActor, UPrimitiveComponent* RungComp); \
-	virtual bool TryStartLadderClimb_Implementation(FCALS_ComponentAndTransform TargetPositionWS, AActor* LadderActor, UPrimitiveComponent* RungComp); \
-	virtual bool TryFinishLadderClimb_Implementation(bool IgnoreCondition); \
-	virtual bool CheckCanStartClimbLadderIteration_Implementation(bool CheckMainCondition, bool FromClimb, FVector InStartLocation, FVector InEndLocation, FRotator InRotation, int32 Iterations, FCALS_ComponentAndTransform& TargetCapPositionWS, AActor*& LadderActor, UPrimitiveComponent*& RungComp); \
-	virtual bool CheckCanStartClimbLadder_Implementation(bool CheckMainCondition, bool Param2, FVector InLocation, FRotator InRotation, FCALS_ComponentAndTransform& TargetCapPositionWS, AActor*& LadderActor, UPrimitiveComponent*& RungComp); \
- \
-	DECLARE_FUNCTION(execChooseMainPosesIndex); \
-	DECLARE_FUNCTION(execSetMainValues); \
-	DECLARE_FUNCTION(execGetMainValues); \
-	DECLARE_FUNCTION(execInitComponent); \
-	DECLARE_FUNCTION(execTryStartLadderClimbWhenHoldLedge); \
-	DECLARE_FUNCTION(execTryStartLadderClimb); \
-	DECLARE_FUNCTION(execTryFinishLadderClimb); \
-	DECLARE_FUNCTION(execCheckCanStartClimbLadderIteration); \
-	DECLARE_FUNCTION(execCheckCanStartClimbLadder);
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_RPC_WRAPPERS_NO_PURE_DECLS \
 	virtual int32 ChooseMainPosesIndex_Implementation(FVector InitLocation, FRotator InitRotation); \
 	virtual bool SetMainValues_Implementation(bool StartedLadderClimb, FCALS_ComponentAndTransform TargetPositionWS, AActor* LadderActor, UPrimitiveComponent* RungComp); \
@@ -58,7 +35,6 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCALS_LadderA
 	virtual bool TryFinishLadderClimb_Implementation(bool IgnoreCondition); \
 	virtual bool CheckCanStartClimbLadderIteration_Implementation(bool CheckMainCondition, bool FromClimb, FVector InStartLocation, FVector InEndLocation, FRotator InRotation, int32 Iterations, FCALS_ComponentAndTransform& TargetCapPositionWS, AActor*& LadderActor, UPrimitiveComponent*& RungComp); \
 	virtual bool CheckCanStartClimbLadder_Implementation(bool CheckMainCondition, bool Param2, FVector InLocation, FRotator InRotation, FCALS_ComponentAndTransform& TargetCapPositionWS, AActor*& LadderActor, UPrimitiveComponent*& RungComp); \
- \
 	DECLARE_FUNCTION(execChooseMainPosesIndex); \
 	DECLARE_FUNCTION(execSetMainValues); \
 	DECLARE_FUNCTION(execGetMainValues); \
@@ -70,7 +46,6 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCALS_LadderA
 	DECLARE_FUNCTION(execCheckCanStartClimbLadder);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_ACCESSORS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_CALLBACK_WRAPPERS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_INCLASS_NO_PURE_DECLS \
 private: \
@@ -81,34 +56,11 @@ public: \
 	DECLARE_SERIALIZER(UCpp_LadderClimbingComponent)
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_INCLASS \
-private: \
-	static void StaticRegisterNativesUCpp_LadderClimbingComponent(); \
-	friend struct Z_Construct_UClass_UCpp_LadderClimbingComponent_Statics; \
-public: \
-	DECLARE_CLASS(UCpp_LadderClimbingComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HelpfulFunctions"), NO_API) \
-	DECLARE_SERIALIZER(UCpp_LadderClimbingComponent)
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_STANDARD_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UCpp_LadderClimbingComponent(const FObjectInitializer& ObjectInitializer); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UCpp_LadderClimbingComponent) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UCpp_LadderClimbingComponent); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UCpp_LadderClimbingComponent); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UCpp_LadderClimbingComponent(UCpp_LadderClimbingComponent&&); \
-	NO_API UCpp_LadderClimbingComponent(const UCpp_LadderClimbingComponent&); \
-public: \
-	NO_API virtual ~UCpp_LadderClimbingComponent();
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UCpp_LadderClimbingComponent(UCpp_LadderClimbingComponent&&); \
-	NO_API UCpp_LadderClimbingComponent(const UCpp_LadderClimbingComponent&); \
+	UCpp_LadderClimbingComponent(UCpp_LadderClimbingComponent&&); \
+	UCpp_LadderClimbingComponent(const UCpp_LadderClimbingComponent&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UCpp_LadderClimbingComponent); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UCpp_LadderClimbingComponent); \
@@ -117,25 +69,10 @@ public: \
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_27_PROLOG
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_GENERATED_BODY_LEGACY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_CALLBACK_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_INCLASS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_STANDARD_CONSTRUCTORS \
-public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_SPARSE_DATA \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_CALLBACK_WRAPPERS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_INCLASS_NO_PURE_DECLS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_LadderClimbingComponent_h_30_ENHANCED_CONSTRUCTORS \

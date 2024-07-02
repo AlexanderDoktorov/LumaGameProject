@@ -9,7 +9,11 @@ public class Interaction_With_ALSTarget : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
+		CppStandard = CppStandardVersion.Cpp20;
 
-		ExtraModuleNames.AddRange( new string[] { "Interaction_With_ALS" } );
+		ExtraModuleNames.AddRange( new string[]
+		{
+			"Interaction_With_ALS"
+		});
 	}
 }

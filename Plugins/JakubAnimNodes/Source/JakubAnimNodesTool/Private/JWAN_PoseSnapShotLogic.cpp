@@ -25,7 +25,7 @@ void FJWAN_PoseSnapShotLogic::CacheBones_AnyThread(const FAnimationCacheBonesCon
 
 void FJWAN_PoseSnapShotLogic::Evaluate_AnyThread(FPoseContext& Output)
 {
-    // Najpierw oceniamy przychodzï¿½cï¿½ pozï¿½
+    // Najpierw oceniamy przychodz¹c¹ pozê
     DECLARE_SCOPE_HIERARCHICAL_COUNTER_ANIMNODE(Evaluate_AnyThread)
     FPoseContext SourceData(Output);
     SourcePose.Evaluate(SourceData);
@@ -35,9 +35,9 @@ void FJWAN_PoseSnapShotLogic::Evaluate_AnyThread(FPoseContext& Output)
     FPoseSnapshot PoseSnapshot;
     PoseSnapshot.SnapshotName = SnapshotName; 
     PoseSnapshot.bIsValid = true;
-    PoseSnapshot.SkeletalMeshName = Output.AnimInstanceProxy->GetSkelMeshComponent()->SkeletalMesh.GetFName();
+    PoseSnapshot.SkeletalMeshName = Output.AnimInstanceProxy->GetSkelMeshComponent()->GetSkeletalMeshAsset()->GetFName();
 
-    // Musimy przeksztaï¿½ciï¿½ FCompactPose na TArray<FTransform>
+    // Musimy przekszta³ciæ FCompactPose na TArray<FTransform>
     PoseSnapshot.LocalTransforms.SetNumUninitialized(Output.Pose.GetNumBones());
     Output.Pose.CopyBonesTo(PoseSnapshot.LocalTransforms);
 
@@ -48,31 +48,24 @@ void FJWAN_PoseSnapShotLogic::Evaluate_AnyThread(FPoseContext& Output)
     {
         // Pobierz USkeletalMeshComponent z AnimInstanceProxy
         USkeletalMeshComponent* SkeletalMeshComponent = Output.AnimInstanceProxy->GetSkelMeshComponent();
-        if (SkeletalMeshComponent && SkeletalMeshComponent->SkeletalMesh && SkeletalMeshComponent->SkeletalMesh->Skeleton)
+        if (SkeletalMeshComponent && SkeletalMeshComponent->GetSkeletalMeshAsset() && SkeletalMeshComponent->GetSkeletalMeshAsset()->GetSkeleton())
         {
             // Pobierz USkeleton
-            const USkeleton* Skeleton = SkeletalMeshComponent->SkeletalMesh->Skeleton;
+            const USkeleton* Skeleton = SkeletalMeshComponent->GetSkeletalMeshAsset()->GetSkeleton();
 
-            // Zarezerwuj odpowiedniï¿½ iloï¿½ï¿½ miejsca dla nazw koï¿½ci
+            // Zarezerwuj odpowiedni¹ iloœæ miejsca dla nazw koœci
             PoseSnapshot.BoneNames.Reserve(Output.Pose.GetNumBones());
 
-            // Iteruj przez wszystkie indeksy koï¿½ci w FCompactPose
+            // Iteruj przez wszystkie indeksy koœci w FCompactPose
             for (FCompactPoseBoneIndex BoneIndex : Output.Pose.ForEachBoneIndex())
             {
-                // Pobierz nazwï¿½ koï¿½ci z FReferenceSkeleton
+                // Pobierz nazwê koœci z FReferenceSkeleton
                 const FName BoneName = Skeleton->GetReferenceSkeleton().GetBoneName(Output.Pose.GetBoneContainer().MakeMeshPoseIndex(BoneIndex).GetInt());
                 PoseSnapshot.BoneNames.Add(BoneName);
             }
         }
     }
 
-    /*
-    for (int i = 0; i < PoseSnapshot.LocalTransforms.Num(); i++)
-    {
-        GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Red, PoseSnapshot.LocalTransforms[i].ToString());
-        GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Orange, FVector(Output.Pose.GetNumBones(),PoseSnapshot.LocalTransforms.Num(),0).ToString());
-    }
-    */
 }
 
 void FJWAN_PoseSnapShotLogic::Update_AnyThread(const FAnimationUpdateContext& Context)

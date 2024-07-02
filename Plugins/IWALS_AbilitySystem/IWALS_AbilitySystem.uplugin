@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "3.1",
+	"VersionName": "1.0",
 	"FriendlyName": "IWALS_AbilitySystem",
 	"Description": "A simple plugin that add Gameplay Ability System to IWALS project",
 	"Category": "Other",

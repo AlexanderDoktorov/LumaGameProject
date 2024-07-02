@@ -58,8 +58,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Category = "Damage Config", ClampMin = "0.0", ClampMax = "1000.0", UIMin = "0.0", UIMax = "1000.0"))
 	float ArmorValue = 0.0;
 
-	/**  Is used to introduce non-linear scaling of the damage value. The range on the X and Y axis should always be between 0 and 1. 
-The X axis represents the mapped minimum and maximum health values. We set the scaling value on the Y axis. 
+	/**  Is used to introduce non-linear scaling of the damage value. The range on the X and Y axis should always be between 0 and 1.
+The X axis represents the mapped minimum and maximum health values. We set the scaling value on the Y axis.
 Note: a reference curve is used to calculate the final value, which is always a function of Y = X. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Category = "Damage Config"))
 	FRuntimeFloatCurve ScalingCurve;
@@ -83,7 +83,7 @@ Note: a reference curve is used to calculate the final value, which is always a 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (Category = "Read Only"))
 	FName DamageEquation;
 
-	
+
 #if WITH_EDITOR	
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override
 	{
@@ -99,7 +99,9 @@ private:
 		for (const auto& Pair : WeightPerWeapon)
 		{
 			if (Pair.Value != 1.0f)
-			{ return true; }
+			{
+				return true;
+			}
 		}
 		return false;
 	}

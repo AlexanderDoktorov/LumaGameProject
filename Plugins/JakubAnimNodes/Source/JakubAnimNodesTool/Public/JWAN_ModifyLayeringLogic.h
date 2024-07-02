@@ -92,8 +92,7 @@ struct JAKUBANIMNODESTOOL_API FAnimNode_ModifyLayering : public FAnimNode_Base
 	// End of FAnimNode_Base interface
 
 private:
-	void ProcessCurveOperation(const EModifyLayeringApplyMode& InApplyMode, FPoseContext& Output, const SmartName::UID_Type& NameUID, float CurrentValue, float NewValue);
-	void ProcessCurveWMAOperation(FPoseContext& Output, const SmartName::UID_Type& NameUID, float CurrentValue, float NewValue, float& InOutLastValue);
+	void ProcessCurveOperation(const EModifyLayeringApplyMode& InApplyMode, FPoseContext& Output, const FName& CurveName, float CurrentValue, float NewValue);
 	float InternalBlendAlpha;
 	UAnimInstance* AnimInst;
 

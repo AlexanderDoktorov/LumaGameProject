@@ -20,18 +20,10 @@ class UGameplayAbility;
 IWALS_ABILITYSYSTEM_API void FExecuteTickDelegate_DelegateWrapper(const FMulticastScriptDelegate& ExecuteTickDelegate);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_RPC_WRAPPERS \
- \
-	DECLARE_FUNCTION(execRunTimerTask);
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
- \
 	DECLARE_FUNCTION(execRunTimerTask);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_ACCESSORS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUAbilityTask_TimerFunction(); \
@@ -41,36 +33,13 @@ public: \
 	DECLARE_SERIALIZER(UAbilityTask_TimerFunction)
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_INCLASS \
-private: \
-	static void StaticRegisterNativesUAbilityTask_TimerFunction(); \
-	friend struct Z_Construct_UClass_UAbilityTask_TimerFunction_Statics; \
-public: \
-	DECLARE_CLASS(UAbilityTask_TimerFunction, UAbilityTask, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/IWALS_AbilitySystem"), NO_API) \
-	DECLARE_SERIALIZER(UAbilityTask_TimerFunction)
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_STANDARD_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UAbilityTask_TimerFunction(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UAbilityTask_TimerFunction) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UAbilityTask_TimerFunction); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UAbilityTask_TimerFunction); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UAbilityTask_TimerFunction(UAbilityTask_TimerFunction&&); \
-	NO_API UAbilityTask_TimerFunction(const UAbilityTask_TimerFunction&); \
-public: \
-	NO_API virtual ~UAbilityTask_TimerFunction();
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UAbilityTask_TimerFunction(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UAbilityTask_TimerFunction(UAbilityTask_TimerFunction&&); \
-	NO_API UAbilityTask_TimerFunction(const UAbilityTask_TimerFunction&); \
+	UAbilityTask_TimerFunction(UAbilityTask_TimerFunction&&); \
+	UAbilityTask_TimerFunction(const UAbilityTask_TimerFunction&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UAbilityTask_TimerFunction); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UAbilityTask_TimerFunction); \
@@ -79,24 +48,10 @@ public: \
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_13_PROLOG
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_GENERATED_BODY_LEGACY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_INCLASS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_STANDARD_CONSTRUCTORS \
-public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_SPARSE_DATA \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_INCLASS_NO_PURE_DECLS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_AbilityTask_TimerFunction_h_16_ENHANCED_CONSTRUCTORS \
 private: \

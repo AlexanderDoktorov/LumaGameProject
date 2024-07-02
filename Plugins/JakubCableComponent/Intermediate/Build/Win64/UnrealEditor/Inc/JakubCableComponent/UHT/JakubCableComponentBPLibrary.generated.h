@@ -15,27 +15,9 @@ class UStaticMeshComponent;
 #endif
 #define JAKUBCABLECOMPONENT_JakubCableComponentBPLibrary_generated_h
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_SPARSE_DATA
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_RPC_WRAPPERS \
- \
 	DECLARE_FUNCTION(execPerformPIDControl); \
 	DECLARE_FUNCTION(execGetCollisionTraceFlag);
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
- \
-	DECLARE_FUNCTION(execPerformPIDControl); \
-	DECLARE_FUNCTION(execGetCollisionTraceFlag);
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_ACCESSORS
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_INCLASS_NO_PURE_DECLS \
-private: \
-	static void StaticRegisterNativesUJakubCableComponentBPLibrary(); \
-	friend struct Z_Construct_UClass_UJakubCableComponentBPLibrary_Statics; \
-public: \
-	DECLARE_CLASS(UJakubCableComponentBPLibrary, UBlueprintFunctionLibrary, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/JakubCableComponent"), NO_API) \
-	DECLARE_SERIALIZER(UJakubCableComponentBPLibrary)
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_INCLASS \
@@ -55,23 +37,9 @@ public: \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UJakubCableComponentBPLibrary); \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UJakubCableComponentBPLibrary(UJakubCableComponentBPLibrary&&); \
-	NO_API UJakubCableComponentBPLibrary(const UJakubCableComponentBPLibrary&); \
+	UJakubCableComponentBPLibrary(UJakubCableComponentBPLibrary&&); \
+	UJakubCableComponentBPLibrary(const UJakubCableComponentBPLibrary&); \
 public: \
-	NO_API virtual ~UJakubCableComponentBPLibrary();
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_ENHANCED_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UJakubCableComponentBPLibrary(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UJakubCableComponentBPLibrary(UJakubCableComponentBPLibrary&&); \
-	NO_API UJakubCableComponentBPLibrary(const UJakubCableComponentBPLibrary&); \
-public: \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UJakubCableComponentBPLibrary); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UJakubCableComponentBPLibrary); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UJakubCableComponentBPLibrary) \
 	NO_API virtual ~UJakubCableComponentBPLibrary();
 
 
@@ -79,24 +47,10 @@ public: \
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_SPARSE_DATA \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_INCLASS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_STANDARD_CONSTRUCTORS \
 public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_GENERATED_BODY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_INCLASS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_JakubCableComponentBPLibrary_h_11_ENHANCED_CONSTRUCTORS \
-static_assert(false, "Unknown access specifier for GENERATED_BODY() macro in class JakubCableComponentBPLibrary."); \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 

@@ -38,26 +38,9 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FMatchedMonta
 
 template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FMMEndingEvent>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_RPC_WRAPPERS \
-	virtual void MatchingMotionNormalized_Implementation(float CurrentTime); \
-	virtual void FinishMatchedMontageC_Implementation(); \
- \
-	DECLARE_FUNCTION(execMatchingMotionNormalized); \
-	DECLARE_FUNCTION(execFinishMatchedMontageC); \
-	DECLARE_FUNCTION(execExtractedInterpolationC); \
-	DECLARE_FUNCTION(execGetCustomCurveValueC); \
-	DECLARE_FUNCTION(execGetAnimCurveC); \
-	DECLARE_FUNCTION(execPlayMatchedMontageTwoPointsC); \
-	DECLARE_FUNCTION(execPlayMatchedMontageManyPointsC); \
-	DECLARE_FUNCTION(execMatchingSinglePointsC); \
-	DECLARE_FUNCTION(execMatchingMultiplePointsC);
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_RPC_WRAPPERS_NO_PURE_DECLS \
 	virtual void MatchingMotionNormalized_Implementation(float CurrentTime); \
 	virtual void FinishMatchedMontageC_Implementation(); \
- \
 	DECLARE_FUNCTION(execMatchingMotionNormalized); \
 	DECLARE_FUNCTION(execFinishMatchedMontageC); \
 	DECLARE_FUNCTION(execExtractedInterpolationC); \
@@ -69,7 +52,6 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FMMEndingEven
 	DECLARE_FUNCTION(execMatchingMultiplePointsC);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_ACCESSORS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_CALLBACK_WRAPPERS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_INCLASS_NO_PURE_DECLS \
 private: \
@@ -80,34 +62,11 @@ public: \
 	DECLARE_SERIALIZER(UCpp_MatchedMontageComponent)
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_INCLASS \
-private: \
-	static void StaticRegisterNativesUCpp_MatchedMontageComponent(); \
-	friend struct Z_Construct_UClass_UCpp_MatchedMontageComponent_Statics; \
-public: \
-	DECLARE_CLASS(UCpp_MatchedMontageComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HelpfulFunctions"), NO_API) \
-	DECLARE_SERIALIZER(UCpp_MatchedMontageComponent)
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_STANDARD_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UCpp_MatchedMontageComponent(const FObjectInitializer& ObjectInitializer); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UCpp_MatchedMontageComponent) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UCpp_MatchedMontageComponent); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UCpp_MatchedMontageComponent); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UCpp_MatchedMontageComponent(UCpp_MatchedMontageComponent&&); \
-	NO_API UCpp_MatchedMontageComponent(const UCpp_MatchedMontageComponent&); \
-public: \
-	NO_API virtual ~UCpp_MatchedMontageComponent();
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UCpp_MatchedMontageComponent(UCpp_MatchedMontageComponent&&); \
-	NO_API UCpp_MatchedMontageComponent(const UCpp_MatchedMontageComponent&); \
+	UCpp_MatchedMontageComponent(UCpp_MatchedMontageComponent&&); \
+	UCpp_MatchedMontageComponent(const UCpp_MatchedMontageComponent&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UCpp_MatchedMontageComponent); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UCpp_MatchedMontageComponent); \
@@ -116,25 +75,10 @@ public: \
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_117_PROLOG
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_GENERATED_BODY_LEGACY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_CALLBACK_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_INCLASS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_STANDARD_CONSTRUCTORS \
-public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_SPARSE_DATA \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_CALLBACK_WRAPPERS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_INCLASS_NO_PURE_DECLS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_Cpp_MatchedMontageComponent_h_120_ENHANCED_CONSTRUCTORS \

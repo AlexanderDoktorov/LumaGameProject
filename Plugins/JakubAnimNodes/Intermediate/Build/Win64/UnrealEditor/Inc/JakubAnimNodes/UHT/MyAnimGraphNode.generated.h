@@ -14,19 +14,6 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define JAKUBANIMNODES_MyAnimGraphNode_generated_h
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_RPC_WRAPPERS
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_RPC_WRAPPERS_NO_PURE_DECLS
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_ACCESSORS
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_INCLASS_NO_PURE_DECLS \
-private: \
-	static void StaticRegisterNativesUAnimGraphNode_LayeredBone(); \
-	friend struct Z_Construct_UClass_UAnimGraphNode_LayeredBone_Statics; \
-public: \
-	DECLARE_CLASS(UAnimGraphNode_LayeredBone, UAnimGraphNode_BlendListBase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/JakubAnimNodes"), JAKUBANIMNODES_API) \
-	DECLARE_SERIALIZER(UAnimGraphNode_LayeredBone)
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_INCLASS \
 private: \
 	static void StaticRegisterNativesUAnimGraphNode_LayeredBone(); \
@@ -44,23 +31,9 @@ public: \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UAnimGraphNode_LayeredBone); \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	JAKUBANIMNODES_API UAnimGraphNode_LayeredBone(UAnimGraphNode_LayeredBone&&); \
-	JAKUBANIMNODES_API UAnimGraphNode_LayeredBone(const UAnimGraphNode_LayeredBone&); \
+	UAnimGraphNode_LayeredBone(UAnimGraphNode_LayeredBone&&); \
+	UAnimGraphNode_LayeredBone(const UAnimGraphNode_LayeredBone&); \
 public: \
-	JAKUBANIMNODES_API virtual ~UAnimGraphNode_LayeredBone();
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_ENHANCED_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	JAKUBANIMNODES_API UAnimGraphNode_LayeredBone(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	JAKUBANIMNODES_API UAnimGraphNode_LayeredBone(UAnimGraphNode_LayeredBone&&); \
-	JAKUBANIMNODES_API UAnimGraphNode_LayeredBone(const UAnimGraphNode_LayeredBone&); \
-public: \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(JAKUBANIMNODES_API, UAnimGraphNode_LayeredBone); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UAnimGraphNode_LayeredBone); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UAnimGraphNode_LayeredBone) \
 	JAKUBANIMNODES_API virtual ~UAnimGraphNode_LayeredBone();
 
 
@@ -68,24 +41,9 @@ public: \
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_INCLASS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_STANDARD_CONSTRUCTORS \
 public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_GENERATED_BODY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_INCLASS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodes_Public_MyAnimGraphNode_h_13_ENHANCED_CONSTRUCTORS \
-static_assert(false, "Unknown access specifier for GENERATED_BODY() macro in class AnimGraphNode_LayeredBone."); \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 

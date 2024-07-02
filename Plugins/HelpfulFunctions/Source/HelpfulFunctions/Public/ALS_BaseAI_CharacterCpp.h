@@ -1,3 +1,5 @@
+
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -113,7 +115,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
 	float PrevAimYawC = 0.0f;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -143,7 +145,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
 	bool HasMovementInputC = false;
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
-	FRotator SmoothTargetAimingC = FRotator(0,0,0);
+	FRotator SmoothTargetAimingC = FRotator(0, 0, 0);
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
 	FRotator TargetRotationC = FRotator(0, 0, 0);
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
@@ -154,7 +156,7 @@ protected:
 	float DetectedEnemyTimeC = 0.0f;
 	// States
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "True")) //Zmieniono np. TEnumAsByte<CALS_Gait> na CALS_Gait !!!
-	CALS_Gait GaitC;
+		CALS_Gait GaitC;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
 	CALS_Gait DesiredGaitC;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
@@ -208,5 +210,5 @@ protected:
 	virtual CALS_Gait GetActualGaitFast(CALS_Gait AllowedGait);
 
 	UFUNCTION(BlueprintCallable, Category = "ALS Character", meta = (WorldContext = "WorldContextObject", DisplayName = "Find Cover Fast", Keywords = "ALS Character"))
-	virtual void FindCoverFast(FVector StartLocation, FVector StartDirection, int DebugIndex, bool& CanCover, float& WallHeigh, FVector& Impact, FVector& Normal );
+	virtual void FindCoverFast(FVector StartLocation, FVector StartDirection, int DebugIndex, bool& CanCover, float& WallHeigh, FVector& Impact, FVector& Normal);
 };

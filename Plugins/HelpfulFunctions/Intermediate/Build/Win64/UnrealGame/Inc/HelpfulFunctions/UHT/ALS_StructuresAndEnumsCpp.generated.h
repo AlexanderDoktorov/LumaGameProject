@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define HELPFULFUNCTIONS_ALS_StructuresAndEnumsCpp_generated_h
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_StructuresAndEnumsCpp_h_36_GENERATED_BODY \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_StructuresAndEnumsCpp_h_36_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FCALS_ComponentAndTransform_Statics; \
 	HELPFULFUNCTIONS_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
@@ -22,7 +22,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCALS_ComponentAndTransform>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_StructuresAndEnumsCpp_h_48_GENERATED_BODY \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_StructuresAndEnumsCpp_h_48_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FCMC_SingleClimbPointC_Statics; \
 	HELPFULFUNCTIONS_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
@@ -30,7 +30,7 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCALS_Compone
 
 template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCMC_SingleClimbPointC>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_StructuresAndEnumsCpp_h_69_GENERATED_BODY \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_StructuresAndEnumsCpp_h_69_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FCMC_LedgeC_Statics; \
 	HELPFULFUNCTIONS_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
@@ -39,7 +39,7 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCMC_SingleCl
 template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCMC_LedgeC>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_StructuresAndEnumsCpp_h
+#define CURRENT_FILE_ID FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_StructuresAndEnumsCpp_h
 
 
 #define FOREACH_ENUM_CMC_ACTIONTYPEC(op) \

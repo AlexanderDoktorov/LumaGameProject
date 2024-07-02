@@ -9,6 +9,7 @@ public class Interaction_With_ALSEditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
+		bOverrideBuildEnvironment = true;
 
 		ExtraModuleNames.AddRange( new string[] { "Interaction_With_ALS" } );
 	}

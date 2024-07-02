@@ -5,8 +5,9 @@
 ===========================================================================*/
 
 // IWYU pragma: private, include "IWALS_AbilitySystem.h"
+#include "Templates/IsUEnumClass.h"
 #include "UObject/ObjectMacros.h"
-#include "UObject/ScriptMacros.h"
+#include "UObject/ReflectedTypeAccessors.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #ifdef IWALS_ABILITYSYSTEM_IWALS_AbilitySystem_generated_h

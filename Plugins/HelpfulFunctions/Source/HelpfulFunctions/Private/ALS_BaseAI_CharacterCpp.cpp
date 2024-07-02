@@ -289,7 +289,6 @@ CALS_Gait AALS_BaseAI_CharacterCpp::GetAllowedGaitFast()
 		else
 		{ return CALS_Gait::Running; }
 	}
-	return CALS_Gait::Walking;
 }
 
 // FUNCTION PURE
@@ -309,7 +308,6 @@ CALS_Gait AALS_BaseAI_CharacterCpp::GetActualGaitFast(CALS_Gait AllowedGait)
 	{ return CALS_Gait::Running; }
 	else
 	{return CALS_Gait::Walking; }
-	return CALS_Gait::Walking;
 }
 
 // Called to bind functionality to input

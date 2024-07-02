@@ -7,6 +7,7 @@ public class Interaction_With_ALS : ModuleRules
 	public Interaction_With_ALS(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		CppStandard = CppStandardVersion.Cpp20;
 	
 		PublicDependencyModuleNames.AddRange(new string[]
 		{

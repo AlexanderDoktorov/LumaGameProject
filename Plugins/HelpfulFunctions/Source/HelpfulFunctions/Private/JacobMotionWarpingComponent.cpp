@@ -8,7 +8,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/World.h"
-#include "Engine/Public/TimerManager.h"
+//#include "Engine/Public/TimerManager.h"
 #include "Kismet/GameplayStatics.h"
 #include "Animation/AnimInstance.h"
 #include "HelpfulFunctionsBPLibrary.h"
@@ -244,11 +244,13 @@ void UJacobMotionWarpingComponent::SetMotionWarpingTarget(FName WarpTargetName, 
 	AlphaByTimeline = 1.0;
 	FloorComponent = nullptr;
 
-	if(WarpKeys.Find(WarpTargetName) != -1)
+	if (WarpKeys.Find(WarpTargetName) != -1)
 	{
 		WarpKeys.Add(WarpTargetName);
-		if (IsValid(WarpingTarget)==true)
-		{ SavedWarpActorRot = UKismetMathLibrary::NormalizedDeltaRotator(WarpingTarget->GetActorRotation(), RotationOffset); }
+		if (IsValid(WarpingTarget) == true)
+		{
+			SavedWarpActorRot = UKismetMathLibrary::NormalizedDeltaRotator(WarpingTarget->GetActorRotation(), RotationOffset);
+		}
 	}
 }
 
@@ -256,9 +258,11 @@ void UJacobMotionWarpingComponent::SetMotionWarpingTarget(FName WarpTargetName, 
 void UJacobMotionWarpingComponent::StopUpdatingWarpPoint(bool StopUpdating)
 {
 	if (StopUpdating == false)
-	{ ExcludeRootMotionV = false; return; }
+	{
+		ExcludeRootMotionV = false; return;
+	}
 	LockWarpingActor = true; ExcludeRootMotionV = false;
-	if (IsValid(WarpingTarget) == false){ return; }
+	if (IsValid(WarpingTarget) == false) { return; }
 	//Config Trace
 	ETraceTypeQuery Channel = UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_Visibility);
 	EDrawDebugTrace::Type TraceType = EDrawDebugTrace::None;
@@ -266,8 +270,8 @@ void UJacobMotionWarpingComponent::StopUpdatingWarpPoint(bool StopUpdating)
 	ToIgnore.Add(CharacterC);
 	ToIgnore.Add(WarpingTarget);
 	FHitResult TraceResult = {};
-	const bool TraceValid = UKismetSystemLibrary::SphereTraceSingle(CharacterC, WarpingTarget->GetActorLocation() + FVector(0, 0, 5), WarpingTarget->GetActorLocation() 
-	+ FVector(0, 0, -150), 3.0, Channel, false, ToIgnore, TraceType, TraceResult, true);
+	const bool TraceValid = UKismetSystemLibrary::SphereTraceSingle(CharacterC, WarpingTarget->GetActorLocation() + FVector(0, 0, 5), WarpingTarget->GetActorLocation()
+		+ FVector(0, 0, -150), 3.0, Channel, false, ToIgnore, TraceType, TraceResult, true);
 	if (TraceValid == true)
 	{
 		FloorComponent = TraceResult.GetComponent();
@@ -282,13 +286,19 @@ void UJacobMotionWarpingComponent::WarpingUpdate(FName X, FName Y, FName Z, FNam
 {
 	CurvesName = { X,Y,Z,R };
 	if (IsValid(WarpingTarget) == false)
-	{ return; }
+	{
+		return;
+	}
 	//Step 1)
 	float NormalizeByAlpha = 1;
 	if (ConstAlphaCurve != "")
-	{ NormalizeByAlpha = UKismetMathLibrary::FClamp(CharacterC->GetMesh()->GetAnimInstance()->GetCurveValue(ConstAlphaCurve), 0.05, 1.0); }
+	{
+		NormalizeByAlpha = UKismetMathLibrary::FClamp(CharacterC->GetMesh()->GetAnimInstance()->GetCurveValue(ConstAlphaCurve), 0.05, 1.0);
+	}
 	if (LockWarpingActor == false)
-	{ SavedWarpActorRot = UKismetMathLibrary::NormalizedDeltaRotator(WarpingTarget->GetActorRotation(),RotationOffset); }
+	{
+		SavedWarpActorRot = UKismetMathLibrary::NormalizedDeltaRotator(WarpingTarget->GetActorRotation(), RotationOffset);
+	}
 	//Step 2)
 	FVector FV, RV, ZV = FVector(0, 0, 0);
 	float FCV, RCV, ZCV = 1.0;
@@ -306,13 +316,17 @@ void UJacobMotionWarpingComponent::WarpingUpdate(FName X, FName Y, FName Z, FNam
 		//GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Blue, ExcludedRootValue.ToString());
 	}
 	else
-	{ ExcludedRootValue = ExcludedRootValue; }
+	{
+		ExcludedRootValue = ExcludedRootValue;
+	}
 	if (LockWarpingActor == false)
-	{ TargetActorLocation = GetOriginPosition() - ExcludedRootValue; }
+	{
+		TargetActorLocation = GetOriginPosition() - ExcludedRootValue;
+	}
 	//Step 3)
 	FVector NextLocation, DeltaOffsetValue = FVector(0, 0, 0);
-	FVector ActorLocWithGroudOffset = UKismetMathLibrary::SelectVector(UHelpfulFunctionsBPLibrary::ConvertLocalToWorldFastMatrix(TargetActorLocationLS).Transform.GetLocation(), 
-	TargetActorLocation, IsValid(FloorComponent) && LockWarpingActor);
+	FVector ActorLocWithGroudOffset = UKismetMathLibrary::SelectVector(UHelpfulFunctionsBPLibrary::ConvertLocalToWorldFastMatrix(TargetActorLocationLS).Transform.GetLocation(),
+		TargetActorLocation, IsValid(FloorComponent) && LockWarpingActor);
 	//Step 4)
 	GetTargetAxis(FV, RV, ZV, -1.0);
 	FV = FV * GetCurveValueByIndex(0) / NormalizeByAlpha;
@@ -339,19 +353,23 @@ void UJacobMotionWarpingComponent::WarpingUpdate(FName X, FName Y, FName Z, FNam
 	CharacterC->GetCharacterMovement()->Velocity = FVector(0, 0, 0);
 	ACharacter* WarpAsCharacter = Cast<ACharacter>(WarpingTarget);
 	if (IsValid(WarpAsCharacter) == true)
-	{ WarpAsCharacter->GetCharacterMovement()->Velocity = FVector(0, 0, 0); }
+	{
+		WarpAsCharacter->GetCharacterMovement()->Velocity = FVector(0, 0, 0);
+	}
 	//Step 7) DEBUG
 	if (DevMode == true)
 	{
 		APlayerCameraManager* Camera = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0);
 		if (IsValid(Camera) == false)
-		{ return; }
+		{
+			return;
+		}
 		DrawDebugSphere(GetWorld(), TargetActorLocation, 15.0, 12, FColor(60.0f, 204.0f, 0.0f), false, 0.0, 0, 0.25);
-		DrawDebugCapsule(GetWorld(), NextLocation, 90.0, 25.0, UKismetMathLibrary::Conv_RotatorToQuaternion(SavedWarpActorRot), FColor(248.0f, 255.0f, 48.0f),false, 0.0, 0, 0.1);
-		DrawDebugString(GetWorld(), CharacterC->GetActorLocation() + (Camera->GetActorRightVector() * 40.0 + Camera->GetActorUpVector() * 40), TEXT("LockWarpingActor = ") 
-		+ UKismetMathLibrary::SelectString("True", "False", LockWarpingActor), nullptr, FColor(255, 76, 45), 0.0, false, 1.0);
+		DrawDebugCapsule(GetWorld(), NextLocation, 90.0, 25.0, UKismetMathLibrary::Conv_RotatorToQuaternion(SavedWarpActorRot), FColor(248.0f, 255.0f, 48.0f), false, 0.0, 0, 0.1);
+		DrawDebugString(GetWorld(), CharacterC->GetActorLocation() + (Camera->GetActorRightVector() * 40.0 + Camera->GetActorUpVector() * 40), TEXT("LockWarpingActor = ")
+			+ UKismetMathLibrary::SelectString("True", "False", LockWarpingActor), nullptr, FColor(255, 76, 45), 0.0, false, 1.0);
 		DrawDebugString(GetWorld(), CharacterC->GetActorLocation() + (Camera->GetActorRightVector() * 40.0 + Camera->GetActorUpVector() * 32), TEXT("ExcludeRootMotion = ")
-		+ UKismetMathLibrary::SelectString("True", "False", ExcludeRootMotionV), nullptr, FColor(255, 76, 45), 0.0, false, 1.0);
+			+ UKismetMathLibrary::SelectString("True", "False", ExcludeRootMotionV), nullptr, FColor(255, 76, 45), 0.0, false, 1.0);
 	}
 	return;
 }

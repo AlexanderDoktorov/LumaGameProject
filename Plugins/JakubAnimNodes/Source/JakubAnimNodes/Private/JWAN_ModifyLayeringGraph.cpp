@@ -152,7 +152,7 @@ void UJWAN_ModifyLayeringGraph::PostEditChangeProperty(struct FPropertyChangedEv
 				if (Node.AlphaInputType != EAnimAlphaInputType::Float)
 				{
 					Pin->BreakAllPinLinks();
-					PropertyBindings.Remove(Pin->PinName);
+					RemoveBindings(Pin->PinName);
 				}
 			}
 			else if (Pin->PinName == GET_MEMBER_NAME_STRING_CHECKED(FAnimNode_ModifyLayering, AlphaCurveName))
@@ -160,7 +160,7 @@ void UJWAN_ModifyLayeringGraph::PostEditChangeProperty(struct FPropertyChangedEv
 				if (Node.AlphaInputType != EAnimAlphaInputType::Curve)
 				{
 					Pin->BreakAllPinLinks();
-					PropertyBindings.Remove(Pin->PinName);
+					RemoveBindings(Pin->PinName);
 				}
 			}
 		}

@@ -20,8 +20,11 @@ UCLASS()
 class HELPFULFUNCTIONS_API AALS_HumanAI_ControllerCpp : public AAIController
 {
 	GENERATED_BODY()
+
 public:
 	AALS_HumanAI_ControllerCpp();
+	
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* InPawn) override;
@@ -96,4 +99,7 @@ protected:
 
 	UFUNCTION(BlueprintPure, Category = "ALS Human AI", meta = (WorldContext = "WorldContextObject", DisplayName = "Get The Average Value Of Spotted Enemies Fast", Keywords = "AI"))
 		virtual float GetTheAverageValueOfSpottedEnemiesFast(float InRadius=1000);
+
+private:
+
 };

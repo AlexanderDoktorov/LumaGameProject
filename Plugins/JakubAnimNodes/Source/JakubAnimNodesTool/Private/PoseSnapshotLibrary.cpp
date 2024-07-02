@@ -56,12 +56,12 @@ TArray<FName> UPoseSnapshotLibrary::GetBoneParents(USkeletalMeshComponent* Skele
 {
     TArray<FName> Parents;
 
-    if (!SkeletalMeshComponent || !SkeletalMeshComponent->SkeletalMesh)
+    if (!SkeletalMeshComponent || !SkeletalMeshComponent->GetSkeletalMeshAsset())
     {
         return Parents;
     }
 
-    const FReferenceSkeleton& RefSkeleton = SkeletalMeshComponent->SkeletalMesh->GetRefSkeleton();
+    const FReferenceSkeleton& RefSkeleton = SkeletalMeshComponent->GetSkeletalMeshAsset()->GetRefSkeleton();
     int32 BoneIndex = RefSkeleton.FindBoneIndex(BoneName);
 
     while (BoneIndex != INDEX_NONE)

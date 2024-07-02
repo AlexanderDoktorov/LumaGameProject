@@ -1,7 +1,11 @@
+
+
+
 #include "GAS_MainCharacterCpp.h"
 #include "GameplayTagsManager.h"
 
-AGAS_MainCharacterCpp::AGAS_MainCharacterCpp(const FObjectInitializer& ObjectInitializer)
+AGAS_MainCharacterCpp::AGAS_MainCharacterCpp(const FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer)
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -201,6 +205,7 @@ void AGAS_MainCharacterCpp::PossessedBy(AController* NewController)
 
 	InitializeAttributes();
 	GiveAbilities();
+
 }
 
 void AGAS_MainCharacterCpp::OnRep_PlayerState()
@@ -220,3 +225,4 @@ void AGAS_MainCharacterCpp::TryCreateInputsGAS()
 		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, Binds);
 	}
 }
+

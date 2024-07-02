@@ -8,6 +8,7 @@ public class JakubAnimNodes : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		PrecompileForTargets = PrecompileTargetsType.Any;
+		CppStandard = CppStandardVersion.Latest;
 
 		PublicIncludePaths.AddRange(
 			new string[] {

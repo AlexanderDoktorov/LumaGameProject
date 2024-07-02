@@ -35,11 +35,11 @@ struct FCableAttachPoint
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CableAttachPoint)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int ParticleIndex = 8;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CableAttachPoint)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FComponentReference ComponentRef;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CableAttachPoint)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FName SocketName = TEXT("None");
 };
 
@@ -48,13 +48,13 @@ struct FExposedCableParticle
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExposedCableParticle)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector Position = FVector(0, 0, 0);
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExposedCableParticle)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector OldPosition = FVector(0, 0, 0);
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExposedCableParticle)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool bIsColliding = false;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ExposedCableParticle)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool bIsFree = false;
 };
 

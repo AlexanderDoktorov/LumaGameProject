@@ -16,16 +16,14 @@ struct FCALSMovementSettings;
 #endif
 #define HELPFULFUNCTIONS_ALS_BaseAI_CharacterCpp_generated_h
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_80_GENERATED_BODY \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_80_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FCALSMovementSettings_Statics; \
 	HELPFULFUNCTIONS_API static class UScriptStruct* StaticStruct();
 
 
 template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCALSMovementSettings>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_RPC_WRAPPERS \
- \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execFindCoverFast); \
 	DECLARE_FUNCTION(execGetActualGaitFast); \
 	DECLARE_FUNCTION(execGetAllowedGaitFast); \
@@ -41,25 +39,7 @@ template<> HELPFULFUNCTIONS_API UScriptStruct* StaticStruct<struct FCALSMovement
 	DECLARE_FUNCTION(execIsCharacter);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_RPC_WRAPPERS_NO_PURE_DECLS \
- \
-	DECLARE_FUNCTION(execFindCoverFast); \
-	DECLARE_FUNCTION(execGetActualGaitFast); \
-	DECLARE_FUNCTION(execGetAllowedGaitFast); \
-	DECLARE_FUNCTION(execUpdateMovementSettings); \
-	DECLARE_FUNCTION(execCalcCanSprint); \
-	DECLARE_FUNCTION(execGetMappedSpeedFast); \
-	DECLARE_FUNCTION(execCalcGroundedRotationRate); \
-	DECLARE_FUNCTION(execCanUpdateRotation); \
-	DECLARE_FUNCTION(execLimitRotationFast); \
-	DECLARE_FUNCTION(execSmoothedCharRotation); \
-	DECLARE_FUNCTION(execCalculateGroundedRotation); \
-	DECLARE_FUNCTION(execCalculateAimingRotatation); \
-	DECLARE_FUNCTION(execIsCharacter);
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_ACCESSORS
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_INCLASS_NO_PURE_DECLS \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAALS_BaseAI_CharacterCpp(); \
 	friend struct Z_Construct_UClass_AALS_BaseAI_CharacterCpp_Statics; \
@@ -69,35 +49,11 @@ public: \
 	virtual UObject* _getUObject() const override { return const_cast<AALS_BaseAI_CharacterCpp*>(this); }
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_INCLASS \
-private: \
-	static void StaticRegisterNativesAALS_BaseAI_CharacterCpp(); \
-	friend struct Z_Construct_UClass_AALS_BaseAI_CharacterCpp_Statics; \
-public: \
-	DECLARE_CLASS(AALS_BaseAI_CharacterCpp, ACharacter, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HelpfulFunctions"), NO_API) \
-	DECLARE_SERIALIZER(AALS_BaseAI_CharacterCpp) \
-	virtual UObject* _getUObject() const override { return const_cast<AALS_BaseAI_CharacterCpp*>(this); }
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_STANDARD_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API AALS_BaseAI_CharacterCpp(const FObjectInitializer& ObjectInitializer); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AALS_BaseAI_CharacterCpp) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, AALS_BaseAI_CharacterCpp); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(AALS_BaseAI_CharacterCpp); \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API AALS_BaseAI_CharacterCpp(AALS_BaseAI_CharacterCpp&&); \
-	NO_API AALS_BaseAI_CharacterCpp(const AALS_BaseAI_CharacterCpp&); \
-public: \
-	NO_API virtual ~AALS_BaseAI_CharacterCpp();
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API AALS_BaseAI_CharacterCpp(AALS_BaseAI_CharacterCpp&&); \
-	NO_API AALS_BaseAI_CharacterCpp(const AALS_BaseAI_CharacterCpp&); \
+	AALS_BaseAI_CharacterCpp(AALS_BaseAI_CharacterCpp&&); \
+	AALS_BaseAI_CharacterCpp(const AALS_BaseAI_CharacterCpp&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, AALS_BaseAI_CharacterCpp); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(AALS_BaseAI_CharacterCpp); \
@@ -105,27 +61,13 @@ public: \
 	NO_API virtual ~AALS_BaseAI_CharacterCpp();
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_99_PROLOG
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_GENERATED_BODY_LEGACY \
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_99_PROLOG
+#define FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_INCLASS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_STANDARD_CONSTRUCTORS \
-public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_GENERATED_BODY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_INCLASS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_ENHANCED_CONSTRUCTORS \
+	FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_INCLASS_NO_PURE_DECLS \
+	FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h_102_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -133,7 +75,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> HELPFULFUNCTIONS_API UClass* StaticClass<class AALS_BaseAI_CharacterCpp>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h
+#define CURRENT_FILE_ID FID_UE___Projects_UE5_4_IWALS__Version_3_3__5_4_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_ALS_BaseAI_CharacterCpp_h
 
 
 #define FOREACH_ENUM_CALS_GAIT(op) \

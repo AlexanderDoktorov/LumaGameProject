@@ -20,27 +20,9 @@ class UObject;
 HELPFULFUNCTIONS_API void FDelayOneFrameOutputPin_DelegateWrapper(const FMulticastScriptDelegate& DelayOneFrameOutputPin, float InputFloatPlusOne, float InputFloatPlusTwo);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_SPARSE_DATA
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_RPC_WRAPPERS \
- \
 	DECLARE_FUNCTION(execExecuteAfterOneFrame); \
 	DECLARE_FUNCTION(execWaitForOneFrame);
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
- \
-	DECLARE_FUNCTION(execExecuteAfterOneFrame); \
-	DECLARE_FUNCTION(execWaitForOneFrame);
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_ACCESSORS
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_INCLASS_NO_PURE_DECLS \
-private: \
-	static void StaticRegisterNativesUJakubW_ASyncFunctions(); \
-	friend struct Z_Construct_UClass_UJakubW_ASyncFunctions_Statics; \
-public: \
-	DECLARE_CLASS(UJakubW_ASyncFunctions, UBlueprintAsyncActionBase, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/HelpfulFunctions"), NO_API) \
-	DECLARE_SERIALIZER(UJakubW_ASyncFunctions)
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_INCLASS \
@@ -60,23 +42,9 @@ public: \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UJakubW_ASyncFunctions); \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UJakubW_ASyncFunctions(UJakubW_ASyncFunctions&&); \
-	NO_API UJakubW_ASyncFunctions(const UJakubW_ASyncFunctions&); \
+	UJakubW_ASyncFunctions(UJakubW_ASyncFunctions&&); \
+	UJakubW_ASyncFunctions(const UJakubW_ASyncFunctions&); \
 public: \
-	NO_API virtual ~UJakubW_ASyncFunctions();
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_ENHANCED_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UJakubW_ASyncFunctions(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UJakubW_ASyncFunctions(UJakubW_ASyncFunctions&&); \
-	NO_API UJakubW_ASyncFunctions(const UJakubW_ASyncFunctions&); \
-public: \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UJakubW_ASyncFunctions); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UJakubW_ASyncFunctions); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UJakubW_ASyncFunctions) \
 	NO_API virtual ~UJakubW_ASyncFunctions();
 
 
@@ -84,24 +52,10 @@ public: \
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_SPARSE_DATA \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_INCLASS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_STANDARD_CONSTRUCTORS \
 public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_GENERATED_BODY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_INCLASS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_HelpfulFunctions_Source_HelpfulFunctions_Public_JakubW_ASyncFunctions_h_16_ENHANCED_CONSTRUCTORS \
-static_assert(false, "Unknown access specifier for GENERATED_BODY() macro in class JakubW_ASyncFunctions."); \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 

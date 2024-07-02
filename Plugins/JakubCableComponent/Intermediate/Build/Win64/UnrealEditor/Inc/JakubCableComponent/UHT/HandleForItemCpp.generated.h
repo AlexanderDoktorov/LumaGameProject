@@ -14,10 +14,6 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define JAKUBCABLECOMPONENT_HandleForItemCpp_generated_h
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_RPC_WRAPPERS
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_RPC_WRAPPERS_NO_PURE_DECLS
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_ACCESSORS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUHandleForItemCpp(); \
@@ -27,36 +23,13 @@ public: \
 	DECLARE_SERIALIZER(UHandleForItemCpp)
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_INCLASS \
-private: \
-	static void StaticRegisterNativesUHandleForItemCpp(); \
-	friend struct Z_Construct_UClass_UHandleForItemCpp_Statics; \
-public: \
-	DECLARE_CLASS(UHandleForItemCpp, UJakubSimpleParticleComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/JakubCableComponent"), NO_API) \
-	DECLARE_SERIALIZER(UHandleForItemCpp)
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_STANDARD_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UHandleForItemCpp(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UHandleForItemCpp) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UHandleForItemCpp); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UHandleForItemCpp); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UHandleForItemCpp(UHandleForItemCpp&&); \
-	NO_API UHandleForItemCpp(const UHandleForItemCpp&); \
-public: \
-	NO_API virtual ~UHandleForItemCpp();
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UHandleForItemCpp(); \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UHandleForItemCpp(UHandleForItemCpp&&); \
-	NO_API UHandleForItemCpp(const UHandleForItemCpp&); \
+	UHandleForItemCpp(UHandleForItemCpp&&); \
+	UHandleForItemCpp(const UHandleForItemCpp&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UHandleForItemCpp); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UHandleForItemCpp); \
@@ -65,24 +38,9 @@ public: \
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_30_PROLOG
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_GENERATED_BODY_LEGACY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_INCLASS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_STANDARD_CONSTRUCTORS \
-public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_INCLASS_NO_PURE_DECLS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubCableComponent_Source_JakubCableComponent_Public_HandleForItemCpp_h_33_ENHANCED_CONSTRUCTORS \
 private: \

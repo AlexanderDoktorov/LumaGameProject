@@ -562,8 +562,6 @@ bool UCpp_DynamicClimbingComponent::CheckCanDropToLedgeC(FCMC_LedgeC& LedgeStruc
 				LedgeStructWS = ReturnStruct;
 				return true;
 			}
-			else
-			{ return false; }
 		}
 	}
 	return false;

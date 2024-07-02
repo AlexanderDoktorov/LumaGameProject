@@ -1,6 +1,5 @@
 
 
-
 #include "ALS_DamageConfigData.h"
 
 UALS_DamageConfigData::UALS_DamageConfigData()
@@ -56,7 +55,7 @@ float UALS_DamageConfigData::GetScalingCurveValueC(float CurrentHealthPoints, fl
 
     const float a = ValueRef - ValueDif;
 
-    return FMath::Clamp<float>(1 - a,0.0,1000.0);
+    return FMath::Clamp<float>(1 - a, 0.0, 1000.0);
 }
 
 float UALS_DamageConfigData::GetWeightPerBoneC(FName BoneName, TArray<FBoneAndWeight> Data)

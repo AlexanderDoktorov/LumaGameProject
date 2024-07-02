@@ -29,18 +29,7 @@ struct FPoseSnapshotReference;
 
 template<> JAKUBANIMNODESTOOL_API UScriptStruct* StaticStruct<struct FPoseSnapshotReference>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_SPARSE_DATA
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_RPC_WRAPPERS \
- \
-	DECLARE_FUNCTION(execGetBoneParents); \
-	DECLARE_FUNCTION(execDrawSkeletonFromPoseSnapshot); \
-	DECLARE_FUNCTION(execGetBoneTransformFromPoseSnapshot); \
-	DECLARE_FUNCTION(execGetSavedPoseSnapshot); \
-	DECLARE_FUNCTION(execConvertToPoseSnapshot);
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
- \
 	DECLARE_FUNCTION(execGetBoneParents); \
 	DECLARE_FUNCTION(execDrawSkeletonFromPoseSnapshot); \
 	DECLARE_FUNCTION(execGetBoneTransformFromPoseSnapshot); \
@@ -48,7 +37,6 @@ template<> JAKUBANIMNODESTOOL_API UScriptStruct* StaticStruct<struct FPoseSnapsh
 	DECLARE_FUNCTION(execConvertToPoseSnapshot);
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_ACCESSORS
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUPoseSnapshotLibrary(); \
@@ -58,36 +46,13 @@ public: \
 	DECLARE_SERIALIZER(UPoseSnapshotLibrary)
 
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_INCLASS \
-private: \
-	static void StaticRegisterNativesUPoseSnapshotLibrary(); \
-	friend struct Z_Construct_UClass_UPoseSnapshotLibrary_Statics; \
-public: \
-	DECLARE_CLASS(UPoseSnapshotLibrary, UBlueprintFunctionLibrary, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/JakubAnimNodesTool"), NO_API) \
-	DECLARE_SERIALIZER(UPoseSnapshotLibrary)
-
-
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_STANDARD_CONSTRUCTORS \
-	/** Standard constructor, called after all reflected properties have been initialized */ \
-	NO_API UPoseSnapshotLibrary(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
-	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UPoseSnapshotLibrary) \
-	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UPoseSnapshotLibrary); \
-	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UPoseSnapshotLibrary); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UPoseSnapshotLibrary(UPoseSnapshotLibrary&&); \
-	NO_API UPoseSnapshotLibrary(const UPoseSnapshotLibrary&); \
-public: \
-	NO_API virtual ~UPoseSnapshotLibrary();
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UPoseSnapshotLibrary(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UPoseSnapshotLibrary(UPoseSnapshotLibrary&&); \
-	NO_API UPoseSnapshotLibrary(const UPoseSnapshotLibrary&); \
+	UPoseSnapshotLibrary(UPoseSnapshotLibrary&&); \
+	UPoseSnapshotLibrary(const UPoseSnapshotLibrary&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UPoseSnapshotLibrary); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UPoseSnapshotLibrary); \
@@ -96,24 +61,10 @@ public: \
 
 
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_22_PROLOG
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_GENERATED_BODY_LEGACY \
-PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_SPARSE_DATA \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_RPC_WRAPPERS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_ACCESSORS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_INCLASS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_STANDARD_CONSTRUCTORS \
-public: \
-PRAGMA_ENABLE_DEPRECATION_WARNINGS
-
-
 #define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_SPARSE_DATA \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_ACCESSORS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_INCLASS_NO_PURE_DECLS \
 	FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_JakubAnimNodes_Source_JakubAnimNodesTool_Public_PoseSnapshotLibrary_h_25_ENHANCED_CONSTRUCTORS \
 private: \

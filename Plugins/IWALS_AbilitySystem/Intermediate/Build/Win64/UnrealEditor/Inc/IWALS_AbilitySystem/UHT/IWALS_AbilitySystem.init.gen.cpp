@@ -37,13 +37,13 @@ void EmptyLinkFunctionForGeneratedCodeIWALS_AbilitySystem_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0xC8E67735,
-				0xF46162BE,
-				METADATA_PARAMS(nullptr, 0)
+				0x617D1F35,
+				0xD1FA9E21,
+				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_IWALS_AbilitySystem.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_IWALS_AbilitySystem.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_IWALS_AbilitySystem(Z_Construct_UPackage__Script_IWALS_AbilitySystem, TEXT("/Script/IWALS_AbilitySystem"), Z_Registration_Info_UPackage__Script_IWALS_AbilitySystem, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xC8E67735, 0xF46162BE));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_IWALS_AbilitySystem(Z_Construct_UPackage__Script_IWALS_AbilitySystem, TEXT("/Script/IWALS_AbilitySystem"), Z_Registration_Info_UPackage__Script_IWALS_AbilitySystem, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x617D1F35, 0xD1FA9E21));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
