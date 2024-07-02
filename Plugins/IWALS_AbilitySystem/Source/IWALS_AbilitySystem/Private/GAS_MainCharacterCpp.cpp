@@ -1,10 +1,9 @@
 #include "GAS_MainCharacterCpp.h"
 #include "GameplayTagsManager.h"
 
-// Sets default values
-AGAS_MainCharacterCpp::AGAS_MainCharacterCpp()
+AGAS_MainCharacterCpp::AGAS_MainCharacterCpp(const FObjectInitializer& ObjectInitializer)
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComp");
@@ -12,7 +11,6 @@ AGAS_MainCharacterCpp::AGAS_MainCharacterCpp()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
 	Attributes = CreateDefaultSubobject<UIWALS_BaseAttributeSet>("Attributes");
-
 }
 
 // Called when the game starts or when spawned
@@ -222,4 +220,3 @@ void AGAS_MainCharacterCpp::TryCreateInputsGAS()
 		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, Binds);
 	}
 }
-
