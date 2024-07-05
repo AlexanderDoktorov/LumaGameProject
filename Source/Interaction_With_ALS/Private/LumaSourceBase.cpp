@@ -7,13 +7,11 @@ ALumaSourceBase::ALumaSourceBase()
 
 }
 
-float ALumaSourceBase::GatherLuma()
+void ALumaSourceBase::GatherCapsule()
 {
-	if(!IsEmpty())
+	if(NumCapsules > 0)
 	{
-		const auto Luma = LumaSourcesArray.Pop(); // pop_back
-		OnLumaGather(Luma);
-		return Luma;
+		NumCapsules = FMath::Max(NumCapsules - 1, 0);
+		OnGatherCapsule();
 	}
-	return 0.f;
 }

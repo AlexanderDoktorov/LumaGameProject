@@ -7,6 +7,7 @@
 
 #include "LumaCharacterBase.generated.h"
 
+enum class ECastType : uint8;
 class ALumaSourceBase;
 /**
  * @author Doktorov Alexander
@@ -17,10 +18,6 @@ class INTERACTION_WITH_ALS_API ALumaCharacterBase : public AGAS_MainCharacterCpp
 	GENERATED_BODY()
 public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-protected:
-	UFUNCTION(BlueprintCallable)
-	void GatherLuma(ALumaSourceBase* LumaSource) const;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = GameplayEffects)
-	TSubclassOf<class UGameplayEffect> LumaGatherGameplayEffect = nullptr;
+	void TryPerformLumaCast(const ECastType& CastType);
 };

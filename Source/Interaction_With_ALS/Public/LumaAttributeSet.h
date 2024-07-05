@@ -16,7 +16,6 @@ class INTERACTION_WITH_ALS_API ULumaAttributeSet : public UIWALS_BaseAttributeSe
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Luma)

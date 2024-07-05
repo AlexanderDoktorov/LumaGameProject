@@ -9,20 +9,23 @@ UCLASS()
 class INTERACTION_WITH_ALS_API ALumaSourceBase : public AActor
 {
 	GENERATED_BODY()
+	using SourceType = int;
 public:
 	ALumaSourceBase();
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnLumaGather(const float& GatheredLuma);
+	void OnGatherCapsule();
+
+	// Simply decreases NumCapsules
+	UFUNCTION(BlueprintCallable)
+	void GatherCapsule();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = LumaSource)
-	FORCEINLINE bool IsEmpty() const { return LumaSourcesArray.IsEmpty(); };
+	FORCEINLINE bool IsEmpty() const { return NumCapsules <= 0; };
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = LumaSource)
-	FORCEINLINE float GetLumaToGather() const { return IsEmpty() ? 0.f : LumaSourcesArray.Top(); };
-	
-	float GatherLuma();
+	FORCEINLINE int GetNumCapsules() const { return NumCapsules; };
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LumaSource)
-	TArray<float> LumaSourcesArray = { 20, 10, 5 };
+	int NumCapsules = 2;
 };

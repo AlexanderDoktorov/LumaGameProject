@@ -2,26 +2,23 @@
 
 
 #include "LumaGatherModMagnituteCalculation.h"
-
+#include "Abilities/GameplayAbilityBase.h"
 #include "LumaAttributeSet.h"
 
 ULumaGatherModMagnituteCalculation::ULumaGatherModMagnituteCalculation()
 {
-	FGameplayEffectAttributeCaptureDefinition CaptureDefinition{};
-	CaptureDefinition.AttributeToCapture = ULumaAttributeSet::GetLumaAttribute();
-	CaptureDefinition.AttributeSource = EGameplayEffectAttributeCaptureSource::Target; // Character
-	CaptureDefinition.bSnapshot = false;
 	
-	RelevantAttributesToCapture.Add(CaptureDefinition);
 }
 
 float ULumaGatherModMagnituteCalculation::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
-	// with that function we can get the magnitute of parameter (tag) that was set by caller
-	// Spec.GetSetByCallerMagnitude(FGameplayTag)
+	const auto Ability = Cast<UGameplayAbilityBase>(Spec.GetContext().GetAbilityInstance_NotReplicated());
 
-	// with that we can get the actor who caused effect to be applied
-	// Spec.GetContext().GetInstigator()
-
-	return Super::CalculateBaseMagnitude_Implementation(Spec);
+	if(!Ability)
+	{
+		return 0.0f;
+	}
+	
+	//return Ability->GetAbilityCost().GetValueAtLevel(Ability->GetAbilityLevel());
+	return 0.f;
 }
