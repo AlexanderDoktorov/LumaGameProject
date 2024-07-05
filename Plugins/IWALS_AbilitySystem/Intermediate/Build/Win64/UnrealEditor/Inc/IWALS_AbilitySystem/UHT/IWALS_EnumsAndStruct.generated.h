@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define IWALS_ABILITYSYSTEM_IWALS_EnumsAndStruct_generated_h
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_EnumsAndStruct_h_24_GENERATED_BODY \
+#define FID_UNREAL_PROJECTS_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_EnumsAndStruct_h_24_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FLeanAmoutC_Statics; \
 	IWALS_ABILITYSYSTEM_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
@@ -22,7 +22,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 template<> IWALS_ABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FLeanAmoutC>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_EnumsAndStruct_h_36_GENERATED_BODY \
+#define FID_UNREAL_PROJECTS_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_EnumsAndStruct_h_36_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FVelocityBlendC_Statics; \
 	IWALS_ABILITYSYSTEM_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
@@ -30,7 +30,7 @@ template<> IWALS_ABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FLeanAmout
 
 template<> IWALS_ABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FVelocityBlendC>();
 
-#define FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_EnumsAndStruct_h_54_GENERATED_BODY \
+#define FID_UNREAL_PROJECTS_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_EnumsAndStruct_h_54_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FTurnInPlaceAssetC_Statics; \
 	IWALS_ABILITYSYSTEM_API static class UScriptStruct* StaticStruct(); \
 	typedef FTableRowBase Super;
@@ -39,7 +39,7 @@ template<> IWALS_ABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FVelocityB
 template<> IWALS_ABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FTurnInPlaceAssetC>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Unreal_Projects_LumaGame_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_EnumsAndStruct_h
+#define CURRENT_FILE_ID FID_UNREAL_PROJECTS_LumaGameProject_Plugins_IWALS_AbilitySystem_Source_IWALS_AbilitySystem_Public_IWALS_EnumsAndStruct_h
 
 
 #define FOREACH_ENUM_HIPSDIRECTIONC(op) \
