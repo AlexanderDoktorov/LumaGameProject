@@ -7,7 +7,9 @@
 
 #include "LumaCharacterBase.generated.h"
 
+class ALumaCapsule;
 enum class ECastType : uint8;
+struct FCapsuleChargingProperties;
 class ALumaSourceBase;
 /**
  * @author Doktorov Alexander
@@ -20,4 +22,22 @@ public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	void TryPerformLumaCast(const ECastType& CastType);
+	void ChargeLumaCapsule(const FCapsuleChargingProperties& ChargingProperties);
+	
+
+	FORCEINLINE void SetActiveLumaCapsule(ALumaCapsule* NewActiveLumaCapsule);
+	FORCEINLINE auto GetActiveLumaCapsule() const { return ActiveLumaCapsule; }
+	FORCEINLINE auto GetLumaCapsuleToSpawnClass() const { return LumaCapsuleToSpawn; }
+	
+	int32 GetNumCapsules() const;
+protected:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CapsuleCharge)
+	FName CapsuleSocketName = "EmptySocket";
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CapsuleCharge)
+	TSubclassOf<ALumaCapsule> LumaCapsuleToSpawn = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = CapsuleCharge)
+	TObjectPtr<ALumaCapsule> ActiveLumaCapsule = nullptr;
 };

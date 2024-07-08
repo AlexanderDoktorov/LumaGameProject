@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LumaCapsule.h"
 #include "LumaPlayerController.generated.h"
 
 enum class ECastType : uint8;
@@ -20,6 +21,7 @@ public:
 	
 	void Call_PickUpCapsule();
 	void Call_TryPerformLumaCast(const ECastType& CastType);
+	void Call_ChargeLumaCapsule(const FCapsuleChargingProperties& ChargingProperties);
 	void SwitchLumaSelectorWidget(const FInputActionValue& ActionValue);
 	
 protected:

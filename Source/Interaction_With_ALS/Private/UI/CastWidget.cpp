@@ -2,9 +2,9 @@
 
 
 #include "UI/CastWidget.h"
-
 #include "LumaPlayerController.h"
 #include "Components/Button.h"
+#include "Components/Image.h"
 
 void UCastWidget::NativeConstruct()
 {
@@ -19,11 +19,26 @@ void UCastWidget::NativeConstruct()
 
 void UCastWidget::MatchButtonColorToCastType()
 {
+	auto ObjectDesc = ObjectDescDataRow.GetRow<FCastableObjectDesc>("");
+	if(!ObjectDesc)
+		return;
+
+	if(ObjectDesc->ObjectCastType == ECastType::None)
+		return;
+
 	FButtonStyle ButtonStyle = CastSelectorButton->GetStyle();
-	ButtonStyle.Normal.TintColor = GetCastColor(CastType);
-	ButtonStyle.Hovered.TintColor = GetCastColor(CastType).ReinterpretAsLinear() * 0.55f;
-	ButtonStyle.Pressed.TintColor = GetCastColor(CastType).ReinterpretAsLinear() * 0.15f;
+	ButtonStyle.Normal.TintColor = GetCastColor(ObjectDesc->ObjectCastType);
+	ButtonStyle.Hovered.TintColor = GetCastColor(ObjectDesc->ObjectCastType).ReinterpretAsLinear() * 0.55f;
+	ButtonStyle.Pressed.TintColor = GetCastColor(ObjectDesc->ObjectCastType).ReinterpretAsLinear() * 0.15f;
 	CastSelectorButton->SetStyle(ButtonStyle);
+}
+
+void UCastWidget::MatchImageTexture()
+{
+	if(auto ObjectDesc = ObjectDescDataRow.GetRow<FCastableObjectDesc>(""))
+	{
+		CastImage->SetBrushFromSoftTexture(ObjectDesc->CastableObjectPreview);
+	}
 }
 
 void UCastWidget::SyncShapeBetweenStyles()
@@ -45,17 +60,17 @@ void UCastWidget::OnButtonHovered()
 
 void UCastWidget::OnButtonClicked()
 {
-	if(auto PlayerController = Cast<ALumaPlayerController>(GetOwningPlayer()))
-	{
-		PlayerController->Call_TryPerformLumaCast(CastType);
-	}
+	OnButtonPressed();
 }
 
 void UCastWidget::OnButtonPressed()
 {
 	if(auto PlayerController = Cast<ALumaPlayerController>(GetOwningPlayer()))
 	{
-		PlayerController->Call_TryPerformLumaCast(CastType);
+		if(auto ObjectDesc = ObjectDescDataRow.GetRow<FCastableObjectDesc>(""))
+		{
+			PlayerController->Call_ChargeLumaCapsule(ObjectDesc->CapsuleChargingProperties);
+		}
 	}
 }
 

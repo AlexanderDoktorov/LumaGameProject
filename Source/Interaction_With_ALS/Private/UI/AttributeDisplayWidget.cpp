@@ -25,7 +25,7 @@ FText UAttributeDisplayWidget::GetAttributeText() const
 			if(auto GAS = AbilitySystemInterfaceOwner->GetAbilitySystemComponent())
 			{
 				if(GameplayAttribute.IsValid())
-					return FText::AsNumber(GAS->GetNumericAttribute(GameplayAttribute));
+					return FText::AsNumber(FMath::RoundToInt(GAS->GetNumericAttribute(GameplayAttribute)));
 			}
 		}
 	}

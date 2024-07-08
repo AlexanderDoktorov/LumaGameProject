@@ -6,13 +6,19 @@
 #include "Blueprint/UserWidget.h"
 #include "CastWidget.generated.h"
 
+class UCastableObject;
+class UImage;
+struct FCastableObjectDesc;
+
 UENUM(BlueprintType)
 enum class ECastType : uint8
 {
+	None,
 	Agressive,
 	Quiet,
 	Cautious
 };
+
 
 static FColor GetCastColor(const ECastType& CastType)
 {
@@ -25,6 +31,9 @@ static FColor GetCastColor(const ECastType& CastType)
 		break;
 	case ECastType::Cautious:
 		return FColor::Green;
+		break;
+	case ECastType::None:
+		return FColor::White;
 		break;
 	}
 	return FColor::White;
@@ -45,6 +54,9 @@ public:
 	void MatchButtonColorToCastType();
 
 	UFUNCTION(BlueprintCallable)
+	void MatchImageTexture();
+
+	UFUNCTION(BlueprintCallable)
 	void SyncShapeBetweenStyles();
 protected:
 
@@ -60,9 +72,12 @@ protected:
 	UFUNCTION()
 	void OnButtonUnHovered();
 	
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UButton* CastSelectorButton = nullptr;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CastWidget)
-	ECastType CastType = ECastType::Agressive;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UImage* CastImage = nullptr;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CastWidget, meta = (RowType="/Script/Interaction_With_ALS.CastableObjectDesc"))
+	FDataTableRowHandle ObjectDescDataRow{};
 };

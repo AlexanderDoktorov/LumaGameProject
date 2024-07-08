@@ -42,6 +42,12 @@ void ALumaPlayerController::Call_TryPerformLumaCast(const ECastType& CastType)
 	*/
 }
 
+void ALumaPlayerController::Call_ChargeLumaCapsule(const FCapsuleChargingProperties& ChargingProperties)
+{
+	if(auto LumaCharacter = Cast<ALumaCharacterBase>(GetPawn()))
+		LumaCharacter->ChargeLumaCapsule(ChargingProperties);
+}
+
 void ALumaPlayerController::SwitchLumaSelectorWidget(const FInputActionValue& ActionValue)
 {
 

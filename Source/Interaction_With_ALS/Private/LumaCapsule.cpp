@@ -24,3 +24,8 @@ void ALumaCapsule::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void ALumaCapsule::Charge(const FCapsuleChargingProperties& ChargingProperties)
+{
+	CapsuleChargingProperties = ChargingProperties;
+}
+
