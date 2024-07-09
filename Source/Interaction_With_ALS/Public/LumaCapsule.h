@@ -13,12 +13,8 @@ struct FCapsuleChargingProperties
 	
 	// Actor to spawn
 	// For example it can be spawned in hands or in world
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CapsuleProperties)
-	TSubclassOf<AActor> ActorClassToSpawn = nullptr;
-
-	// Method which we spawn with
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CapsuleProperties)
-	//TFunction<void()> SpawnMethod;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CapsuleProperties, meta = (MustImplement="CastableInterface"))
+	TSubclassOf<UObject> CastableObjectClass = nullptr;
 };
 
 USTRUCT(Blueprintable, BlueprintType)
@@ -47,9 +43,13 @@ class INTERACTION_WITH_ALS_API ALumaCapsule : public AActor
 public:
 	ALumaCapsule();
 	virtual void Tick(float DeltaTime) override;
-
 	void Charge(const FCapsuleChargingProperties& ChargingProperties);
-	FORCEINLINE bool IsCharged() const { return CapsuleChargingProperties.ActorClassToSpawn != nullptr; }
+
+	UFUNCTION(BlueprintCallable)
+	void Discharge();
+	
+	FORCEINLINE bool IsCharged() const { return CapsuleChargingProperties.CastableObjectClass != nullptr; }
+	FORCEINLINE FCapsuleChargingProperties GetChargingProperties() const { return CapsuleChargingProperties; }
 protected:
 	virtual void BeginPlay() override;
 

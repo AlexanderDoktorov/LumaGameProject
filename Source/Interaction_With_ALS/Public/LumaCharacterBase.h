@@ -4,13 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GAS_MainCharacterCpp.h"
-
 #include "LumaCharacterBase.generated.h"
 
+// Forward declarations
+class ICastableInterface;
 class ALumaCapsule;
 enum class ECastType : uint8;
 struct FCapsuleChargingProperties;
 class ALumaSourceBase;
+
 /**
  * @author Doktorov Alexander
  */
@@ -20,13 +22,15 @@ class INTERACTION_WITH_ALS_API ALumaCharacterBase : public AGAS_MainCharacterCpp
 	GENERATED_BODY()
 public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-
-	void TryPerformLumaCast(const ECastType& CastType);
-	void ChargeLumaCapsule(const FCapsuleChargingProperties& ChargingProperties);
 	
+	void TryPerformLumaCast();
+	void ChargeLumaCapsule(const FCapsuleChargingProperties& ChargingProperties);
+	void SetActiveLumaCapsule(ALumaCapsule* NewActiveLumaCapsule);
 
-	FORCEINLINE void SetActiveLumaCapsule(ALumaCapsule* NewActiveLumaCapsule);
-	FORCEINLINE auto GetActiveLumaCapsule() const { return ActiveLumaCapsule; }
+	// If capsule is hidden, return null as if it isn't active
+	UFUNCTION(BlueprintPure)
+	ALumaCapsule* GetActiveLumaCapsule() const;
+
 	FORCEINLINE auto GetLumaCapsuleToSpawnClass() const { return LumaCapsuleToSpawn; }
 	
 	int32 GetNumCapsules() const;

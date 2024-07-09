@@ -13,9 +13,8 @@ UCLASS()
 class INTERACTION_WITH_ALS_API USpawnLumaCapsuleAbility : public UGameplayAbilityBase
 {
 	GENERATED_BODY()
-
-protected:
+public:
 	USpawnLumaCapsuleAbility();
-	
+protected:
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 };

@@ -7,7 +7,7 @@
 #include "LumaCapsule.h"
 #include "LumaCharacterBase.h"
 #include "LumaGameplayTags.h"
-#include "Abilities/CapsuleChargeEventData.h"
+#include "MMC's/SpawnLumaCapsuleMMC.h"
 
 USpawnLumaCapsuleAbility::USpawnLumaCapsuleAbility()
 {
@@ -15,12 +15,17 @@ USpawnLumaCapsuleAbility::USpawnLumaCapsuleAbility()
 	FGameplayModifierInfo ModifierInfo{};
 	
 	ModifierInfo.Attribute = ULumaAttributeSet::GetLumaAttribute();
-	ModifierInfo.ModifierMagnitude = { -1.f };
+	
+	FCustomCalculationBasedFloat MMCSpawnLumaCapsule{};
+	MMCSpawnLumaCapsule.Coefficient = -1.f;
+	MMCSpawnLumaCapsule.CalculationClassMagnitude = USpawnLumaCapsuleMMC::StaticClass();
+	
+	ModifierInfo.ModifierMagnitude = MMCSpawnLumaCapsule;
 	ModifierInfo.ModifierOp = EGameplayModOp::Additive;
 	
 	AddAttributeCost(ModifierInfo);
 
-	AbilityTags.AddTag(TAG_Action_ChargeCapsule);
+	AbilityTags.AddTag(TAG_Action_SpawnCapsule);
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 }
 
@@ -28,31 +33,48 @@ void USpawnLumaCapsuleAbility::ActivateAbility(const FGameplayAbilitySpecHandle 
                                                 const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                                 const FGameplayEventData* TriggerEventData)
 {
-	if(!CommitCheck(Handle, ActorInfo, ActivationInfo))
-		EndAbility(Handle, ActorInfo, ActivationInfo, false, true);
-
 	auto LumaCharacter = Cast<ALumaCharacterBase>(ActorInfo->AvatarActor.Get());
 	if(!LumaCharacter)
-		EndAbility(Handle, ActorInfo, ActivationInfo, false, true);
-
-	int32 NumCapsules = FMath::RoundToInt(ActorInfo->AbilitySystemComponent->GetNumericAttribute(ULumaAttributeSet::GetLumaAttribute()));
-	
-	if(NumCapsules > 0)
 	{
-		if(auto World = GetWorld())
-		{
-			FActorSpawnParameters SpawnParameters{};
-			SpawnParameters.Instigator = LumaCharacter;
-			SpawnParameters.Owner = LumaCharacter;
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, true);
+		return;
+	}
+	
+	// If character has active charged luma capsule it should change it's properties, but not spawn
+	// Also cost doesn't need to be applied in that case
+	if(auto ActiveLumaCapsule = LumaCharacter->GetActiveLumaCapsule())
+	{
+		ActiveLumaCapsule->SetHidden(false);
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
+		return;
+	}
 
-			// Spawn Capsule
-			auto SpawnLocation = LumaCharacter->GetActorLocation();
-			auto SpawnRotation = LumaCharacter->GetActorRotation();
-			auto SpawnedCapsule = Cast<ALumaCapsule>(World->SpawnActor(LumaCharacter->GetLumaCapsuleToSpawnClass(), &SpawnLocation, &SpawnRotation, SpawnParameters));
+	// Otherwise spawn capsule as normal using luma attribute
+	if(!CommitCheck(Handle, ActorInfo, ActivationInfo))
+	{
+		// not enought luma
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
+		return;
+	}
 
-			// Set Active Capsule to newly created
-			LumaCharacter->SetActiveLumaCapsule(SpawnedCapsule);
-		}
+	if(auto World = GetWorld())
+	{
+		FActorSpawnParameters SpawnParameters{};
+		SpawnParameters.Instigator = LumaCharacter;
+		SpawnParameters.Owner = LumaCharacter;
+
+		// Spawn Capsule
+		auto SpawnLocation = LumaCharacter->GetActorLocation();
+		auto SpawnRotation = LumaCharacter->GetActorRotation();
+		auto SpawnedCapsule = Cast<ALumaCapsule>(World->SpawnActor(LumaCharacter->GetLumaCapsuleToSpawnClass(), &SpawnLocation, &SpawnRotation, SpawnParameters));
+
+		// Set Active Capsule to newly created
+		LumaCharacter->SetActiveLumaCapsule(SpawnedCapsule);
+	}
+	else
+	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, true);
+		return;
 	}
 	
 	CommitAbility(Handle, ActorInfo, ActivationInfo);

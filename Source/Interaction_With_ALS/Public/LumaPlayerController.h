@@ -20,7 +20,7 @@ public:
 	ALumaPlayerController() = default;
 	
 	void Call_PickUpCapsule();
-	void Call_TryPerformLumaCast(const ECastType& CastType);
+	void Call_TryPerformLumaCast();
 	void Call_ChargeLumaCapsule(const FCapsuleChargingProperties& ChargingProperties);
 	void SwitchLumaSelectorWidget(const FInputActionValue& ActionValue);
 	

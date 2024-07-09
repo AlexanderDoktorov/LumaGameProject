@@ -29,3 +29,11 @@ void ALumaCapsule::Charge(const FCapsuleChargingProperties& ChargingProperties)
 	CapsuleChargingProperties = ChargingProperties;
 }
 
+void ALumaCapsule::Discharge()
+{
+	// Hide capsule, disable collision and clear castable object class
+	SetActorHiddenInGame(true);
+	SetActorEnableCollision(false);
+	CapsuleChargingProperties.CastableObjectClass = nullptr;
+}
+

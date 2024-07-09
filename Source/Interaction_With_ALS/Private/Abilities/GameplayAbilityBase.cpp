@@ -3,7 +3,6 @@
 
 #include "Abilities/GameplayAbilityBase.h"
 #include "LumaAttributeSet.h"
-#include "LumaGatherModMagnituteCalculation.h"
 
 UGameplayAbilityBase::UGameplayAbilityBase(const FObjectInitializer& ObjectInitilizer)
 {
