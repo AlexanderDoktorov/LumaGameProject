@@ -22,7 +22,6 @@ void ALumaPlayerController::SetupInputComponent()
 	if(auto EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
 	{
 		EnhancedInputComponent->BindAction(InputData->IA_PickUpLumaCapsule, ETriggerEvent::Triggered, this, &ThisClass::Call_PickUpCapsule);
-		EnhancedInputComponent->BindAction(InputData->IA_PerfromLumaCast, ETriggerEvent::Triggered, this, &ThisClass::Call_TryPerformLumaCast);
 		EnhancedInputComponent->BindAction(InputData->IA_OpenLumaCastSelector, ETriggerEvent::Triggered, this, &ThisClass::SwitchLumaSelectorWidget);
 	}
 }
@@ -39,31 +38,6 @@ void ALumaPlayerController::Call_PickUpCapsule()
 				UE_LOG(LogAbilitySystemComponent, Warning, TEXT("Unable to activate ability"));
 		}
 	}
-}
-
-void ALumaPlayerController::Call_TryPerformLumaCast()
-{
-	if(auto LumaCharacter = Cast<ALumaCharacterBase>(GetPawn()))
-		LumaCharacter->TryPerformLumaCast();
-
-	/*
-	if(auto GASPawn = Cast<IAbilitySystemInterface>(GetPawn()))
-	{
-		if(auto GAS = GASPawn->GetAbilitySystemComponent())
-		{
-			UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(AActor* Actor, FGameplayTag EventTag, FGameplayEventData Payload).
-			const FGameplayTagContainer TagsToActivate {TAG_Action_LumaCast };
-			if(!GAS->TryActivateAbilitiesByTag(TagsToActivate))
-				UE_LOG(LogAbilitySystemComponent, Warning, TEXT("Unable to perform luma cast"));
-		}
-	}
-	*/
-}
-
-void ALumaPlayerController::Call_ChargeLumaCapsule(const FCapsuleChargingProperties& ChargingProperties)
-{
-	if(auto LumaCharacter = Cast<ALumaCharacterBase>(GetPawn()))
-		LumaCharacter->ChargeLumaCapsule(ChargingProperties);
 }
 
 void ALumaPlayerController::SwitchLumaSelectorWidget(const FInputActionValue& ActionValue)

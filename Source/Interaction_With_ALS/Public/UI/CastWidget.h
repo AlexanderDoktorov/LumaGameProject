@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Blueprint/UserWidget.h"
 #include "CastWidget.generated.h"
 
@@ -38,6 +39,23 @@ static FColor GetCastColor(const ECastType& CastType)
 	}
 	return FColor::White;
 }
+
+USTRUCT(Blueprintable, BlueprintType)
+struct FCastableObjectDesc : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	// Object preview
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableObjectDesc)
+	UTexture2D* CastableObjectPreview = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableObjectDesc)
+	ECastType ObjectCastType = ECastType::None;
+
+	// Used to charge capsule with tags to activate when cast happens
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableObjectDesc)
+	FGameplayTagContainer LumaAbilityGameplayTags{};
+};
 
 class UButton;
 /**

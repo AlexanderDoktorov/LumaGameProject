@@ -2,6 +2,8 @@
 
 
 #include "UI/CastWidget.h"
+
+#include "LumaCharacterBase.h"
 #include "LumaPlayerController.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
@@ -69,8 +71,12 @@ void UCastWidget::OnButtonPressed()
 	{
 		if(auto ObjectDesc = ObjectDescDataRow.GetRow<FCastableObjectDesc>(""))
 		{
-			PlayerController->Call_ChargeLumaCapsule(ObjectDesc->CapsuleChargingProperties);
+			if(auto LumaCharacter = Cast<ALumaCharacterBase>(PlayerController->GetPawn()))
+			{
+				LumaCharacter->PeformLumaCast(*ObjectDesc);
+			}
 		}
+		
 	}
 }
 
