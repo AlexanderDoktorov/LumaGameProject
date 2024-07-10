@@ -20,7 +20,8 @@ public class Interaction_With_ALS : ModuleRules
 			"GameplayTags",
 			"GameplayTasks",
 			"EnhancedInput",
-			"UE5Coro"
+			"UE5Coro",
+			"UE5CoroGAS"
 		});
 
 		// Uncomment if you are using Slate UI

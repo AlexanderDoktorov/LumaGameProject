@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GAS_MainCharacterCpp.h"
+#include "UE5Coro/Coroutine.h"
 #include "LumaCharacterBase.generated.h"
 
 // Forward declarations
@@ -22,26 +23,13 @@ class INTERACTION_WITH_ALS_API ALumaCharacterBase : public AGAS_MainCharacterCpp
 	GENERATED_BODY()
 public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-	
-	void TryPerformLumaCast();
-	void ChargeLumaCapsule(const FCapsuleChargingProperties& ChargingProperties);
-	void SetActiveLumaCapsule(ALumaCapsule* NewActiveLumaCapsule);
 
-	// If capsule is hidden, return null as if it isn't active
-	UFUNCTION(BlueprintPure)
-	ALumaCapsule* GetActiveLumaCapsule() const;
+	UFUNCTION(BlueprintNativeEvent)
+	void OnLumaCastPerform(const FCastableObjectDesc& CastableObjectDesc);
 
-	FORCEINLINE auto GetLumaCapsuleToSpawnClass() const { return LumaCapsuleToSpawn; }
+	void PeformLumaCast(const FCastableObjectDesc& CastableObjectDesc);
 	
 	int32 GetNumCapsules() const;
 protected:
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CapsuleCharge)
-	FName CapsuleSocketName = "EmptySocket";
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CapsuleCharge)
-	TSubclassOf<ALumaCapsule> LumaCapsuleToSpawn = nullptr;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = CapsuleCharge)
-	TObjectPtr<ALumaCapsule> ActiveLumaCapsule = nullptr;
+	virtual void BeginPlay() override;
 };

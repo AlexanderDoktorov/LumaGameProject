@@ -8,3 +8,4 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Interaction_PickItem_Luma, "Interaction.PickItem.Luma
 UE_DEFINE_GAMEPLAY_TAG(TAG_Action_LumaCast, "Action.LumaCast");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Event_LumaCast, "Event.LumaCast");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Action_SpawnCapsule, "Action.SpawnCapsule");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast, "Ability.LumaCast");
