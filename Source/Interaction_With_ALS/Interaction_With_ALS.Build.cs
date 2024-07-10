@@ -19,10 +19,9 @@ public class Interaction_With_ALS : ModuleRules
 			"IWALS_AbilitySystem",
 			"GameplayTags",
 			"GameplayTasks",
-			"EnhancedInput"
+			"EnhancedInput",
+			"UE5Coro"
 		});
-
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 		// Uncomment if you are using Slate UI
 		PrivateDependencyModuleNames.AddRange(new string[]
