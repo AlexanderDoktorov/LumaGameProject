@@ -64,47 +64,37 @@ TArray<FCastableAbilityDesc> ULumaSystemComponent::GetMostPrioritizedCasts() con
 	if(!OwnerAsc.IsValid())
 		return {};
 
-	TMap<EEmotion, float> CurrentEmotions{};
+	// Get owner emotions to compare with when adding to the queue
+	FEmotionDescContainer OwnerEmotions{};
 	for(EEmotion Emotion : TEnumRange<EEmotion>())
 	{
-		CurrentEmotions.Emplace(Emotion, OwnerAsc->GetNumericAttribute(UEmotionsAttributeSet::GetAttributeByEmotion(Emotion)));
+		FEmotionDesc EmotionDesc{};
+		EmotionDesc.Value = OwnerAsc->GetNumericAttribute(UEmotionsAttributeSet::GetAttributeByEmotion(Emotion));
+		EmotionDesc.EmotionType = Emotion;
+		OwnerEmotions.EmplaceEmotion(EmotionDesc);
 	}
 
-	// Get emotion attributes
-	double MinDistance = MAX_dbl;
-	TArray<FCastableAbilityDesc> PrioritizedCasts{};
-
-	// Iterate through available luma abilities and find closest that fits characters emotions
-	
-	// NOTE : NOW IT CHECKS COSTS FOR AN ABILITY AND IT IS WRONG, COSTS AND EMOTIONAL REQUIREMENT ARE DIFFERENT THINGS
-	// NEEDS FIX
-	TArray<TPair<double, int32>> IndexDistances{};
-	for(int32 i = 0; i < CastableAbilityDescs.Num(); ++i)
+	// Build predicate to pass to heap push for buidling a prioritized queue
+	auto SortPredicate = [&OwnerEmotions](const FCastableAbilityDesc& Lhs, const FCastableAbilityDesc& Rhs) -> bool
 	{
-		IndexDistances.Emplace( TPair<double, int32>{ GetDistance(CastableAbilityDescs[i].EmotionRequirements, CurrentEmotions), i });
-	}
-	IndexDistances.Sort([](const TPair<double, int32>& Lhs, const TPair<double, int32>& Rhs)
-	{
-		return Lhs.Key < Rhs.Key;
-	});
-
-	for(int32 i = 0; i < FMath::Min(MaxCasts, IndexDistances.Num()); ++i)
-	{
-		PrioritizedCasts.Add(CastableAbilityDescs[IndexDistances[i].Value]);
-	}
-
-	// Find intersection
-	/*
-	auto f = [](const FGameplayAttribute& Attribute, const FGameplayEffectModifiedAttribute& ModifiedAttribute) -> const FGameplayEffectModifiedAttribute* {
-		if(Attribute == ModifiedAttribute.Attribute)
-			return &ModifiedAttribute;
-		return nullptr;
+		return Lhs.EmotionRequirements.GetDistanceTo(OwnerEmotions) < Rhs.EmotionRequirements.GetDistanceTo(OwnerEmotions);
 	};
-	auto ModifiedAttributes = GetCostEffectSpec().ModifiedAttributes;
-	auto Intersection = UArrayHelpersFunctionLibrary::IntersectByPredicate<FGameplayEffectModifiedAttribute>(, ModifiedAttributes, f);
-	*/
+
+	// Sort abilities by distance
+	auto SortedAbilities = CastableAbilityDescs;
+	SortedAbilities.Sort(SortPredicate);
+
+	// Make sure MaxCasts doesn't exceed all luma cast abilities number
+	const int32 MaxIndx = FMath::Max(0, FMath::Min(SortedAbilities.Num(), MaxCasts));
+
+	TArray<FCastableAbilityDesc> ReturnArray{};
+	// As abilities descs has been added using heap and predicate everything is already sorted, so just return MaxCasts casts
+	for (int32 i = 0; i < MaxIndx; ++i)
+	{
+		ReturnArray.Emplace(SortedAbilities[i]);
+	}
 	
-	return PrioritizedCasts;
+	return ReturnArray;
 }
 
 void ULumaSystemComponent::HandleEmotionalSourcePresense(AActor* EmoitonSourceActor)
@@ -156,7 +146,8 @@ void ULumaSystemComponent::InitilizeCastableAbilityDescs()
 {
 	if(!AbilityDescDataTable)
 		return;
-
+	
+	// Add castable ability descs using predicate
 	for(auto& DataRow : AbilityDescDataTable->GetRowMap())
 	{
 		if(FCastableAbilityDesc* Data = reinterpret_cast<FCastableAbilityDesc*>(DataRow.Value))

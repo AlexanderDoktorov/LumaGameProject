@@ -18,7 +18,7 @@ class INTERACTION_WITH_ALS_API ULumaCastAbility : public UGameplayAbilityBase
 	GENERATED_BODY()
 public:
 	ULumaCastAbility() = default;
-	FORCEINLINE const TMap<EEmotion, float>& GetEmotionalRequirements() const { return CastableAbilityDesc.EmotionRequirements; }
+	FORCEINLINE const FEmotionDescContainer& GetEmotionalRequirements() const { return CastableAbilityDesc.EmotionRequirements; }
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FCastableAbilityDesc CastableAbilityDesc{};

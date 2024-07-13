@@ -17,6 +17,8 @@ class UAbilitySystemComponent;
 class UGameplayEffect;
 enum class EEmotion : uint8;
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnEmotionsChangedDelegate, )
+
 /**
  * @author Doktorov Alexander
  */

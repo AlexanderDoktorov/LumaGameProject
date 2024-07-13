@@ -69,6 +69,87 @@ static FColor GetCastColor(const EEmotion& CastType)
 	return FColor::White;
 }
 
+USTRUCT(BlueprintType)
+struct FEmotionDesc
+{
+	GENERATED_BODY()
+
+	FEmotionDesc() = default;
+	FEmotionDesc(EEmotion EmotionType, float Value) : EmotionType(EmotionType), Value(Value)
+	{}
+
+	// Emotion Type
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = EmotionDesc, meta = (InvalidEnumValues="None"))
+	EEmotion EmotionType = EEmotion::None;
+
+	// Amount of an emotion
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = EmotionDesc, meta = (ClampMin=0))
+	float Value = 0.f;
+
+	bool operator==(const FEmotionDesc& Other) const = default;
+};
+
+// Used to store emotions for any object
+// Example:
+// Aggressiveness : 10
+// Reticence : 15
+// SelfPreservation : 2
+// Curiosity : 7
+USTRUCT(BlueprintType)
+struct FEmotionDescContainer
+{
+	GENERATED_BODY()
+
+	template<class T>
+	requires std::is_same_v<std::decay_t<T>, FEmotionDesc>
+	void EmplaceEmotion(T&& NewEmotionDesc)
+	{
+		if(!HasEmotion(NewEmotionDesc.EmotionType) && NewEmotionDesc.EmotionType != EEmotion::None)
+		{
+			EmotionDescs.Emplace(Forward<T>(NewEmotionDesc));
+		}
+	}
+	
+	FORCEINLINE bool HasEmotion(const EEmotion& Emotion) const
+	{
+		return GetEmotionDescPtr(Emotion) != nullptr;
+	}
+	FORCEINLINE const FEmotionDesc* GetEmotionDescPtr(const EEmotion& Emotion) const
+	{
+		return EmotionDescs.FindByPredicate([&Emotion](const FEmotionDesc& Other)
+		{
+			return Emotion == Other.EmotionType;
+		});
+	}
+	FORCEINLINE float GetDistanceTo(const FEmotionDescContainer& Other) const
+	{
+		double DistanceSquare = 0.f;
+		for (EEmotion EmotionType : TEnumRange<EEmotion>())
+		{
+			const FEmotionDesc* Desc1 = GetEmotionDescPtr(EmotionType);
+			const FEmotionDesc* Desc2 = Other.GetEmotionDescPtr(EmotionType);
+
+			if(Desc1 && Desc2)
+			{
+				DistanceSquare += FMath::Square(Desc1->Value - Desc2->Value);
+			}
+			else
+			{
+				DistanceSquare += Desc1 ? FMath::Square(Desc1->Value) : 0.f;
+				DistanceSquare += Desc2 ? FMath::Square(Desc2->Value) : 0.f;
+			}
+		}
+		return FMath::Sqrt(DistanceSquare);
+	}
+	FORCEINLINE bool IsEmpty() const
+	{
+		return EmotionDescs.IsEmpty();
+	}
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EmotionDescContainer, meta = (NoElementDuplicate))
+	TArray<FEmotionDesc> EmotionDescs{};
+};
+
 USTRUCT(Blueprintable, BlueprintType)
 struct FCastableAbilityDesc : public FTableRowBase
 {
@@ -87,23 +168,33 @@ struct FCastableAbilityDesc : public FTableRowBase
 		EEmotion MostValuableEmotion = EEmotion::None;
 		float MaxValue = 0.f;
 		
-		for (const auto& Pair : EmotionRequirements)
+		for (const auto& EmotionDesc : EmotionRequirements.EmotionDescs)
 		{
-			if(Pair.Value > MaxValue)
+			if(EmotionDesc.Value > MaxValue)
 			{
-				MaxValue = Pair.Value;
-				MostValuableEmotion = Pair.Key;
+				MaxValue = EmotionDesc.Value;
+				MostValuableEmotion = EmotionDesc.EmotionType;
 			}
 		}
 		
 		return MostValuableEmotion;
+	}
+	FORCEINLINE const FCastableAbilityDesc& GetMorePrioritizedDescForActor(const FCastableAbilityDesc& OtherAbilityDesc, const FEmotionDescContainer& ActorEmotions) const
+	{
+		return GetMorePrioritizedDescForActor(*this, OtherAbilityDesc, ActorEmotions);
+	}
+	FORCEINLINE static const FCastableAbilityDesc& GetMorePrioritizedDescForActor(const FCastableAbilityDesc& Desc0, const FCastableAbilityDesc& Desc1, const FEmotionDescContainer& ActorEmotions)
+	{
+		float Distance0 = Desc0.EmotionRequirements.GetDistanceTo(ActorEmotions);
+		float Distance1 = Desc1.EmotionRequirements.GetDistanceTo(ActorEmotions);
+		return Distance0 < Distance1 ? Desc0 : Desc1;
 	}
 
 	// Object preview
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
 	TSoftObjectPtr<UTexture2D> CastableObjectPreview = nullptr;
 
-	// Object preview
+	// Object actor class to cast
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
 	TSubclassOf<AActor> CastableObjectClass = nullptr;
 
@@ -113,5 +204,5 @@ struct FCastableAbilityDesc : public FTableRowBase
 
 	// Emotion Requirements
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
-	TMap<EEmotion, float> EmotionRequirements{};
+	FEmotionDescContainer EmotionRequirements{};
 };
