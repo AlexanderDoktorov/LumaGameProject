@@ -4,14 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GAS_MainCharacterCpp.h"
-#include "UE5Coro/Coroutine.h"
+#include "LumaTypes.h"
 #include "LumaCharacterBase.generated.h"
 
-// Forward declarations
 class ICastableInterface;
-class ALumaCapsule;
 enum class ECastType : uint8;
-struct FCapsuleChargingProperties;
 class ALumaSourceBase;
 
 /**
@@ -25,9 +22,9 @@ public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	UFUNCTION(BlueprintNativeEvent)
-	void OnLumaCastPerform(const FCastableObjectDesc& CastableObjectDesc);
+	void OnLumaCastPerform(const FCastableAbilityDesc& CastableAbilityDesc);
 
-	void PeformLumaCast(const FCastableObjectDesc& CastableObjectDesc);
+	void PeformLumaCast(const FCastableAbilityDesc& CastableObjectDesc);
 	
 	int32 GetNumCapsules() const;
 protected:

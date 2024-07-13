@@ -2,7 +2,6 @@
 
 
 #include "UI/CastWidget.h"
-
 #include "LumaCharacterBase.h"
 #include "LumaPlayerController.h"
 #include "Components/Button.h"
@@ -19,28 +18,30 @@ void UCastWidget::NativeConstruct()
 	CastSelectorButton->SynchronizeProperties();
 }
 
+void UCastWidget::SetFromCastableAbilityDesc(FCastableAbilityDesc AbilityDesc)
+{
+	CastableAbilityDesc = AbilityDesc;
+
+	MatchImageTexture();
+	MatchButtonColorToCastType();
+}
+
 void UCastWidget::MatchButtonColorToCastType()
 {
-	auto ObjectDesc = ObjectDescDataRow.GetRow<FCastableObjectDesc>("");
-	if(!ObjectDesc)
-		return;
-
-	if(ObjectDesc->ObjectCastType == ECastType::None)
+	if(CastableAbilityDesc.GetPrimaryEmotion() == EEmotion::None)
 		return;
 
 	FButtonStyle ButtonStyle = CastSelectorButton->GetStyle();
-	ButtonStyle.Normal.TintColor = GetCastColor(ObjectDesc->ObjectCastType);
-	ButtonStyle.Hovered.TintColor = GetCastColor(ObjectDesc->ObjectCastType).ReinterpretAsLinear() * 0.55f;
-	ButtonStyle.Pressed.TintColor = GetCastColor(ObjectDesc->ObjectCastType).ReinterpretAsLinear() * 0.15f;
+	ButtonStyle.Normal.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion);
+	ButtonStyle.Hovered.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion).ReinterpretAsLinear() * 0.55f;
+	ButtonStyle.Pressed.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion).ReinterpretAsLinear() * 0.15f;
 	CastSelectorButton->SetStyle(ButtonStyle);
 }
 
 void UCastWidget::MatchImageTexture()
 {
-	if(auto ObjectDesc = ObjectDescDataRow.GetRow<FCastableObjectDesc>(""))
-	{
-		CastImage->SetBrushFromSoftTexture(ObjectDesc->CastableObjectPreview);
-	}
+	if(CastImage)
+		CastImage->SetBrushFromSoftTexture(CastableAbilityDesc.CastableObjectPreview);
 }
 
 void UCastWidget::SyncShapeBetweenStyles()
@@ -69,14 +70,10 @@ void UCastWidget::OnButtonPressed()
 {
 	if(auto PlayerController = Cast<ALumaPlayerController>(GetOwningPlayer()))
 	{
-		if(auto ObjectDesc = ObjectDescDataRow.GetRow<FCastableObjectDesc>(""))
+		if(auto LumaCharacter = Cast<ALumaCharacterBase>(PlayerController->GetPawn()))
 		{
-			if(auto LumaCharacter = Cast<ALumaCharacterBase>(PlayerController->GetPawn()))
-			{
-				LumaCharacter->PeformLumaCast(*ObjectDesc);
-			}
+			LumaCharacter->PeformLumaCast(CastableAbilityDesc);
 		}
-		
 	}
 }
 

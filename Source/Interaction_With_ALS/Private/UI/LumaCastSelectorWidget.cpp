@@ -2,9 +2,34 @@
 
 
 #include "UI/LumaCastSelectorWidget.h"
-#include "Components/UniformGridPanel.h"
+#include "UI/CastWidget.h"
 
 void ULumaCastSelectorWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 }
+
+/*
+void ULumaCastSelectorWidget::UpdateSelector()
+{
+	if(!CastWidgetClass || !CanvasPanel)
+		return;
+
+	for(int32 i = 0; i < NumSlots; ++i)
+	{
+		float Degrees = (360.f / NumSlots) * i;
+		FVector2d CenterOffset = Radius * FVector2d(FMath::Cos(Degrees), FMath::Sin(Degrees));
+
+		UCastWidget* NewCastWidget = Cast<UCastWidget>(CreateWidget(GetOwningPlayer(), CastWidgetClass, FName(FString("Cast Widget#").Append(FString::FromInt(i)))));
+		CastWidgets.Add(NewCastWidget);
+
+		// Set Position of the widget relative to panel center
+		if(auto PanelSlot = CanvasPanel->AddChildToCanvas(NewCastWidget))
+		{
+			PanelSlot->SetAutoSize(true);
+			PanelSlot->SetAnchors({ 0.5f, 0.5f, 0.5f, 0.5f});
+			PanelSlot->SetPosition(CenterOffset);
+		}
+	}
+}
+*/

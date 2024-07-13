@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "LumaCastSelectorWidget.generated.h"
 
+class UCanvasPanel;
+class UCastWidget;
 class UUniformGridPanel;
 class UButton;
 class UImage;
@@ -18,7 +20,4 @@ class INTERACTION_WITH_ALS_API ULumaCastSelectorWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	virtual void NativeConstruct() override;
-
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	UUniformGridPanel* UniformGridPanel = nullptr;
 };

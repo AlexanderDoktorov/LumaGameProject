@@ -18,15 +18,15 @@ bool UIWALS_GameplayAbilitySet::HasAbility(UAbilitySystemComponent* AbilitySyste
 	{
 		if (Spec.Ability->GetClass() == AbilityClass)
 		{
-			// ZdolnoúÊ zosta≥a juø przydzielona
+			// Zdolno—ö–∂ zosta—ña ju—ó przydzielona
 			return true;
 		}
 	}
-	// ZdolnoúÊ nie zosta≥a jeszcze przydzielona
+	// Zdolno—ö–∂ nie zosta—ña jeszcze przydzielona
 	return false;
 }
 
-void UIWALS_GameplayAbilitySet::GiveAbilities(UAbilitySystemComponent* AbilitySystemComponent, AActor* TargetActor) const
+void UIWALS_GameplayAbilitySet:: GiveAbilities(UAbilitySystemComponent* AbilitySystemComponent, AActor* TargetActor) const
 {
 	if (TargetActor)
 	{

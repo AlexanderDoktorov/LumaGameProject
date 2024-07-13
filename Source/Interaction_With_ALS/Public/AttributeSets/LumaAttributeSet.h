@@ -25,7 +25,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MaxLuma)
 	FGameplayAttributeData MaxLuma;
 	ATTRIBUTE_ACCESSORS(ThisClass, MaxLuma);
-	
+
 	UFUNCTION()
 	virtual void OnRep_Luma(const FGameplayAttributeData& OldLuma);
 	

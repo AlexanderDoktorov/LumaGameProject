@@ -2,11 +2,8 @@
 
 
 #include "UI/AttributeDisplayWidget.h"
-
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
-#include "GameplayCueInterface.h"
-#include "LumaAttributeSet.h"
 #include "Components/TextBlock.h"
 
 void UAttributeDisplayWidget::NativeConstruct()
