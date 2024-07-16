@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 #include "EmotionSourceComponent.generated.h"
 
+struct FEmotionDesc;
 enum class EEmotion : uint8;
 
 USTRUCT(BlueprintType, Blueprintable)
@@ -30,12 +31,17 @@ public:
 	UEmotionSourceComponent();
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable)
+	void SetEmotionalAffectMagnitude(const FEmotionDesc& EmotionDesc);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveAllAffectsAndStopEmmiting();
+	
 	bool RemoveAllAffectsFrom(UAbilitySystemComponent* TargetASC);
 
 	UFUNCTION(BlueprintCallable)
 	FActiveGameplayEffectHandle ApplyEmotionalAffect(UAbilitySystemComponent* TargetASC);
 protected:
-
 	UFUNCTION(BlueprintNativeEvent)
 	void OnTriggerBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
 
@@ -49,4 +55,6 @@ protected:
 	TSubclassOf<UGameplayEffect> GE_ApplyEmotionalAffect;
 
 	TArray<FActiveGameplayEffectHandle> ActiveGameplayEffectHandles{};
+
+	uint8_t bIsEmmiting : 1 = 1;
 };

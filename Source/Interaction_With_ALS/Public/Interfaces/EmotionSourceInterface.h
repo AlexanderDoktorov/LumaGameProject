@@ -6,9 +6,6 @@
 #include "UObject/Interface.h"
 #include "EmotionSourceInterface.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMyDelegate);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FEmotionTriggerDelegate, ULumaSystemComponent*, LumaSystemComponent, UEmotionSourceComponent*, EmotionSourceComponent);
-
 class UEmotionSourceComponent;
 class ULumaSystemComponent;
 // This class does not need to be modified.

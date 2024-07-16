@@ -20,10 +20,34 @@ void UEmotionSourceComponent::BeginPlay()
 		{
 			TriggerPrimitive->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnTriggerBeginOverlap);
 			TriggerPrimitive->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnTriggerEndOverlap);
+			// Overlap only pawn
 			TriggerPrimitive->SetCollisionResponseToAllChannels(ECR_Ignore);
 			TriggerPrimitive->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 		}
 	}
+}
+
+void UEmotionSourceComponent::SetEmotionalAffectMagnitude(const FEmotionDesc& EmotionDesc)
+{
+	if(EmotionDesc.EmotionType != EEmotion::None)
+	{
+		EmotionalAffects.FindRef(EmotionDesc.EmotionType);
+		EmotionalAffects[EmotionDesc.EmotionType] = EmotionDesc.Value;
+	}
+}
+
+void UEmotionSourceComponent::RemoveAllAffectsAndStopEmmiting()
+{
+	// Remove all affects currently happening
+	for(auto& ActiveHandle : ActiveGameplayEffectHandles)
+	{
+		check(ActiveHandle.GetOwningAbilitySystemComponent());
+		ActiveHandle.GetOwningAbilitySystemComponent()->RemoveActiveGameplayEffect(ActiveHandle);
+	}
+	ActiveGameplayEffectHandles.Empty();
+
+	// Stop emmiting
+	bIsEmmiting = false;
 }
 
 bool UEmotionSourceComponent::RemoveAllAffectsFrom(UAbilitySystemComponent* TargetASC)
@@ -44,7 +68,8 @@ bool UEmotionSourceComponent::RemoveAllAffectsFrom(UAbilitySystemComponent* Targ
 
 FActiveGameplayEffectHandle UEmotionSourceComponent::ApplyEmotionalAffect(UAbilitySystemComponent* TargetASC)
 {
- 	if (!TargetASC || !GE_ApplyEmotionalAffect)
+	// Cannot apply effects if it's not emmiting any emotions
+ 	if (!TargetASC || !GE_ApplyEmotionalAffect || !bIsEmmiting)
 		return FActiveGameplayEffectHandle{};
 	
 	FGameplayEffectContextHandle EffectContext = TargetASC->MakeEffectContext();
@@ -67,6 +92,9 @@ FActiveGameplayEffectHandle UEmotionSourceComponent::ApplyEmotionalAffect(UAbili
 void UEmotionSourceComponent::OnTriggerEndOverlap_Implementation(UPrimitiveComponent* OverlappedComponent,
 	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	if(!bIsEmmiting)
+		return;
+	
 	if(OtherActor)
 	{
 		if(auto LumaSystemComponent = Cast<ULumaSystemComponent>(OtherActor->GetComponentByClass(ULumaSystemComponent::StaticClass())))
@@ -80,6 +108,9 @@ void UEmotionSourceComponent::OnTriggerBeginOverlap_Implementation(UPrimitiveCom
                                                                    AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                                                    const FHitResult& SweepResult)
 {
+	if(!bIsEmmiting)
+		return;
+	
 	if(OtherActor)
 	{
 		if(auto LumaSystemComponent = Cast<ULumaSystemComponent>(OtherActor->GetComponentByClass(ULumaSystemComponent::StaticClass())))
