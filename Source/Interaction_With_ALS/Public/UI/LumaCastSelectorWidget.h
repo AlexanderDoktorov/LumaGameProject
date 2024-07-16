@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "GameplayEffectTypes.h"
 #include "LumaCastSelectorWidget.generated.h"
 
+class ULumaSystemComponent;
+class UEmotionSourceComponent;
 class UCanvasPanel;
 class UCastWidget;
 class UUniformGridPanel;
@@ -20,4 +23,10 @@ class INTERACTION_WITH_ALS_API ULumaCastSelectorWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	virtual void NativeConstruct() override;
+
+	void OnEmotionalAttributeChangeInternal(const FOnAttributeChangeData& AttributeChangeData);
+	
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+	void OnEmotionalAttributeChange();
+	
 };

@@ -2,11 +2,27 @@
 
 
 #include "UI/LumaCastSelectorWidget.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
+#include "AttributeSets/EmotionsAttributeSet.h"
 #include "UI/CastWidget.h"
 
 void ULumaCastSelectorWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+
+	if(auto OwnerASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwningPlayerPawn()))
+	{
+		for(EEmotion EmotionType : TEnumRange<EEmotion>() )
+		{
+			OwnerASC->GetGameplayAttributeValueChangeDelegate(UEmotionsAttributeSet::GetAttributeByEmotion(EmotionType)).AddUObject(this, &ThisClass::OnEmotionalAttributeChangeInternal);
+		}
+	}
+}
+
+void ULumaCastSelectorWidget::OnEmotionalAttributeChangeInternal(const FOnAttributeChangeData& AttributeChangeData)
+{
+	OnEmotionalAttributeChange();
 }
 
 /*

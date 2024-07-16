@@ -159,10 +159,7 @@ struct FCastableAbilityDesc : public FTableRowBase
 	// Determined by max emotion requirement
 	FORCEINLINE EEmotion GetPrimaryEmotion() const
 	{
-		if(PrimaryEmotion != EEmotion::None)
-			return PrimaryEmotion;
-
-		if(EmotionRequirements.IsEmpty())
+		if(PrimaryEmotion != EEmotion::None || EmotionRequirements.IsEmpty())
 			return PrimaryEmotion;
 
 		EEmotion MostValuableEmotion = EEmotion::None;

@@ -2,16 +2,19 @@
 
 
 #include "Components/LumaSystemComponent.h"
-#include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "Abilities/LumaCastAbility.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
 #include "Components/EmotionSourceComponent.h"
 #include "LumaTypes.h"
 #include "GameplayEffect.h"
+#include "Abilities/LumaAbilitySystemComponent.h"
+#include "UI/LumaCastSelectorWidget.h"
+#include "UI/LumaHUD.h"
 
 ULumaSystemComponent::ULumaSystemComponent()
 {
+	
 }
 
 void ULumaSystemComponent::BeginPlay()
@@ -21,7 +24,7 @@ void ULumaSystemComponent::BeginPlay()
 	// Add new attribute set so owner's ability system can manage emotional state of the owner
 	if(auto AbilitySystemInterface = Cast<IAbilitySystemInterface>(GetOwner()))
 	{
-		OwnerAsc = AbilitySystemInterface->GetAbilitySystemComponent();
+		OwnerAsc = Cast<ULumaAbilitySystemComponent>(AbilitySystemInterface->GetAbilitySystemComponent());
 	}
 
 	if(OwnerAsc.IsValid())
@@ -97,54 +100,29 @@ TArray<FCastableAbilityDesc> ULumaSystemComponent::GetMostPrioritizedCasts() con
 	return ReturnArray;
 }
 
-void ULumaSystemComponent::HandleEmotionalSourcePresense(AActor* EmoitonSourceActor)
+void ULumaSystemComponent::HandleEmotionalSourcePresense(UEmotionSourceComponent* EmotionSourceComponent)
 {
-	ApplyEmotionAffectToOwner(EmoitonSourceActor, false);
-}
-
-void ULumaSystemComponent::HandleEmotionalSourceAbsence(AActor* EmoitonSourceActor)
-{
-	ApplyEmotionAffectToOwner(EmoitonSourceActor, true);
-}
-
-void ULumaSystemComponent::ApplyEmotionAffectToOwner(const AActor* EmoitonSourceActor, const bool& bInverse)
-{
-	if(EmoitonSourceActor)
+	if(EmotionSourceComponent)
 	{
-		if(auto EmoitonSourceComponent = Cast<UEmotionSourceComponent>(EmoitonSourceActor->GetComponentByClass(UEmotionSourceComponent::StaticClass())))
+		if(EmotionSourceComponent->ApplyEmotionalAffect(OwnerAsc.Get()).WasSuccessfullyApplied())
 		{
-			if(EmoitonSourceComponent->ApplyEmotionalAffect(GetOwner(), bInverse))
-			{
-				if(bInverse)
-					AffectingEmotionalSources.Remove(EmoitonSourceComponent);
-				else
-					AffectingEmotionalSources.AddUnique(EmoitonSourceComponent);
-			}
+			AffectingEmotionalSources.AddUnique(EmotionSourceComponent);
 		}
 	}
 }
 
-double ULumaSystemComponent::GetDistance(const TMap<EEmotion, float>& Map1, const TMap<EEmotion, float>& Map2)
+void ULumaSystemComponent::HandleEmotionalSourceAbsence(UEmotionSourceComponent* EmotionSourceComponent)
 {
-	const TMap<EEmotion, float>& LargerMap = Map1.Num() > Map2.Num() ? Map1 : Map2;
-	const TMap<EEmotion, float>& SmallerMap = Map1.Num() > Map2.Num() ? Map2 : Map1;
-
-	double Distance = 0.f;
-	for (auto& Pair0 : LargerMap)
+	if(EmotionSourceComponent)
 	{
-		if(auto Value = SmallerMap.Find(Pair0.Key))
-		{
-			Distance += FMath::Square(*Value - Pair0.Value);
-		}
-		else
-			Distance += FMath::Square(Pair0.Value);
+		EmotionSourceComponent->RemoveAllAffectsFrom(OwnerAsc.Get());
 	}
-	return FMath::Sqrt(Distance);
+	//ApplyEmotionAffectToOwner(EmoitonSourceActor);
 }
 
 void ULumaSystemComponent::InitilizeCastableAbilityDescs()
 {
-	if(!AbilityDescDataTable)
+	if(!AbilityDescDataTable || !AbilityDescDataTable->IsValidLowLevel())
 		return;
 	
 	// Add castable ability descs using predicate

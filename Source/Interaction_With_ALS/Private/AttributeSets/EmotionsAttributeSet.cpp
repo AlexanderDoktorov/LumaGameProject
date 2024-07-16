@@ -3,7 +3,9 @@
 
 #include "AttributeSets/EmotionsAttributeSet.h"
 
+#include "LumaGameplayTags.h"
 #include "LumaTypes.h"
+#include "Abilities/LumaAbilitySystemComponent.h"
 #include "Net/UnrealNetwork.h"
 
 TMap<EEmotion, FGameplayAttribute> UEmotionsAttributeSet::Map{};
@@ -47,6 +49,22 @@ EEmotion UEmotionsAttributeSet::GetEmotionByAttribute(const FGameplayAttribute& 
 	if(auto Attr = Map.FindKey(GameplayAttribute))
 		return *Attr;
 	return EEmotion::None;
+}
+
+FGameplayTag UEmotionsAttributeSet::GetDataTagByEmotion(const EEmotion& Emotion)
+{
+	switch (Emotion)
+	{
+	case EEmotion::Aggressiveness:
+		return TAG_Data_Aggressiveness;
+	case EEmotion::Reticence:
+		return TAG_Data_Reticence;
+	case EEmotion::SelfPreservation:
+		return TAG_Data_SelfPreservation;
+	case EEmotion::Curiosity:
+		return TAG_Data_Curiosity;
+	}
+	return FGameplayTag::EmptyTag;
 }
 
 void UEmotionsAttributeSet::OnRep_Aggressiveness(const FGameplayAttributeData& OldAggressiveness)

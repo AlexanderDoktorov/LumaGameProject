@@ -5,6 +5,13 @@
 #include "NativeGameplayTags.h"
 
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_LumaToGather)
+
+// Emotions set by callers data tags
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_Aggressiveness)
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_Reticence)
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_SelfPreservation)
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_Curiosity)
+
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Interaction_PickItem_Luma)
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Action_LumaCast)
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Event_LumaCast)

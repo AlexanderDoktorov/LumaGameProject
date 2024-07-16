@@ -25,7 +25,7 @@ public:
 	void OnLumaCastPerform(const FCastableAbilityDesc& CastableAbilityDesc);
 
 	void PeformLumaCast(const FCastableAbilityDesc& CastableObjectDesc);
-	
+
 	int32 GetNumCapsules() const;
 protected:
 	virtual void BeginPlay() override;

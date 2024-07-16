@@ -24,6 +24,7 @@ public:
 
 	static FGameplayAttribute GetAttributeByEmotion(const EEmotion& Emotion);
 	static EEmotion GetEmotionByAttribute(const FGameplayAttribute& GameplayAttribute);
+	static FGameplayTag GetDataTagByEmotion(const EEmotion& Emotion);
 
 	// Агрессивность
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_Aggressiveness)

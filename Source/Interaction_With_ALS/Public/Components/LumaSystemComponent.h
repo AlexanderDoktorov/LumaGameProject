@@ -8,6 +8,8 @@
 #include "LumaSystemComponent.generated.h"
 
 
+class ULumaCastSelectorWidget;
+class ULumaAbilitySystemComponent;
 struct FCastableAbilityDesc;
 class UEmotionSourceComponent;
 class USphereComponent;
@@ -17,7 +19,7 @@ class UAbilitySystemComponent;
 class UGameplayEffect;
 enum class EEmotion : uint8;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnEmotionsChangedDelegate, )
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEmotionsChangedDelegate, ULumaSystemComponent*, EmotionOwner, UEmotionSourceComponent*, EmotionSource);
 
 /**
  * @author Doktorov Alexander
@@ -28,6 +30,7 @@ class INTERACTION_WITH_ALS_API ULumaSystemComponent : public UActorComponent
 	GENERATED_BODY()
 public:
 	ULumaSystemComponent();
+
 	virtual void BeginPlay() override;
 
 	FORCEINLINE void SetMaxCasts(const int32& NewMaxCasts) { MaxCasts = NewMaxCasts; }
@@ -36,19 +39,17 @@ public:
 	TArray<FCastableAbilityDesc> GetMostPrioritizedCasts() const;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void HandleEmotionalSourcePresense(AActor* EmoitonSourceActor);
+	virtual void HandleEmotionalSourcePresense(UEmotionSourceComponent* EmotionSourceComponent);
 
 	UFUNCTION(BlueprintCallable)
-	virtual void HandleEmotionalSourceAbsence(AActor* EmoitonSourceActor);
-	
-	void ApplyEmotionAffectToOwner(const AActor* EmoitonSourceActor, const bool& bInverse);
+	virtual void HandleEmotionalSourceAbsence(UEmotionSourceComponent* EmotionSourceComponent);
 protected:
 	// Emotional Sources that are affecting owner right now
 	TArray<UEmotionSourceComponent*> AffectingEmotionalSources{};
 	
 	// Ability System Component From Owner
 	UPROPERTY()
-	TWeakObjectPtr<UAbilitySystemComponent> OwnerAsc = nullptr;
+	TWeakObjectPtr<ULumaAbilitySystemComponent> OwnerAsc = nullptr;
 
 	// Emotion Attribute Set
 	UPROPERTY()
@@ -72,10 +73,7 @@ protected:
 	class UDataTable* AbilityDescDataTable = nullptr;
 
 	// Corresponding array that initilized by data table that will be modified at runtime (probably)
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = LumaSystemComponent)
 	TArray<FCastableAbilityDesc> CastableAbilityDescs{};
-	
 private:
-	static double GetDistance(const TMap<EEmotion, float>& Map1, const TMap<EEmotion, float>& Map2);
 	void InitilizeCastableAbilityDescs();
 };

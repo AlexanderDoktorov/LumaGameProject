@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "IWALS_BaseAttributeSet.h"
+#include "Camera/CameraComponent.h"
 #include "LumaAttributeSet.generated.h"
 
+class UCameraComponent;
 /**
  * 
  */
@@ -14,7 +16,6 @@ class INTERACTION_WITH_ALS_API ULumaAttributeSet : public UIWALS_BaseAttributeSe
 {
 	GENERATED_BODY()
 public:
-
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	
