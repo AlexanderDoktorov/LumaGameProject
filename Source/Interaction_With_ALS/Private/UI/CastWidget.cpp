@@ -18,7 +18,7 @@ void UCastWidget::NativeConstruct()
 	CastSelectorButton->SynchronizeProperties();
 }
 
-void UCastWidget::SetFromCastableAbilityDesc(FCastableAbilityDesc AbilityDesc)
+void UCastWidget::SetFromCastableAbilityDesc(FCastableObjectDesc AbilityDesc)
 {
 	CastableAbilityDesc = AbilityDesc;
 
@@ -68,13 +68,9 @@ void UCastWidget::OnButtonClicked()
 
 void UCastWidget::OnButtonPressed()
 {
+	// Dispatch luma cast ability call to player controller
 	if(auto PlayerController = Cast<ALumaPlayerController>(GetOwningPlayer()))
-	{
-		if(auto LumaCharacter = Cast<ALumaCharacterBase>(PlayerController->GetPawn()))
-		{
-			LumaCharacter->PeformLumaCast(CastableAbilityDesc);
-		}
-	}
+		PlayerController->Call_ActivateLumaCastAbility(CastableAbilityDesc);
 }
 
 void UCastWidget::OnButtonUnHovered()

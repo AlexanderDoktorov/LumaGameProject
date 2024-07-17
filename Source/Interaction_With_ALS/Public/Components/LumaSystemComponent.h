@@ -3,14 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameplayAbilitySpecHandle.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "LumaTypes.h"
 #include "Components/ActorComponent.h"
 #include "LumaSystemComponent.generated.h"
 
-
 class ULumaCastSelectorWidget;
 class ULumaAbilitySystemComponent;
-struct FCastableAbilityDesc;
 class UEmotionSourceComponent;
 class USphereComponent;
 class ULumaCastAbility;
@@ -24,7 +23,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEmotionsChangedDelegate, ULumaSy
 /**
  * @author Doktorov Alexander
  */
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class INTERACTION_WITH_ALS_API ULumaSystemComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -36,7 +35,7 @@ public:
 	FORCEINLINE void SetMaxCasts(const int32& NewMaxCasts) { MaxCasts = NewMaxCasts; }
 	
 	UFUNCTION(BlueprintCallable)
-	TArray<FCastableAbilityDesc> GetMostPrioritizedCasts() const;
+	TArray<FCastableObjectDesc> GetMostPrioritizedCasts() const;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void HandleEmotionalSourcePresense(UEmotionSourceComponent* EmotionSourceComponent);
@@ -46,34 +45,30 @@ public:
 protected:
 	// Emotional Sources that are affecting owner right now
 	TArray<UEmotionSourceComponent*> AffectingEmotionalSources{};
-	
-	// Ability System Component From Owner
-	UPROPERTY()
-	TWeakObjectPtr<ULumaAbilitySystemComponent> OwnerAsc = nullptr;
 
-	// Emotion Attribute Set
-	UPROPERTY()
-	UEmotionsAttributeSet* EmotionAttributes = nullptr;
-
-	// Gameplay effect initilizing default emotion attributes
+	// Gameplay effect that is used to apply emotional effect to the owner actor
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = LumaSystemComponent)
-	TSubclassOf<UGameplayEffect> GE_InitilizeAttributes = nullptr;
+	TSubclassOf<UGameplayEffect> GE_ApplyEmotionalAffect;
 
 	// Max amount of luma casts that owner can select from 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = LumaSystemComponent)
 	int32 MaxCasts = 3;
-
-	// Abilities that are available to a character
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = LumaSystemComponent)
-	TSubclassOf<ULumaCastAbility> LumaCastAbility;
-	FGameplayAbilitySpecHandle LumaCastSpecHandle{};
 	
 	// Data table for ability casts
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LumaSystemComponent, Meta=(RequiredAssetDataTags="/Script/Interaction_With_ALS.CastableAbilityDesc"))
 	class UDataTable* AbilityDescDataTable = nullptr;
 
 	// Corresponding array that initilized by data table that will be modified at runtime (probably)
-	TArray<FCastableAbilityDesc> CastableAbilityDescs{};
+	TArray<FCastableObjectDesc> CastableObjectDescs{};
 private:
+	template<class T = UAbilitySystemComponent>
+	requires std::is_base_of_v<UAbilitySystemComponent, T>
+	T* GetAbilitySystemComponentFromOwner() const
+	{
+		if constexpr(std::is_same_v<T, ULumaSystemComponent>)
+			return UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner());
+		else
+			return Cast<T>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner()));
+	}
 	void InitilizeCastableAbilityDescs();
 };

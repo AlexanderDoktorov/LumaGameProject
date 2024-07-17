@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameplayAbilityBase.h"
-#include "LumaTypes.h"
 #include "LumaCastAbility.generated.h"
 
 enum class EEmotion : uint8;
@@ -17,9 +16,5 @@ class INTERACTION_WITH_ALS_API ULumaCastAbility : public UGameplayAbilityBase
 {
 	GENERATED_BODY()
 public:
-	ULumaCastAbility() = default;
-	FORCEINLINE const FEmotionDescContainer& GetEmotionalRequirements() const { return CastableAbilityDesc.EmotionRequirements; }
-protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FCastableAbilityDesc CastableAbilityDesc{};
+	ULumaCastAbility();
 };

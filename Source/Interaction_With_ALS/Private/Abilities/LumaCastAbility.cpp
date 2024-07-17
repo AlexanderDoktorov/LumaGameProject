@@ -2,20 +2,14 @@
 
 
 #include "Abilities/LumaCastAbility.h"
+#include "LumaGameplayTags.h"
 
-/*
-TMap<EEmotion, float> ULumaCastAbility::GetEmotionsCostMap() const
+ULumaCastAbility::ULumaCastAbility()
 {
-	TMap<EEmotion, float> CostMap{};
-
-	// Find Attributes that has cost and respecitve emotion type
-	TArray<FGameplayAttribute> CostEmotionAttributes{};
-	for (auto& ModifiedAttribute : GetCostEffectSpec().ModifiedAttributes)
-	{
-		if(EEmotion EmotionType = UEmotionsAttributeSet::GetEmotionByAttribute(ModifiedAttribute.Attribute); EmotionType != EEmotion::None)
-			CostMap.Emplace(EmotionType, ModifiedAttribute.TotalMagnitude);
-	}
-
-	return CostMap;
+	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
+	
+	FAbilityTriggerData TriggerData{};
+	TriggerData.TriggerSource = EGameplayAbilityTriggerSource::GameplayEvent;
+	TriggerData.TriggerTag = LumaGameplayTags::TAG_Event_LumaCast;
+	AbilityTriggers.Emplace(TriggerData);
 }
-*/

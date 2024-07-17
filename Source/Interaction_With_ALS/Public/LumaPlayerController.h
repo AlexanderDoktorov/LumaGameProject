@@ -7,6 +7,7 @@
 
 enum class ECastType : uint8;
 struct FInputActionValue;
+struct FCastableObjectDesc;
 class ULumaInputDataAsset;
 /**
  * 
@@ -19,6 +20,7 @@ public:
 	ALumaPlayerController() = default;
 	
 	void Call_PickUpCapsule();
+	void Call_ActivateLumaCastAbility(const FCastableObjectDesc& CastableAbilityDesc);
 	void SwitchLumaSelectorWidget(const FInputActionValue& ActionValue);
 	
 protected:

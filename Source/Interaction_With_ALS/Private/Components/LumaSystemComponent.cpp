@@ -2,15 +2,12 @@
 
 
 #include "Components/LumaSystemComponent.h"
-#include "AbilitySystemInterface.h"
-#include "Abilities/LumaCastAbility.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
 #include "Components/EmotionSourceComponent.h"
 #include "LumaTypes.h"
 #include "GameplayEffect.h"
 #include "Abilities/LumaAbilitySystemComponent.h"
 #include "UI/LumaCastSelectorWidget.h"
-#include "UI/LumaHUD.h"
 
 ULumaSystemComponent::ULumaSystemComponent()
 {
@@ -21,53 +18,17 @@ void ULumaSystemComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	// Add new attribute set so owner's ability system can manage emotional state of the owner
-	if(auto AbilitySystemInterface = Cast<IAbilitySystemInterface>(GetOwner()))
-	{
-		OwnerAsc = Cast<ULumaAbilitySystemComponent>(AbilitySystemInterface->GetAbilitySystemComponent());
-	}
-
-	if(OwnerAsc.IsValid())
-	{
-		EmotionAttributes = NewObject<UEmotionsAttributeSet>(this, UEmotionsAttributeSet::StaticClass());
-		OwnerAsc->AddAttributeSetSubobject(EmotionAttributes);
-	}
-
-	// Initilize Emotions Attributes
-	if (OwnerAsc.IsValid() && GE_InitilizeAttributes)
-	{
-		FGameplayEffectContextHandle EffectContext = OwnerAsc->MakeEffectContext();
-		EffectContext.AddSourceObject(this);
-
-		FGameplayEffectSpecHandle SpecHandle = OwnerAsc->MakeOutgoingSpec(GE_InitilizeAttributes, 1, EffectContext);
-
-		if (SpecHandle.IsValid())
-		{
-			FActiveGameplayEffectHandle GHandle = OwnerAsc->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-		}
-	}
-
 	// Initilize ability desc with data table if present or use array if not specified
 	InitilizeCastableAbilityDescs();
-
-	// Give Luma Ability to an owner, but only on server
-	if (GetOwnerRole() == ROLE_Authority && OwnerAsc.IsValid() && LumaCastAbility)
-	{
-		FGameplayAbilitySpec GameplayAbilitySpec{};
-		GameplayAbilitySpec.Ability = LumaCastAbility.GetDefaultObject();
-		GameplayAbilitySpec.Level = LumaCastAbility.GetDefaultObject()->GetAbilityLevel();
-		GameplayAbilitySpec.SourceObject = this;
-	
-		LumaCastSpecHandle = OwnerAsc->GiveAbility(GameplayAbilitySpec);
-	}
 }
 
-TArray<FCastableAbilityDesc> ULumaSystemComponent::GetMostPrioritizedCasts() const
+TArray<FCastableObjectDesc> ULumaSystemComponent::GetMostPrioritizedCasts() const
 {
-	if(!OwnerAsc.IsValid())
+	auto OwnerAsc = GetAbilitySystemComponentFromOwner();
+	if(!OwnerAsc)
 		return {};
 
-	// Get owner emotions to compare with when adding to the queue
+	// Get owner emotions to compare with when building sorted array
 	FEmotionDescContainer OwnerEmotions{};
 	for(EEmotion Emotion : TEnumRange<EEmotion>())
 	{
@@ -77,20 +38,20 @@ TArray<FCastableAbilityDesc> ULumaSystemComponent::GetMostPrioritizedCasts() con
 		OwnerEmotions.EmplaceEmotion(EmotionDesc);
 	}
 
-	// Build predicate to pass to heap push for buidling a prioritized queue
-	auto SortPredicate = [&OwnerEmotions](const FCastableAbilityDesc& Lhs, const FCastableAbilityDesc& Rhs) -> bool
+	// Build predicate for sorting
+	auto SortPredicate = [&OwnerEmotions](const FCastableObjectDesc& Lhs, const FCastableObjectDesc& Rhs) -> bool
 	{
 		return Lhs.EmotionRequirements.GetDistanceTo(OwnerEmotions) < Rhs.EmotionRequirements.GetDistanceTo(OwnerEmotions);
 	};
 
 	// Sort abilities by distance
-	auto SortedAbilities = CastableAbilityDescs;
+	auto SortedAbilities = CastableObjectDescs;
 	SortedAbilities.Sort(SortPredicate);
 
 	// Make sure MaxCasts doesn't exceed all luma cast abilities number
 	const int32 MaxIndx = FMath::Max(0, FMath::Min(SortedAbilities.Num(), MaxCasts));
 
-	TArray<FCastableAbilityDesc> ReturnArray{};
+	TArray<FCastableObjectDesc> ReturnArray{};
 	// As abilities descs has been added using heap and predicate everything is already sorted, so just return MaxCasts casts
 	for (int32 i = 0; i < MaxIndx; ++i)
 	{
@@ -102,11 +63,25 @@ TArray<FCastableAbilityDesc> ULumaSystemComponent::GetMostPrioritizedCasts() con
 
 void ULumaSystemComponent::HandleEmotionalSourcePresense(UEmotionSourceComponent* EmotionSourceComponent)
 {
-	if(EmotionSourceComponent)
+	// Cannot apply effects if it's not emmiting any emotions
+	if(EmotionSourceComponent && EmotionSourceComponent->IsEmmiting())
 	{
-		if(EmotionSourceComponent->ApplyEmotionalAffect(OwnerAsc.Get()).WasSuccessfullyApplied())
+		UAbilitySystemComponent* OwnerAsc = GetAbilitySystemComponentFromOwner();
+		if (!OwnerAsc || !GE_ApplyEmotionalAffect)
+			return;
+	
+		FGameplayEffectContextHandle EffectContext = OwnerAsc->MakeEffectContext();
+		EffectContext.AddSourceObject(this);
+
+		FGameplayEffectSpecHandle SpecHandle = OwnerAsc->MakeOutgoingSpec(GE_ApplyEmotionalAffect, 1, EffectContext);
+		EmotionSourceComponent->FillEmotionalAffects(*SpecHandle.Data.Get());
+
+		// Apply emotional effect and add active handle to the source component
+		FActiveGameplayEffectHandle ActiveHandle = OwnerAsc->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+		if(ActiveHandle.WasSuccessfullyApplied())
 		{
 			AffectingEmotionalSources.AddUnique(EmotionSourceComponent);
+			EmotionSourceComponent->AddActiveGameplayEffectHandle(ActiveHandle);
 		}
 	}
 }
@@ -114,10 +89,7 @@ void ULumaSystemComponent::HandleEmotionalSourcePresense(UEmotionSourceComponent
 void ULumaSystemComponent::HandleEmotionalSourceAbsence(UEmotionSourceComponent* EmotionSourceComponent)
 {
 	if(EmotionSourceComponent)
-	{
-		EmotionSourceComponent->RemoveAllAffectsFrom(OwnerAsc.Get());
-	}
-	//ApplyEmotionAffectToOwner(EmoitonSourceActor);
+		EmotionSourceComponent->RemoveEffectHandlesFrom(GetAbilitySystemComponentFromOwner());
 }
 
 void ULumaSystemComponent::InitilizeCastableAbilityDescs()
@@ -128,7 +100,7 @@ void ULumaSystemComponent::InitilizeCastableAbilityDescs()
 	// Add castable ability descs using predicate
 	for(auto& DataRow : AbilityDescDataTable->GetRowMap())
 	{
-		if(FCastableAbilityDesc* Data = reinterpret_cast<FCastableAbilityDesc*>(DataRow.Value))
-			CastableAbilityDescs.Emplace(*Data);
+		if(FCastableObjectDesc* Data = reinterpret_cast<FCastableObjectDesc*>(DataRow.Value))
+			CastableObjectDescs.Emplace(*Data);
 	}
 }

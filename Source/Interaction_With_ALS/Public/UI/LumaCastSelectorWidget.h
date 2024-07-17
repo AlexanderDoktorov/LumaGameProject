@@ -28,5 +28,4 @@ public:
 	
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void OnEmotionalAttributeChange();
-	
 };

@@ -151,7 +151,7 @@ struct FEmotionDescContainer
 };
 
 USTRUCT(Blueprintable, BlueprintType)
-struct FCastableAbilityDesc : public FTableRowBase
+struct FCastableObjectDesc : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -176,11 +176,11 @@ struct FCastableAbilityDesc : public FTableRowBase
 		
 		return MostValuableEmotion;
 	}
-	FORCEINLINE const FCastableAbilityDesc& GetMorePrioritizedDescForActor(const FCastableAbilityDesc& OtherAbilityDesc, const FEmotionDescContainer& ActorEmotions) const
+	FORCEINLINE const FCastableObjectDesc& GetMorePrioritizedDescForActor(const FCastableObjectDesc& OtherAbilityDesc, const FEmotionDescContainer& ActorEmotions) const
 	{
 		return GetMorePrioritizedDescForActor(*this, OtherAbilityDesc, ActorEmotions);
 	}
-	FORCEINLINE static const FCastableAbilityDesc& GetMorePrioritizedDescForActor(const FCastableAbilityDesc& Desc0, const FCastableAbilityDesc& Desc1, const FEmotionDescContainer& ActorEmotions)
+	FORCEINLINE static const FCastableObjectDesc& GetMorePrioritizedDescForActor(const FCastableObjectDesc& Desc0, const FCastableObjectDesc& Desc1, const FEmotionDescContainer& ActorEmotions)
 	{
 		float Distance0 = Desc0.EmotionRequirements.GetDistanceTo(ActorEmotions);
 		float Distance1 = Desc1.EmotionRequirements.GetDistanceTo(ActorEmotions);
@@ -191,9 +191,13 @@ struct FCastableAbilityDesc : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
 	TSoftObjectPtr<UTexture2D> CastableObjectPreview = nullptr;
 
-	// Object actor class to cast
+	// Class of the actor to spawn
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
-	TSubclassOf<AActor> CastableObjectClass = nullptr;
+	TSubclassOf<AActor> ObjectClass = nullptr;
+
+	// Object lifetime after which it gets despawned (if ObjectLifetime > 0.f)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
+	float ObjectLifetime = 0.f;
 
 	// Primary Emotion Type
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)

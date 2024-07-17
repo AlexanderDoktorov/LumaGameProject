@@ -56,13 +56,13 @@ FGameplayTag UEmotionsAttributeSet::GetDataTagByEmotion(const EEmotion& Emotion)
 	switch (Emotion)
 	{
 	case EEmotion::Aggressiveness:
-		return TAG_Data_Aggressiveness;
+		return LumaGameplayTags::TAG_Data_Aggressiveness;
 	case EEmotion::Reticence:
-		return TAG_Data_Reticence;
+		return LumaGameplayTags::TAG_Data_Reticence;
 	case EEmotion::SelfPreservation:
-		return TAG_Data_SelfPreservation;
+		return LumaGameplayTags::TAG_Data_SelfPreservation;
 	case EEmotion::Curiosity:
-		return TAG_Data_Curiosity;
+		return LumaGameplayTags::TAG_Data_Curiosity;
 	}
 	return FGameplayTag::EmptyTag;
 }

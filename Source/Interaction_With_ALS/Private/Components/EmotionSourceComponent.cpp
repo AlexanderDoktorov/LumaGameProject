@@ -23,6 +23,15 @@ void UEmotionSourceComponent::BeginPlay()
 			// Overlap only pawn
 			TriggerPrimitive->SetCollisionResponseToAllChannels(ECR_Ignore);
 			TriggerPrimitive->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+
+			// Apply effects to actors that initially overlap this component
+			TArray<AActor*> OverlappingActors{};
+			TriggerPrimitive->GetOverlappingActors(OverlappingActors);
+			for(auto& OverlappingActor : OverlappingActors)
+			{
+				if(auto LumaSystemComponent = Cast<ULumaSystemComponent>(OverlappingActor->GetComponentByClass(ULumaSystemComponent::StaticClass())))
+					LumaSystemComponent->HandleEmotionalSourcePresense(this);
+			}
 		}
 	}
 }
@@ -50,7 +59,21 @@ void UEmotionSourceComponent::RemoveAllAffectsAndStopEmmiting()
 	bIsEmmiting = false;
 }
 
-bool UEmotionSourceComponent::RemoveAllAffectsFrom(UAbilitySystemComponent* TargetASC)
+void UEmotionSourceComponent::FillEmotionalAffects(FGameplayEffectSpec& EffectSpec) const
+{
+	EffectSpec.SetSetByCallerMagnitude(LumaGameplayTags::TAG_Data_Aggressiveness,		EmotionalAffects.FindRef(EEmotion::Aggressiveness));
+	EffectSpec.SetSetByCallerMagnitude(LumaGameplayTags::TAG_Data_Curiosity,			EmotionalAffects.FindRef(EEmotion::Curiosity));
+	EffectSpec.SetSetByCallerMagnitude(LumaGameplayTags::TAG_Data_Reticence,			EmotionalAffects.FindRef(EEmotion::Reticence));
+	EffectSpec.SetSetByCallerMagnitude(LumaGameplayTags::TAG_Data_SelfPreservation,	EmotionalAffects.FindRef(EEmotion::SelfPreservation));
+}
+
+void UEmotionSourceComponent::AddActiveGameplayEffectHandle(
+	const FActiveGameplayEffectHandle& ActiveGameplayEffectHandle)
+{
+	ActiveGameplayEffectHandles.Add(ActiveGameplayEffectHandle);
+}
+
+bool UEmotionSourceComponent::RemoveEffectHandlesFrom(UAbilitySystemComponent* TargetASC)
 {
 	if(!TargetASC)
 		return false;
@@ -64,29 +87,6 @@ bool UEmotionSourceComponent::RemoveAllAffectsFrom(UAbilitySystemComponent* Targ
 	}
 	ActiveGameplayEffectHandles.Shrink();
 	return true;
-}
-
-FActiveGameplayEffectHandle UEmotionSourceComponent::ApplyEmotionalAffect(UAbilitySystemComponent* TargetASC)
-{
-	// Cannot apply effects if it's not emmiting any emotions
- 	if (!TargetASC || !GE_ApplyEmotionalAffect || !bIsEmmiting)
-		return FActiveGameplayEffectHandle{};
-	
-	FGameplayEffectContextHandle EffectContext = TargetASC->MakeEffectContext();
-	EffectContext.AddSourceObject(this);
-
-	FGameplayEffectSpecHandle SpecHandle = TargetASC->MakeOutgoingSpec(GE_ApplyEmotionalAffect, 1, EffectContext);
-	SpecHandle.Data->SetSetByCallerMagnitude(TAG_Data_Aggressiveness,		EmotionalAffects.FindRef(EEmotion::Aggressiveness));
-	SpecHandle.Data->SetSetByCallerMagnitude(TAG_Data_Curiosity,			EmotionalAffects.FindRef(EEmotion::Curiosity));
-	SpecHandle.Data->SetSetByCallerMagnitude(TAG_Data_Reticence,			EmotionalAffects.FindRef(EEmotion::Reticence));
-	SpecHandle.Data->SetSetByCallerMagnitude(TAG_Data_SelfPreservation,	EmotionalAffects.FindRef(EEmotion::SelfPreservation));
-
-	// Apply emotional effect and return active handle
-	FActiveGameplayEffectHandle ActiveHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-	if(ActiveHandle.WasSuccessfullyApplied())
-		ActiveGameplayEffectHandles.Add(ActiveHandle);
-
-	return ActiveHandle;
 }
 
 void UEmotionSourceComponent::OnTriggerEndOverlap_Implementation(UPrimitiveComponent* OverlappedComponent,

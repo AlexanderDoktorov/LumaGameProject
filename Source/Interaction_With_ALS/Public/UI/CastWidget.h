@@ -23,7 +23,7 @@ public:
 	void NativeConstruct() override;
 
 	UFUNCTION(BlueprintCallable)
-	void SetFromCastableAbilityDesc(FCastableAbilityDesc AbilityDesc);
+	void SetFromCastableAbilityDesc(FCastableObjectDesc AbilityDesc);
 
 	UFUNCTION(BlueprintCallable)
 	void MatchButtonColorToCastType();
@@ -54,5 +54,5 @@ protected:
 	UImage* CastImage = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CastWidget)
-	FCastableAbilityDesc CastableAbilityDesc{};
+	FCastableObjectDesc CastableAbilityDesc{};
 };

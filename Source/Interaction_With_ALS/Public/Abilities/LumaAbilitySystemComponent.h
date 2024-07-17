@@ -11,9 +11,7 @@ UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class INTERACTION_WITH_ALS_API ULumaAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
-
 public:
-	// Sets default values for this component's properties
 	ULumaAbilitySystemComponent();
 protected:
 	virtual void BeginPlay() override;

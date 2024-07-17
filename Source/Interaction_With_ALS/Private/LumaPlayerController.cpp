@@ -33,11 +33,17 @@ void ALumaPlayerController::Call_PickUpCapsule()
 	{
 		if(auto GAS = GASPawn->GetAbilitySystemComponent())
 		{
-			const FGameplayTagContainer TagsToActivate {TAG_Interaction_PickItem_Luma };
+			const FGameplayTagContainer TagsToActivate {LumaGameplayTags::TAG_Interaction_PickItem_Luma };
 			if(!GAS->TryActivateAbilitiesByTag(TagsToActivate))
 				UE_LOG(LogAbilitySystemComponent, Warning, TEXT("Unable to activate ability"));
 		}
 	}
+}
+
+void ALumaPlayerController::Call_ActivateLumaCastAbility(const FCastableObjectDesc& CastableAbilityDesc)
+{
+	if(auto pawn = Cast<ALumaCharacterBase>(GetPawn()))
+		pawn->ActivateLumaCastAbility(CastableAbilityDesc);
 }
 
 void ALumaPlayerController::SwitchLumaSelectorWidget(const FInputActionValue& ActionValue)
