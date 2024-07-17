@@ -199,6 +199,10 @@ struct FCastableObjectDesc : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
 	float ObjectLifetime = 0.f;
 
+	// Object Cast Time
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
+	float CastTime = 0.f;
+	
 	// Primary Emotion Type
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
 	EEmotion PrimaryEmotion = EEmotion::None;

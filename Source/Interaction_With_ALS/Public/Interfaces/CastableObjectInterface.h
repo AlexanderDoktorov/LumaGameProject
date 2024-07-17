@@ -25,4 +25,7 @@ class INTERACTION_WITH_ALS_API ICastableObjectInterface
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = CastableObjectInterface)
 	void Notify_SpawnedFromLumaCastAbility(UGameplayAbility* LumaCastAbility);
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = CastableObjectInterface)
+	void Notify_LifetimeExpiredFromLumaCastAbility(UGameplayAbility* LumaCastAbility);
 };

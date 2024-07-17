@@ -5,7 +5,6 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "LumaGameplayTags.h"
 #include "Abilities/LumaAbilitySystemComponent.h"
-#include "Abilities/LumaCastAbility.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
 #include "AttributeSets/LumaAttributeSet.h"
 #include "Objects/CastableObjectData.h"
@@ -23,7 +22,6 @@ ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializ
 
 void ALumaCharacterBase::OnLumaCastPerform_Implementation(const FCastableObjectDesc& CastableAbilityDesc)
 {
-	
 }
 
 void ALumaCharacterBase::ActivateLumaCastAbility(const FCastableObjectDesc& ObjectDesc)
