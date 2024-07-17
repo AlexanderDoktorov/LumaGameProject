@@ -21,6 +21,8 @@ UCLASS()
 class INTERACTION_WITH_ALS_API ALumaCharacterBase : public AGAS_MainCharacterCpp
 {
 	GENERATED_BODY()
+
+	friend class ALumaPlayerController;
 public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
@@ -33,6 +35,8 @@ public:
 
 	int32 GetNumCapsules() const;
 protected:
+	void OnLumaSelectorWidgetOpen() const;
+	void OnLumaSelectorWidgetClosed() const;
 
 	UPROPERTY()
 	TObjectPtr<UEmotionsAttributeSet> EmotionsAttributes = nullptr;

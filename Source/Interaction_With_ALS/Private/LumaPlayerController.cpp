@@ -79,5 +79,12 @@ void ALumaPlayerController::SwitchLumaSelectorWidget(const FInputActionValue& Ac
 		SetInputMode(InputMode);
 		SetShowMouseCursor(false);
 	}
+
+	// Call On Luma Selector Widget Open/Closed on Character
+	if(auto pawn = Cast<ALumaCharacterBase>(GetPawn()))
+	{
+		ActionValue.Get<bool>() ? pawn->OnLumaSelectorWidgetOpen() : pawn->OnLumaSelectorWidgetClosed();
+	}
+	
 }
 

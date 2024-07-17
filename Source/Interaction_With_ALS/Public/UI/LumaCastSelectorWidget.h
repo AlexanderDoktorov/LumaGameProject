@@ -25,7 +25,16 @@ public:
 	virtual void NativeConstruct() override;
 
 	void OnEmotionalAttributeChangeInternal(const FOnAttributeChangeData& AttributeChangeData);
+
+	UFUNCTION()
+	void OnCharacterOverlappedLocallyCastedActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnCharacterEndOverlappLocallyCastedActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void OnEmotionalAttributeChange();
+protected:
+	UPROPERTY(BlueprintReadOnly, Category=LumaCastSelectorWidget, meta = (BindWidget))
+	UCastWidget* LocalCastWidget = nullptr;
 };

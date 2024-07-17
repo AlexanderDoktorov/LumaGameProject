@@ -3,10 +3,14 @@
 #include "LumaCharacterBase.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "EngineUtils.h"
 #include "LumaGameplayTags.h"
 #include "Abilities/LumaAbilitySystemComponent.h"
+#include "Actors/LocallyCastedActor.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
 #include "AttributeSets/LumaAttributeSet.h"
+#include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Objects/CastableObjectData.h"
 
 ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializer) :
@@ -22,6 +26,7 @@ ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializ
 
 void ALumaCharacterBase::OnLumaCastPerform_Implementation(const FCastableObjectDesc& CastableAbilityDesc)
 {
+	// Not realized
 }
 
 void ALumaCharacterBase::ActivateLumaCastAbility(const FCastableObjectDesc& ObjectDesc)
@@ -46,6 +51,43 @@ int32 ALumaCharacterBase::GetNumCapsules() const
 		return -1;
 	
 	return FMath::RoundToInt(GetAbilitySystemComponent()->GetNumericAttribute(ULumaAttributeSet::GetLumaAttribute()));
+}
+
+void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const
+{
+	// Get all actors of ALocallyCastedActor Class
+	TArray<ALocallyCastedActor*> LocalCasts;
+	if (UWorld* World = GEngine->GetWorldFromContextObject(this, EGetWorldErrorMode::LogAndReturnNull))
+		for (TActorIterator<ALocallyCastedActor> It(World, ALocallyCastedActor::StaticClass()); It; ++It)
+			LocalCasts.Add(*It);
+
+	// Show local casts for player
+	for(auto& LocalCast : LocalCasts)
+	{
+		if(!LocalCast)
+			continue;
+
+		LocalCast->SetActorHiddenInGame(false);
+		LocalCast->SetPrimitiveCollisionEnabled(true);
+	}
+}
+
+void ALumaCharacterBase::OnLumaSelectorWidgetClosed() const
+{
+	// Get all actors of ALocallyCastedActor Class
+	TArray<ALocallyCastedActor*> LocalCasts;
+	if (UWorld* World = GEngine->GetWorldFromContextObject(this, EGetWorldErrorMode::LogAndReturnNull))
+		for (TActorIterator<ALocallyCastedActor> It(World, ALocallyCastedActor::StaticClass()); It; ++It)
+			LocalCasts.Add(*It);
+
+	// Hide local casts for player
+	for(auto& LocalCast : LocalCasts)
+	{
+		if(!LocalCast)
+			continue;
+
+		LocalCast->SetActorHiddenInGame(true);
+	}
 }
 
 void ALumaCharacterBase::BeginPlay()
