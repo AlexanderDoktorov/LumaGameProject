@@ -3,8 +3,20 @@
 
 #include "LumaGameplayTags.h"
 
-UE_DEFINE_GAMEPLAY_TAG(TAG_Data_LumaToGather, "Data.LumaToGather");
-UE_DEFINE_GAMEPLAY_TAG(TAG_Interaction_PickItem_Luma, "Interaction.PickItem.Luma");
-UE_DEFINE_GAMEPLAY_TAG(TAG_Action_LumaCast, "Action.LumaCast");
-UE_DEFINE_GAMEPLAY_TAG(TAG_Event_LumaCast, "Event.LumaCast");
+namespace LumaGameplayTags
+{
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_LumaToGather, "Data.LumaToGather");
+
+	// Emotions set by callers data tags
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Aggressiveness,		"Data.Aggressiveness")
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Reticence,			"Data.Reticence")
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_SelfPreservation,	"Data.SelfPreservation")
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Curiosity,			"Data.Curiosity")
+
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Interaction_PickItem_Luma, "Interaction.PickItem.Luma");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Action_LumaCast, "Action.LumaCast");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Event_LumaCast, "Event.LumaCast");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Action_SpawnCapsule, "Action.SpawnCapsule");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast, "Ability.LumaCast");
+}
 

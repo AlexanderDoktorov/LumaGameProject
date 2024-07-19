@@ -7,6 +7,7 @@ public class Interaction_With_ALSTarget : TargetRules
 {
 	public Interaction_With_ALSTarget(TargetInfo Target) : base(Target)
 	{
+		bEnableCppCoroutinesForEvaluation = true;
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		CppStandard = CppStandardVersion.Cpp20;

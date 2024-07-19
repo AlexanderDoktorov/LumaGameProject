@@ -3,34 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LumaTypes.h"
 #include "Blueprint/UserWidget.h"
 #include "CastWidget.generated.h"
 
-UENUM(BlueprintType)
-enum class ECastType : uint8
-{
-	Agressive,
-	Quiet,
-	Cautious
-};
-
-static FColor GetCastColor(const ECastType& CastType)
-{
-	switch (CastType) {
-	case ECastType::Agressive:
-		return FColor::Red;
-		break;
-	case ECastType::Quiet:
-		return FColor::Cyan;
-		break;
-	case ECastType::Cautious:
-		return FColor::Green;
-		break;
-	}
-	return FColor::White;
-}
-
+struct FCastableAbilityDesc;
+enum class EEmotion : uint8;
+class UImage;
 class UButton;
+
 /**
  * 
  */
@@ -42,7 +23,13 @@ public:
 	void NativeConstruct() override;
 
 	UFUNCTION(BlueprintCallable)
+	void SetFromCastableAbilityDesc(FCastableObjectDesc AbilityDesc);
+
+	UFUNCTION(BlueprintCallable)
 	void MatchButtonColorToCastType();
+
+	UFUNCTION(BlueprintCallable)
+	void MatchImageTexture();
 
 	UFUNCTION(BlueprintCallable)
 	void SyncShapeBetweenStyles();
@@ -60,9 +47,12 @@ protected:
 	UFUNCTION()
 	void OnButtonUnHovered();
 	
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UButton* CastSelectorButton = nullptr;
 
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UImage* CastImage = nullptr;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CastWidget)
-	ECastType CastType = ECastType::Agressive;
+	FCastableObjectDesc CastableAbilityDesc{};
 };

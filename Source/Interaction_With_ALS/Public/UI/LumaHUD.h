@@ -18,6 +18,9 @@ class INTERACTION_WITH_ALS_API ALumaHUD : public AHUD
 	friend class ALumaPlayerController;
 public:
 	ALumaHUD();
+
+	ULumaCastSelectorWidget* GetLumaSelectorWidget() const { return LumaSelectorWidget; }
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;

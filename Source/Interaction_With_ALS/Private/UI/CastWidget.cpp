@@ -2,9 +2,10 @@
 
 
 #include "UI/CastWidget.h"
-
+#include "LumaCharacterBase.h"
 #include "LumaPlayerController.h"
 #include "Components/Button.h"
+#include "Components/Image.h"
 
 void UCastWidget::NativeConstruct()
 {
@@ -17,13 +18,30 @@ void UCastWidget::NativeConstruct()
 	CastSelectorButton->SynchronizeProperties();
 }
 
+void UCastWidget::SetFromCastableAbilityDesc(FCastableObjectDesc AbilityDesc)
+{
+	CastableAbilityDesc = AbilityDesc;
+
+	MatchImageTexture();
+	MatchButtonColorToCastType();
+}
+
 void UCastWidget::MatchButtonColorToCastType()
 {
+	if(CastableAbilityDesc.GetPrimaryEmotion() == EEmotion::None)
+		return;
+
 	FButtonStyle ButtonStyle = CastSelectorButton->GetStyle();
-	ButtonStyle.Normal.TintColor = GetCastColor(CastType);
-	ButtonStyle.Hovered.TintColor = GetCastColor(CastType).ReinterpretAsLinear() * 0.55f;
-	ButtonStyle.Pressed.TintColor = GetCastColor(CastType).ReinterpretAsLinear() * 0.15f;
+	ButtonStyle.Normal.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion);
+	ButtonStyle.Hovered.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion).ReinterpretAsLinear() * 0.55f;
+	ButtonStyle.Pressed.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion).ReinterpretAsLinear() * 0.15f;
 	CastSelectorButton->SetStyle(ButtonStyle);
+}
+
+void UCastWidget::MatchImageTexture()
+{
+	if(CastImage)
+		CastImage->SetBrushFromSoftTexture(CastableAbilityDesc.CastableObjectPreview);
 }
 
 void UCastWidget::SyncShapeBetweenStyles()
@@ -45,18 +63,14 @@ void UCastWidget::OnButtonHovered()
 
 void UCastWidget::OnButtonClicked()
 {
-	if(auto PlayerController = Cast<ALumaPlayerController>(GetOwningPlayer()))
-	{
-		PlayerController->Call_TryPerformLumaCast(CastType);
-	}
+	OnButtonPressed();
 }
 
 void UCastWidget::OnButtonPressed()
 {
+	// Dispatch luma cast ability call to player controller
 	if(auto PlayerController = Cast<ALumaPlayerController>(GetOwningPlayer()))
-	{
-		PlayerController->Call_TryPerformLumaCast(CastType);
-	}
+		PlayerController->Call_ActivateLumaCastAbility(CastableAbilityDesc);
 }
 
 void UCastWidget::OnButtonUnHovered()

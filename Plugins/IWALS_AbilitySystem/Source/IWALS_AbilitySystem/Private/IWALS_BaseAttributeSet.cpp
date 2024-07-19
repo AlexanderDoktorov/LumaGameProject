@@ -2,7 +2,6 @@
 #include "IWALS_BaseAttributeSet.h"
 #include "Net/UnrealNetwork.h"
 
-
 UIWALS_BaseAttributeSet::UIWALS_BaseAttributeSet()
 {
 }

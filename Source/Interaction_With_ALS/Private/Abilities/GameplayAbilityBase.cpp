@@ -2,8 +2,7 @@
 
 
 #include "Abilities/GameplayAbilityBase.h"
-#include "LumaAttributeSet.h"
-#include "LumaGatherModMagnituteCalculation.h"
+#include "AbilitySystemComponent.h"
 
 UGameplayAbilityBase::UGameplayAbilityBase(const FObjectInitializer& ObjectInitilizer)
 {
@@ -16,12 +15,19 @@ UGameplayEffect* UGameplayAbilityBase::GetCostGameplayEffect() const
 
 	// Modifiers from ModifierInfos Array;
 	GE_CostEffect->Modifiers = ModifierInfos;
-    
+	
 	return GE_CostEffect;
 }
 
+FGameplayEffectSpec UGameplayAbilityBase::GetCostEffectSpec() const
+{
+	if(auto ASC = GetAbilitySystemComponentFromActorInfo())
+		return FGameplayEffectSpec(GetCostGameplayEffect(), ASC->MakeEffectContext(), GetAbilityLevel());
+	return {};
+}
+
 void UGameplayAbilityBase::ApplyCost(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
+                                     const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
 {
 	Super::ApplyCost(Handle, ActorInfo, ActivationInfo);
 

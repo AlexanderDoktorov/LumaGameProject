@@ -3,25 +3,54 @@
 #include "LumaCharacterBase.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "LumaAttributeSet.h"
 #include "LumaGameplayTags.h"
-#include "Abilities/LumaCastAbilityEventData.h"
+#include "Abilities/LumaAbilitySystemComponent.h"
+#include "Abilities/LumaCastAbility.h"
+#include "AttributeSets/EmotionsAttributeSet.h"
+#include "AttributeSets/LumaAttributeSet.h"
+#include "Objects/CastableObjectData.h"
 
 ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializer) :
-	Super(ObjectInitializer.SetDefaultSubobjectClass("Attributes", ULumaAttributeSet::StaticClass()))
+	Super(
+		ObjectInitializer.SetDefaultSubobjectClass("Attributes", ULumaAttributeSet::StaticClass())
+		.SetDefaultSubobjectClass("AbilitySystemComp", ULumaAbilitySystemComponent::StaticClass()))
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	// Add new attribute set so ability system && luma system component can manage emotional state of the owner
+	EmotionsAttributes = CreateDefaultSubobject<UEmotionsAttributeSet>("Emotion attributes");
 }
 
-void ALumaCharacterBase::TryPerformLumaCast(const ECastType& CastType)
+void ALumaCharacterBase::OnLumaCastPerform_Implementation(const FCastableObjectDesc& CastableAbilityDesc)
 {
-	// Fill Payload with info
-	FGameplayEventData Payload{};
-	auto EventData = NewObject<ULumaCastAbilityEventData>(GetTransientPackage(), "CastEventData");
-	EventData->CastType = CastType;
-	Payload.OptionalObject = EventData;
+	
+}
 
-	// Send ability an event and if it has trigger set up it will activate the ability with this payload
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, TAG_Event_LumaCast, Payload);
+void ALumaCharacterBase::ActivateLumaCastAbility(const FCastableObjectDesc& ObjectDesc)
+{
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	check(ASC);
+	
+	UCastableObjectData* ObjectData = NewObject<UCastableObjectData>(GetTransientPackage());
+	ObjectData->CastableObjectDesc = ObjectDesc;
+	
+	FGameplayEventData EventData{};
+	EventData.EventTag = LumaGameplayTags::TAG_Event_LumaCast;
+	EventData.OptionalObject = ObjectData;
+	EventData.Instigator = GetController();
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, EventData.EventTag, EventData);
+}
+
+int32 ALumaCharacterBase::GetNumCapsules() const
+{
+	if(!GetAbilitySystemComponent())
+		return -1;
+	
+	return FMath::RoundToInt(GetAbilitySystemComponent()->GetNumericAttribute(ULumaAttributeSet::GetLumaAttribute()));
+}
+
+void ALumaCharacterBase::BeginPlay()
+{
+	Super::BeginPlay();
 }

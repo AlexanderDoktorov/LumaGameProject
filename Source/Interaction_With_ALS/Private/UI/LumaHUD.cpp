@@ -13,12 +13,10 @@ void ALumaHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto PlayerController = GetOwningPlayerController();
-
 	if(LumaSelectorClass)
 	{
 		// Create core hud and add it to viewport
-		LumaSelectorWidget = CreateWidget<ULumaCastSelectorWidget>(PlayerController, LumaSelectorClass);
+		LumaSelectorWidget = CreateWidget<ULumaCastSelectorWidget>(GetOwningPlayerController(), LumaSelectorClass);
 		LumaSelectorWidget->AddToViewport(5);
 		LumaSelectorWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}

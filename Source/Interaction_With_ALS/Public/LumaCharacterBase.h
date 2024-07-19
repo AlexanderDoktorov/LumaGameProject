@@ -4,11 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GAS_MainCharacterCpp.h"
-
+#include "LumaTypes.h"
+#include "Abilities/LumaAbilitySystemComponent.h"
 #include "LumaCharacterBase.generated.h"
 
+class UEmotionsAttributeSet;
+class ULumaAbilitySystemComponent;
+class ICastableInterface;
 enum class ECastType : uint8;
 class ALumaSourceBase;
+
 /**
  * @author Doktorov Alexander
  */
@@ -19,5 +24,18 @@ class INTERACTION_WITH_ALS_API ALumaCharacterBase : public AGAS_MainCharacterCpp
 public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
-	void TryPerformLumaCast(const ECastType& CastType);
+	FORCEINLINE ULumaAbilitySystemComponent* GetLumaAbilitySystemComponent() const { return Cast<ULumaAbilitySystemComponent>(GetAbilitySystemComponent()); }
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnLumaCastPerform(const FCastableObjectDesc& CastableAbilityDesc);
+
+	void ActivateLumaCastAbility(const FCastableObjectDesc& ObjectDesc);
+
+	int32 GetNumCapsules() const;
+protected:
+
+	UPROPERTY()
+	TObjectPtr<UEmotionsAttributeSet> EmotionsAttributes = nullptr;
+	
+	virtual void BeginPlay() override;
 };

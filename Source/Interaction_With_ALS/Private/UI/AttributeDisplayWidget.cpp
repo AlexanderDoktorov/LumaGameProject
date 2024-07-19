@@ -2,11 +2,8 @@
 
 
 #include "UI/AttributeDisplayWidget.h"
-
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
-#include "GameplayCueInterface.h"
-#include "LumaAttributeSet.h"
 #include "Components/TextBlock.h"
 
 void UAttributeDisplayWidget::NativeConstruct()
@@ -25,7 +22,7 @@ FText UAttributeDisplayWidget::GetAttributeText() const
 			if(auto GAS = AbilitySystemInterfaceOwner->GetAbilitySystemComponent())
 			{
 				if(GameplayAttribute.IsValid())
-					return FText::AsNumber(GAS->GetNumericAttribute(GameplayAttribute));
+					return FText::AsNumber(FMath::RoundToInt(GAS->GetNumericAttribute(GameplayAttribute)));
 			}
 		}
 	}

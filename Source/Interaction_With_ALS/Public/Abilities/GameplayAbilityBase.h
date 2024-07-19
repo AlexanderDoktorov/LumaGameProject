@@ -16,6 +16,7 @@ class INTERACTION_WITH_ALS_API UGameplayAbilityBase : public UGameplayAbility
 public:
 	UGameplayAbilityBase(const FObjectInitializer& ObjectInitilizer = FObjectInitializer::Get());
 	virtual UGameplayEffect* GetCostGameplayEffect() const override;
+	FGameplayEffectSpec GetCostEffectSpec() const;
 	virtual void ApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const override;
 	void AddAttributeCost(const FGameplayModifierInfo& ModifierInfo);
 	FGameplayModifierInfo GetModInfoByAttribute(const FGameplayAttribute& Attribute) const;
