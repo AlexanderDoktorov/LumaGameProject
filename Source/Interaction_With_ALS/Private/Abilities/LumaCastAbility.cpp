@@ -4,12 +4,16 @@
 #include "Abilities/LumaCastAbility.h"
 #include "LumaGameplayTags.h"
 
-ULumaCastAbility::ULumaCastAbility()
+ULumaContextCastAbility::ULumaContextCastAbility()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
-	
+
+	AbilityTags.AddTag(LumaGameplayTags::TAG_Ability_LumaCast_Context);
+
+	/*
 	FAbilityTriggerData TriggerData{};
 	TriggerData.TriggerSource = EGameplayAbilityTriggerSource::GameplayEvent;
 	TriggerData.TriggerTag = LumaGameplayTags::TAG_Event_LumaCast;
 	AbilityTriggers.Emplace(TriggerData);
+	*/
 }

@@ -7,6 +7,7 @@
 #include "GameplayEffectTypes.h"
 #include "LumaCastSelectorWidget.generated.h"
 
+class ULocalCastWidget;
 class ULumaSystemComponent;
 class UEmotionSourceComponent;
 class UCanvasPanel;
@@ -36,5 +37,5 @@ public:
 	void OnEmotionalAttributeChange();
 protected:
 	UPROPERTY(BlueprintReadOnly, Category=LumaCastSelectorWidget, meta = (BindWidget))
-	UCastWidget* LocalCastWidget = nullptr;
+	ULocalCastWidget* LocalCastWidget = nullptr;
 };

@@ -72,6 +72,10 @@
 		{
 			"Name": "ModelingToolsEditorMode",
 			"Enabled": true
+		},
+		{
+			"Name": "UE5CoroGAS",
+			"Enabled": true
 		}
 	]
 }

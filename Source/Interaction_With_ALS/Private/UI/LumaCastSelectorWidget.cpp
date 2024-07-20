@@ -31,6 +31,10 @@ void ULumaCastSelectorWidget::NativeConstruct()
 
 	// By default local cast widget is hidden
 	LocalCastWidget->SetVisibility(ESlateVisibility::Collapsed);
+	LocalCastWidget->OnLumaCast().AddLambda([this]()
+	{
+		LocalCastWidget->SetVisibility(ESlateVisibility::Collapsed);
+	});
 }
 
 void ULumaCastSelectorWidget::OnEmotionalAttributeChangeInternal(const FOnAttributeChangeData& AttributeChangeData)
@@ -42,42 +46,26 @@ void ULumaCastSelectorWidget::OnCharacterOverlappedLocallyCastedActor(UPrimitive
 	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 	const FHitResult& SweepResult)
 {
+	// If we overlapp locally casted actor 
 	if(auto LocallyCastedActor = Cast<ALocallyCastedActor>(OtherActor))
-		if(LocalCastWidget)
+	{
+		// And the primitive is cast primitive
+		if(LocallyCastedActor->IsCastPrimitive(OtherComp) && LocalCastWidget && !LocallyCastedActor->HasBeenReseted())
 		{
-			LocalCastWidget->SetFromCastableAbilityDesc(LocallyCastedActor->GetCastableObjectDesc());
+			// Show local cast widget on screen
+			LocalCastWidget->SetLocalActor(LocallyCastedActor);
+			LocalCastWidget->SetPreview(LocallyCastedActor->LocalCastPreview);
 			LocalCastWidget->SetVisibility(ESlateVisibility::Visible);
 		}
+	}
 }
 
 void ULumaCastSelectorWidget::OnCharacterEndOverlappLocallyCastedActor(UPrimitiveComponent* OverlappedComponent,
 	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	if(LocalCastWidget)
-		LocalCastWidget->SetVisibility(ESlateVisibility::Collapsed);
-}
-
-/*
-void ULumaCastSelectorWidget::UpdateSelector()
-{
-	if(!CastWidgetClass || !CanvasPanel)
-		return;
-
-	for(int32 i = 0; i < NumSlots; ++i)
 	{
-		float Degrees = (360.f / NumSlots) * i;
-		FVector2d CenterOffset = Radius * FVector2d(FMath::Cos(Degrees), FMath::Sin(Degrees));
-
-		UCastWidget* NewCastWidget = Cast<UCastWidget>(CreateWidget(GetOwningPlayer(), CastWidgetClass, FName(FString("Cast Widget#").Append(FString::FromInt(i)))));
-		CastWidgets.Add(NewCastWidget);
-
-		// Set Position of the widget relative to panel center
-		if(auto PanelSlot = CanvasPanel->AddChildToCanvas(NewCastWidget))
-		{
-			PanelSlot->SetAutoSize(true);
-			PanelSlot->SetAnchors({ 0.5f, 0.5f, 0.5f, 0.5f});
-			PanelSlot->SetPosition(CenterOffset);
-		}
+		LocalCastWidget->SetLocalActor(nullptr);
+		LocalCastWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}
 }
-*/

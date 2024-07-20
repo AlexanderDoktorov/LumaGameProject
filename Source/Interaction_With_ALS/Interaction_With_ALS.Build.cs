@@ -22,7 +22,7 @@ public class Interaction_With_ALS : ModuleRules
 			"EnhancedInput",
 			"UE5Coro",
 			"UE5CoroGAS",
-			"UnrealEd"
+			"UnrealEd",
 			"FunctionalUE5"
 		});
 

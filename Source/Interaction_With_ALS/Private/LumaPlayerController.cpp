@@ -3,7 +3,7 @@
 #include "LumaPlayerController.h"
 #include "EnhancedInputComponent.h"
 #include "LumaCharacterBase.h"
-#include "LumaInputDataAsset.h"
+#include "Objects/LumaInputDataAsset.h"
 #include "EnhancedInputSubsystems.h"
 #include "LumaGameplayTags.h"
 #include "UI/LumaHUD.h"
@@ -38,12 +38,6 @@ void ALumaPlayerController::Call_PickUpCapsule()
 				UE_LOG(LogAbilitySystemComponent, Warning, TEXT("Unable to activate ability"));
 		}
 	}
-}
-
-void ALumaPlayerController::Call_ActivateLumaCastAbility(const FCastableObjectDesc& CastableAbilityDesc)
-{
-	if(auto pawn = Cast<ALumaCharacterBase>(GetPawn()))
-		pawn->ActivateLumaCastAbility(CastableAbilityDesc);
 }
 
 void ALumaPlayerController::SwitchLumaSelectorWidget(const FInputActionValue& ActionValue)

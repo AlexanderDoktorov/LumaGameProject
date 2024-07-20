@@ -5,14 +5,16 @@
 #include "CoreMinimal.h"
 #include "GAS_MainCharacterCpp.h"
 #include "LumaTypes.h"
-#include "Abilities/LumaAbilitySystemComponent.h"
+#include "Components/LumaAbilitySystemComponent.h"
 #include "LumaCharacterBase.generated.h"
 
+class ULumaAbilitiesDataAsset;
 class UEmotionsAttributeSet;
 class ULumaAbilitySystemComponent;
 class ICastableInterface;
 enum class ECastType : uint8;
 class ALumaSourceBase;
+class ALocallyCastedActor;
 
 /**
  * @author Doktorov Alexander
@@ -27,18 +29,17 @@ public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	FORCEINLINE ULumaAbilitySystemComponent* GetLumaAbilitySystemComponent() const { return Cast<ULumaAbilitySystemComponent>(GetAbilitySystemComponent()); }
-
-	UFUNCTION(BlueprintNativeEvent)
-	void OnLumaCastPerform(const FCastableObjectDesc& CastableAbilityDesc);
-
-	void ActivateLumaCastAbility(const FCastableObjectDesc& ObjectDesc);
-
+	
 	int32 GetNumCapsules() const;
 protected:
 	void OnLumaSelectorWidgetOpen() const;
 	void OnLumaSelectorWidgetClosed() const;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<ULumaAbilitiesDataAsset> LumaAbilitiesDataAsset = nullptr;
+
+	// All Luma Abilities Data
+	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UEmotionsAttributeSet> EmotionsAttributes = nullptr;
 	
 	virtual void BeginPlay() override;

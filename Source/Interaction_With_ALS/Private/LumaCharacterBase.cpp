@@ -1,17 +1,12 @@
 // The use of the project for commercial purposes is partially allowed. Distribution of project files is PROHIBITED. The ban does not apply to packaged versions that have encrypted files. One of the formats allowed for distribution is the game in the form of an .exe file.
 
 #include "LumaCharacterBase.h"
-
-#include "AbilitySystemBlueprintLibrary.h"
 #include "EngineUtils.h"
-#include "LumaGameplayTags.h"
-#include "Abilities/LumaAbilitySystemComponent.h"
+#include "Components/LumaAbilitySystemComponent.h"
 #include "Actors/LocallyCastedActor.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
 #include "AttributeSets/LumaAttributeSet.h"
-#include "Components/CapsuleComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "Objects/CastableObjectData.h"
+#include "Objects/CastableObjectsDataAsset.h"
 
 ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializer) :
 	Super(
@@ -22,27 +17,6 @@ ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializ
 
 	// Add new attribute set so ability system && luma system component can manage emotional state of the owner
 	EmotionsAttributes = CreateDefaultSubobject<UEmotionsAttributeSet>("Emotion attributes");
-}
-
-void ALumaCharacterBase::OnLumaCastPerform_Implementation(const FCastableObjectDesc& CastableAbilityDesc)
-{
-	// Not realized
-}
-
-void ALumaCharacterBase::ActivateLumaCastAbility(const FCastableObjectDesc& ObjectDesc)
-{
-	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
-	check(ASC);
-	
-	UCastableObjectData* ObjectData = NewObject<UCastableObjectData>(GetTransientPackage());
-	ObjectData->CastableObjectDesc = ObjectDesc;
-	
-	FGameplayEventData EventData{};
-	EventData.EventTag = LumaGameplayTags::TAG_Event_LumaCast;
-	EventData.OptionalObject = ObjectData;
-	EventData.Instigator = GetController();
-
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, EventData.EventTag, EventData);
 }
 
 int32 ALumaCharacterBase::GetNumCapsules() const
@@ -67,8 +41,8 @@ void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const
 		if(!LocalCast)
 			continue;
 
-		LocalCast->SetActorHiddenInGame(false);
-		LocalCast->SetPrimitiveCollisionEnabled(true);
+		if(!LocalCast->HasBeenReseted())
+			LocalCast->OnLumaSelectorWidgetOpen();
 	}
 }
 
@@ -85,12 +59,25 @@ void ALumaCharacterBase::OnLumaSelectorWidgetClosed() const
 	{
 		if(!LocalCast)
 			continue;
-
-		LocalCast->SetActorHiddenInGame(true);
+		if(!LocalCast->HasBeenReseted())
+			LocalCast->OnLumaSelectorWidgetClosed();
 	}
 }
 
 void ALumaCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Grant abilities, but only on the server	
+	if (GetLocalRole() != ROLE_Authority || !GetAbilitySystemComponent())
+		return;
+
+	if(!LumaAbilitiesDataAsset)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LumaAbilitiesDataAsset isn't specified for [%s]"), *GetName());
+		return;
+	}
+
+	// Give luma cast abilities
+	LumaAbilitiesDataAsset->GiveAbilitiesTo(GetAbilitySystemComponent(), this);
 }

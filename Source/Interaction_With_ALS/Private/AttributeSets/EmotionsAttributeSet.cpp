@@ -5,7 +5,7 @@
 
 #include "LumaGameplayTags.h"
 #include "LumaTypes.h"
-#include "Abilities/LumaAbilitySystemComponent.h"
+#include "Components/LumaAbilitySystemComponent.h"
 #include "Net/UnrealNetwork.h"
 
 TMap<EEmotion, FGameplayAttribute> UEmotionsAttributeSet::Map{};

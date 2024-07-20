@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "LumaPlayerController.generated.h"
 
+class ALocallyCastedActor;
+struct FLocalCastObjectDesc;
+struct FContextCastObjectDesc;
 enum class ECastType : uint8;
 struct FInputActionValue;
 struct FCastableObjectDesc;
@@ -20,7 +23,6 @@ public:
 	ALumaPlayerController() = default;
 	
 	void Call_PickUpCapsule();
-	void Call_ActivateLumaCastAbility(const FCastableObjectDesc& CastableAbilityDesc);
 	void SwitchLumaSelectorWidget(const FInputActionValue& ActionValue);
 	
 protected:
