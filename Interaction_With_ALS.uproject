@@ -11,6 +11,11 @@
 			"AdditionalDependencies": [
 				"GameplayAbilities"
 			]
+		},
+		{
+			"Name": "FunctionalUE5",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
