@@ -6,7 +6,9 @@
 #include "Components/EmotionSourceComponent.h"
 #include "LumaTypes.h"
 #include "GameplayEffect.h"
-#include "Abilities/LumaAbilitySystemComponent.h"
+#include "LumaGameplayTags.h"
+#include "Abilities/LumaCastAbility.h"
+#include "Components/LumaAbilitySystemComponent.h"
 #include "UI/LumaCastSelectorWidget.h"
 
 ULumaSystemComponent::ULumaSystemComponent()
@@ -17,12 +19,9 @@ ULumaSystemComponent::ULumaSystemComponent()
 void ULumaSystemComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	// Initilize ability desc with data table if present or use array if not specified
-	InitilizeCastableAbilityDescs();
 }
 
-TArray<FCastableObjectDesc> ULumaSystemComponent::GetMostPrioritizedCasts() const
+TArray<ULumaContextCastAbility*> ULumaSystemComponent::GetMostPrioritizedCasts() const
 {
 	auto OwnerAsc = GetAbilitySystemComponentFromOwner();
 	if(!OwnerAsc)
@@ -38,24 +37,36 @@ TArray<FCastableObjectDesc> ULumaSystemComponent::GetMostPrioritizedCasts() cons
 		OwnerEmotions.EmplaceEmotion(EmotionDesc);
 	}
 
-	// Build predicate for sorting
-	auto SortPredicate = [&OwnerEmotions](const FCastableObjectDesc& Lhs, const FCastableObjectDesc& Rhs) -> bool
-	{
-		return Lhs.EmotionRequirements.GetDistanceTo(OwnerEmotions) < Rhs.EmotionRequirements.GetDistanceTo(OwnerEmotions);
-	};
-
+	// Gather all luma abilities specs from owner ASC and sort them by predicate
 	// Sort abilities by distance
-	auto SortedAbilities = CastableObjectDescs;
-	SortedAbilities.Sort(SortPredicate);
+	TArray<FGameplayAbilitySpec*> Specs{};
+	FGameplayTagContainer Tags { LumaGameplayTags::TAG_Ability_LumaCast_Context };
+	OwnerAsc->GetActivatableGameplayAbilitySpecsByAllMatchingTags(Tags, Specs, false);
 
+	// Find context cast abilities
+	TArray<ULumaContextCastAbility*> Abilities{};
+	for(auto& Spec : Specs)
+	{
+		if(ULumaContextCastAbility* ContextCastAbility = Cast<ULumaContextCastAbility>(Spec->Ability.Get()))
+			Abilities.Add(ContextCastAbility);
+	}
+
+	// Build predicate for sorting
+	auto SortPredicate = [&OwnerEmotions](const ULumaContextCastAbility* Lhs,const ULumaContextCastAbility* Rhs) -> bool
+	{
+		return Lhs->GetEmotionRequirements().GetDistanceTo(OwnerEmotions) < Rhs->GetEmotionRequirements().GetDistanceTo(OwnerEmotions);
+	};
+	Algo::Sort(Abilities, SortPredicate);
+	
 	// Make sure MaxCasts doesn't exceed all luma cast abilities number
-	const int32 MaxIndx = FMath::Max(0, FMath::Min(SortedAbilities.Num(), MaxCasts));
+	const int32 MaxIndx = FMath::Max(0, FMath::Min(Abilities.Num(), MaxCasts));
 
-	TArray<FCastableObjectDesc> ReturnArray{};
+	TArray<ULumaContextCastAbility*> ReturnArray{};
+	ReturnArray.Reserve(MaxIndx);
 	// As abilities descs has been added using heap and predicate everything is already sorted, so just return MaxCasts casts
 	for (int32 i = 0; i < MaxIndx; ++i)
 	{
-		ReturnArray.Emplace(SortedAbilities[i]);
+		ReturnArray.Emplace(Abilities[i]);
 	}
 	
 	return ReturnArray;
@@ -90,17 +101,4 @@ void ULumaSystemComponent::HandleEmotionalSourceAbsence(UEmotionSourceComponent*
 {
 	if(EmotionSourceComponent)
 		EmotionSourceComponent->RemoveEffectHandlesFrom(GetAbilitySystemComponentFromOwner());
-}
-
-void ULumaSystemComponent::InitilizeCastableAbilityDescs()
-{
-	if(!AbilityDescDataTable || !AbilityDescDataTable->IsValidLowLevel())
-		return;
-	
-	// Add castable ability descs using predicate
-	for(auto& DataRow : AbilityDescDataTable->GetRowMap())
-	{
-		if(FCastableObjectDesc* Data = reinterpret_cast<FCastableObjectDesc*>(DataRow.Value))
-			CastableObjectDescs.Emplace(*Data);
-	}
 }

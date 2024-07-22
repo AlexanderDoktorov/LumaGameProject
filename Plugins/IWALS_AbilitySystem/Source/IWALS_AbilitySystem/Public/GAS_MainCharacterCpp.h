@@ -120,5 +120,4 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Pawn|Input", meta = (DisplayName = "Try Create Inputs Binds For GAS", Keywords = "Inputs Player"))
 	virtual void TryCreateInputsGAS();
-
 };

@@ -7,6 +7,11 @@ namespace LumaGameplayTags
 {
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_LumaToGather, "Data.LumaToGather");
 
+	// Luma Cast Abilities
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast, "Ability.LumaCast");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast_Local, "Ability.LumaCast.Local");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast_Context, "Ability.LumaCast.Context");
+
 	// Emotions set by callers data tags
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Aggressiveness,		"Data.Aggressiveness")
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Reticence,			"Data.Reticence")
@@ -17,6 +22,5 @@ namespace LumaGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Action_LumaCast, "Action.LumaCast");
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Event_LumaCast, "Event.LumaCast");
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Action_SpawnCapsule, "Action.SpawnCapsule");
-	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast, "Ability.LumaCast");
 }
 

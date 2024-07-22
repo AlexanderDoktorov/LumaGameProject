@@ -2,63 +2,57 @@
 
 
 #include "UI/CastWidget.h"
+
+#include "AbilitySystemGlobals.h"
 #include "LumaCharacterBase.h"
-#include "LumaPlayerController.h"
+#include "Abilities/LumaCastAbility.h"
+#include "Actors/LocallyCastedActor.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
+
+/********** BEGIN UCastWidget BEGIN **********/
 
 void UCastWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
-	CastSelectorButton->OnHovered.AddDynamic(this, &ThisClass::OnButtonHovered);
+	
 	CastSelectorButton->OnPressed.AddDynamic(this, &ThisClass::OnButtonPressed);
 	CastSelectorButton->OnClicked.AddDynamic(this, &ThisClass::OnButtonClicked);
-	CastSelectorButton->OnUnhovered.AddDynamic(this, &ThisClass::OnButtonUnHovered);
 	CastSelectorButton->SynchronizeProperties();
 }
 
-void UCastWidget::SetFromCastableAbilityDesc(FCastableObjectDesc AbilityDesc)
+void UCastWidget::SyncStyle()
 {
-	CastableAbilityDesc = AbilityDesc;
-
-	MatchImageTexture();
-	MatchButtonColorToCastType();
-}
-
-void UCastWidget::MatchButtonColorToCastType()
-{
-	if(CastableAbilityDesc.GetPrimaryEmotion() == EEmotion::None)
+	if(!CastSelectorButton)
 		return;
 
 	FButtonStyle ButtonStyle = CastSelectorButton->GetStyle();
-	ButtonStyle.Normal.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion);
-	ButtonStyle.Hovered.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion).ReinterpretAsLinear() * 0.55f;
-	ButtonStyle.Pressed.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion).ReinterpretAsLinear() * 0.15f;
+	ButtonStyle.Hovered = ButtonStyle.Normal;
+	ButtonStyle.Pressed = ButtonStyle.Normal;
+	ButtonStyle.Disabled = ButtonStyle.Normal;
+
+	FSlateColor NormalTint = ButtonStyle.Normal.TintColor;
+	float HoveredMultiplier = 0.7f;
+	float PressedMultiplier = 0.5f;
+	float DisabledMultiplier = 0.1f;
+
+	ButtonStyle.Hovered.TintColor = NormalTint.GetSpecifiedColor() * HoveredMultiplier;
+	ButtonStyle.Pressed.TintColor = NormalTint.GetSpecifiedColor() * PressedMultiplier;
+	ButtonStyle.Disabled.TintColor = NormalTint.GetSpecifiedColor() * DisabledMultiplier;
+
 	CastSelectorButton->SetStyle(ButtonStyle);
+	
 }
 
-void UCastWidget::MatchImageTexture()
+void UCastWidget::SetPreview(const TSoftObjectPtr<UTexture2D>& PreviewTexture)
 {
 	if(CastImage)
-		CastImage->SetBrushFromSoftTexture(CastableAbilityDesc.CastableObjectPreview);
+		CastImage->SetBrushFromSoftTexture(PreviewTexture);
 }
 
-void UCastWidget::SyncShapeBetweenStyles()
+void UCastWidget::SetAbilityTag(const FGameplayTag& NewAbilityCastTag)
 {
-	FButtonStyle ButtonStyle = CastSelectorButton->GetStyle();
-	ButtonStyle.Hovered.DrawAs = ButtonStyle.Normal.DrawAs;
-	ButtonStyle.Pressed.DrawAs = ButtonStyle.Normal.DrawAs;
-	ButtonStyle.Disabled.DrawAs = ButtonStyle.Normal.DrawAs;
-
-	ButtonStyle.Hovered.OutlineSettings = ButtonStyle.Normal.OutlineSettings;
-	ButtonStyle.Pressed.OutlineSettings = ButtonStyle.Normal.OutlineSettings;
-	ButtonStyle.Disabled.OutlineSettings = ButtonStyle.Normal.OutlineSettings;
-}
-
-void UCastWidget::OnButtonHovered()
-{
-
+	AbilityCastTag = NewAbilityCastTag;
 }
 
 void UCastWidget::OnButtonClicked()
@@ -68,11 +62,36 @@ void UCastWidget::OnButtonClicked()
 
 void UCastWidget::OnButtonPressed()
 {
-	// Dispatch luma cast ability call to player controller
-	if(auto PlayerController = Cast<ALumaPlayerController>(GetOwningPlayer()))
-		PlayerController->Call_ActivateLumaCastAbility(CastableAbilityDesc);
+	if(!AbilityCastTag.IsValid())
+		return;
+	
+	if(auto Pawn = GetOwningPlayer())
+	{
+		if(auto OwnerAsc = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn))
+		{
+			if(!OwnerAsc->TryActivateAbilitiesByTag( FGameplayTagContainer { AbilityCastTag }))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Unable to activate ability from cast widget with [%s] tag"), *AbilityCastTag.GetTagName().ToString())
+			}
+			else
+				OnLumaCast().Broadcast();
+		}
+	}
 }
 
-void UCastWidget::OnButtonUnHovered()
+void ULocalCastWidget::SetLocalActor(ALocallyCastedActor* LocallyCastedActor)
 {
+	CastedActor = LocallyCastedActor;
+}
+
+void ULocalCastWidget::OnButtonPressed()
+{
+	if(CastedActor.Get())
+	{
+		if(!CastedActor->HasBeenReseted())
+		{
+			CastedActor->ResetToInitialState();
+			OnLumaCast().Broadcast();
+		}
+	}
 }

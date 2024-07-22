@@ -1,7 +1,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "LumaTypes.generated.h"
+
+class ULumaCastAbility;
+class UGameplayAbility;
 
 template<class T, int N>
 struct NVectorStatic
@@ -45,6 +49,14 @@ enum class EEmotion : uint8
 	Reticence,
 	SelfPreservation,
 	Curiosity
+};
+
+UENUM(BlueprintType)
+enum class ECastType : uint8
+{
+	None,
+	Local,
+	Context
 };
 
 ENUM_RANGE_BY_FIRST_AND_LAST(EEmotion, EEmotion::Aggressiveness, EEmotion::Curiosity)
@@ -148,62 +160,4 @@ struct FEmotionDescContainer
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EmotionDescContainer, meta = (NoElementDuplicate))
 	TArray<FEmotionDesc> EmotionDescs{};
-};
-
-USTRUCT(Blueprintable, BlueprintType)
-struct FCastableObjectDesc : public FTableRowBase
-{
-	GENERATED_BODY()
-
-	// Handy function to get primary emotion if it is not set in this struct
-	// Determined by max emotion requirement
-	FORCEINLINE EEmotion GetPrimaryEmotion() const
-	{
-		if(PrimaryEmotion != EEmotion::None || EmotionRequirements.IsEmpty())
-			return PrimaryEmotion;
-
-		EEmotion MostValuableEmotion = EEmotion::None;
-		float MaxValue = 0.f;
-		
-		for (const auto& EmotionDesc : EmotionRequirements.EmotionDescs)
-		{
-			if(EmotionDesc.Value > MaxValue)
-			{
-				MaxValue = EmotionDesc.Value;
-				MostValuableEmotion = EmotionDesc.EmotionType;
-			}
-		}
-		
-		return MostValuableEmotion;
-	}
-	FORCEINLINE const FCastableObjectDesc& GetMorePrioritizedDescForActor(const FCastableObjectDesc& OtherAbilityDesc, const FEmotionDescContainer& ActorEmotions) const
-	{
-		return GetMorePrioritizedDescForActor(*this, OtherAbilityDesc, ActorEmotions);
-	}
-	FORCEINLINE static const FCastableObjectDesc& GetMorePrioritizedDescForActor(const FCastableObjectDesc& Desc0, const FCastableObjectDesc& Desc1, const FEmotionDescContainer& ActorEmotions)
-	{
-		float Distance0 = Desc0.EmotionRequirements.GetDistanceTo(ActorEmotions);
-		float Distance1 = Desc1.EmotionRequirements.GetDistanceTo(ActorEmotions);
-		return Distance0 < Distance1 ? Desc0 : Desc1;
-	}
-
-	// Object preview
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
-	TSoftObjectPtr<UTexture2D> CastableObjectPreview = nullptr;
-
-	// Class of the actor to spawn
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
-	TSubclassOf<AActor> ObjectClass = nullptr;
-
-	// Object lifetime after which it gets despawned (if ObjectLifetime > 0.f)
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
-	float ObjectLifetime = 0.f;
-
-	// Primary Emotion Type
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
-	EEmotion PrimaryEmotion = EEmotion::None;
-
-	// Emotion Requirements
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CastableAbilityDesc)
-	FEmotionDescContainer EmotionRequirements{};
 };
