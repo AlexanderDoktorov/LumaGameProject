@@ -4,7 +4,7 @@
 #include "UI/LumaCastSelectorWidget.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
-#include "Actors/LocallyCastedActor.h"
+#include "Actors/LocalCastActor.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
@@ -47,10 +47,10 @@ void ULumaCastSelectorWidget::OnCharacterOverlappedLocallyCastedActor(UPrimitive
 	const FHitResult& SweepResult)
 {
 	// If we overlapp locally casted actor 
-	if(auto LocallyCastedActor = Cast<ALocallyCastedActor>(OtherActor))
+	if(auto LocallyCastedActor = Cast<ALocalCastActor>(OtherActor))
 	{
 		// And the primitive is cast primitive
-		if(LocallyCastedActor->IsCastPrimitive(OtherComp) && LocalCastWidget && !LocallyCastedActor->HasBeenReseted())
+		if(LocallyCastedActor->IsCastPrimitive(OtherComp) && LocalCastWidget && !LocallyCastedActor->HasBeenCasted())
 		{
 			// Show local cast widget on screen
 			LocalCastWidget->SetLocalActor(LocallyCastedActor);

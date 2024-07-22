@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GAS_MainCharacterCpp.h"
-#include "LumaTypes.h"
 #include "Components/LumaAbilitySystemComponent.h"
 #include "LumaCharacterBase.generated.h"
 
@@ -14,7 +13,6 @@ class ULumaAbilitySystemComponent;
 class ICastableInterface;
 enum class ECastType : uint8;
 class ALumaSourceBase;
-class ALocallyCastedActor;
 
 /**
  * @author Doktorov Alexander

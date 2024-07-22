@@ -3,7 +3,7 @@
 #include "LumaCharacterBase.h"
 #include "EngineUtils.h"
 #include "Components/LumaAbilitySystemComponent.h"
-#include "Actors/LocallyCastedActor.h"
+#include "Actors/LocalCastActor.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
 #include "AttributeSets/LumaAttributeSet.h"
 #include "Objects/CastableObjectsDataAsset.h"
@@ -30,9 +30,9 @@ int32 ALumaCharacterBase::GetNumCapsules() const
 void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const
 {
 	// Get all actors of ALocallyCastedActor Class
-	TArray<ALocallyCastedActor*> LocalCasts;
+	TArray<ALocalCastActor*> LocalCasts;
 	if (UWorld* World = GEngine->GetWorldFromContextObject(this, EGetWorldErrorMode::LogAndReturnNull))
-		for (TActorIterator<ALocallyCastedActor> It(World, ALocallyCastedActor::StaticClass()); It; ++It)
+		for (TActorIterator<ALocalCastActor> It(World, ALocalCastActor::StaticClass()); It; ++It)
 			LocalCasts.Add(*It);
 
 	// Show local casts for player
@@ -41,7 +41,7 @@ void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const
 		if(!LocalCast)
 			continue;
 
-		if(!LocalCast->HasBeenReseted())
+		if(!LocalCast->HasBeenCasted())
 			LocalCast->OnLumaSelectorWidgetOpen();
 	}
 }
@@ -49,9 +49,9 @@ void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const
 void ALumaCharacterBase::OnLumaSelectorWidgetClosed() const
 {
 	// Get all actors of ALocallyCastedActor Class
-	TArray<ALocallyCastedActor*> LocalCasts;
+	TArray<ALocalCastActor*> LocalCasts;
 	if (UWorld* World = GEngine->GetWorldFromContextObject(this, EGetWorldErrorMode::LogAndReturnNull))
-		for (TActorIterator<ALocallyCastedActor> It(World, ALocallyCastedActor::StaticClass()); It; ++It)
+		for (TActorIterator<ALocalCastActor> It(World, ALocalCastActor::StaticClass()); It; ++It)
 			LocalCasts.Add(*It);
 
 	// Hide local casts for player
@@ -59,7 +59,7 @@ void ALumaCharacterBase::OnLumaSelectorWidgetClosed() const
 	{
 		if(!LocalCast)
 			continue;
-		if(!LocalCast->HasBeenReseted())
+		if(!LocalCast->HasBeenCasted())
 			LocalCast->OnLumaSelectorWidgetClosed();
 	}
 }

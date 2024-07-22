@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "LumaTypes.h"
-#include "LocallyCastedActor.generated.h"
+#include "LocalCastActor.generated.h"
 
 class UBoxComponent;
 
@@ -22,68 +22,47 @@ concept FunctionConcept = requires(FType F, InType InParam)
 
 
 UCLASS()
-class INTERACTION_WITH_ALS_API ALocallyCastedActor : public AActor
+class INTERACTION_WITH_ALS_API ALocalCastActor : public AActor
 {
 	GENERATED_BODY()
 	static constexpr auto MaterialParamName_OpacityMask = "Opacity Mask";
 public:
-	ALocallyCastedActor();
+	ALocalCastActor();
 
-	// Hides all meshes on begin play so only their overlay material is shown
-	// Parent class might want to override this
-	virtual void SetMateialsOpacityMask(float OpacityMask);
+	AActor* PerformCast(APawn* InInstigator, bool bDestroyIfSuccess = true);
 	virtual void OnLumaSelectorWidgetOpen();
 	virtual void OnLumaSelectorWidgetClosed();
-	virtual void ResetToInitialState();
-
-	template<ComponentConcept C, FunctionConcept<C*> F>
-	void ForEachComponent(F Function)
-	{
-		TArray<C*> Components{};
-		GetComponents(C::StaticClass(), Components);
-		for(auto& Component : Components)
-		{
-			if(!Component)
-				continue;
-
-			Function(Component);
-		}
-	}
 	
 	void SetPrimitiveCollisionEnabled(bool bEnabled);
 	FORCEINLINE bool IsCastPrimitive(const UPrimitiveComponent* const PrimitiveComponent) const { return CastPrimitives.Contains(PrimitiveComponent); }
-	FORCEINLINE bool HasBeenReseted() const { return bHasBeenReseted; }
+	FORCEINLINE bool HasBeenCasted() const { return bHasBeenCasted; }
 
 	UPROPERTY(EditAnywhere)
 	TSoftObjectPtr<UTexture2D> LocalCastPreview = nullptr;
 protected:
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LocallyCastedActor)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LocalCastActor")
 	TArray<TObjectPtr<UPrimitiveComponent>> CastPrimitives;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LocallyCastedActor)
-	TObjectPtr<UMaterialInterface> OverlayMaterial;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "LocalCastActor")
+	TSubclassOf<AActor> CastActorClass;
 public:
 #if WITH_EDITOR
-	UFUNCTION(CallInEditor, Category = InteractionCollision)
+	UFUNCTION(CallInEditor, Category = "LocalCastActor|Interaction")
 	void AddPrimitive();
 #endif
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = InteractionCollision)
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "LocalCastActor|Interaction")
 	uint8 bSelectNewlyCreatedComponent : 1 = 1;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = InteractionCollision)
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "LocalCastActor|Interaction")
 	TSubclassOf<UPrimitiveComponent> PrimitiveClass;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = InteractionCollision)
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "LocalCastActor|Interaction")
 	FColor CastPrimitiveColor = FColor::Cyan;
 #endif
 private:
-	TArray<TWeakObjectPtr<const UPrimitiveComponent>> DefaultPrimtivies;
-
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess), Category = LocallyCastedActor)
-	uint8 bInitilizeAsCastable : 1 = 1;
-	uint8 bHasBeenReseted : 1 = 0;
+	uint8 bHasBeenCasted : 1 = 0;
 };

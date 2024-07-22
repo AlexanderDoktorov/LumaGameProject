@@ -7,8 +7,8 @@
 #include "Blueprint/UserWidget.h"
 #include "CastWidget.generated.h"
 
+class ALocalCastActor;
 class ULumaContextCastAbility;
-class ALocallyCastedActor;
 struct FCastableAbilityDesc;
 enum class EEmotion : uint8;
 class UImage;
@@ -61,12 +61,12 @@ class ULocalCastWidget : public UCastWidget
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
-	void SetLocalActor(ALocallyCastedActor* LocallyCastedActor);
+	void SetLocalActor(ALocalCastActor* LocallyCastedActor);
 protected:
 	virtual void OnButtonPressed() override;
 
 	// Pointer to the actual object
-	TWeakObjectPtr<ALocallyCastedActor> CastedActor = nullptr;
+	TWeakObjectPtr<ALocalCastActor> CastedActor = nullptr;
 private:
 	using Super::SetAbilityTag;
 };

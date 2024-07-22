@@ -6,7 +6,7 @@
 #include "AbilitySystemGlobals.h"
 #include "LumaCharacterBase.h"
 #include "Abilities/LumaCastAbility.h"
-#include "Actors/LocallyCastedActor.h"
+#include "Actors/LocalCastActor.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
 
@@ -79,7 +79,7 @@ void UCastWidget::OnButtonPressed()
 	}
 }
 
-void ULocalCastWidget::SetLocalActor(ALocallyCastedActor* LocallyCastedActor)
+void ULocalCastWidget::SetLocalActor(ALocalCastActor* LocallyCastedActor)
 {
 	CastedActor = LocallyCastedActor;
 }
@@ -88,9 +88,9 @@ void ULocalCastWidget::OnButtonPressed()
 {
 	if(CastedActor.Get())
 	{
-		if(!CastedActor->HasBeenReseted())
+		if(!CastedActor->HasBeenCasted())
 		{
-			CastedActor->ResetToInitialState();
+			CastedActor->PerformCast(GetOwningPlayerPawn());
 			OnLumaCast().Broadcast();
 		}
 	}
