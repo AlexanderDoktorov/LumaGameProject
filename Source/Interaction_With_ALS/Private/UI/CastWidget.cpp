@@ -50,34 +50,44 @@ void UCastWidget::SetPreview(const TSoftObjectPtr<UTexture2D>& PreviewTexture)
 		CastImage->SetBrushFromSoftTexture(PreviewTexture);
 }
 
-void UCastWidget::SetAbilityTag(const FGameplayTag& NewAbilityCastTag)
-{
-	AbilityCastTag = NewAbilityCastTag;
-}
-
 void UCastWidget::OnButtonClicked()
 {
+	// By default does the same as pressed
 	OnButtonPressed();
 }
 
 void UCastWidget::OnButtonPressed()
 {
-	if(!AbilityCastTag.IsValid())
+	// No default realization
+}
+
+// Context cast widget
+void UContextCastWidget::SetContextAbility(const ULumaContextCastAbility* ContextCastAbility)
+{
+	CastAbility = ContextCastAbility;
+}
+
+void UContextCastWidget::OnButtonPressed()
+{
+	if(!CastAbility.IsValid())
 		return;
 	
-	if(auto Pawn = GetOwningPlayer())
+	if(auto Pawn = GetOwningPlayerPawn())
 	{
 		if(auto OwnerAsc = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn))
 		{
-			if(!OwnerAsc->TryActivateAbilitiesByTag( FGameplayTagContainer { AbilityCastTag }))
+			// Activate an ability by the spec handle from it
+			if(!OwnerAsc->TryActivateAbility(CastAbility->GetCurrentAbilitySpecHandle()))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Unable to activate ability from cast widget with [%s] tag"), *AbilityCastTag.GetTagName().ToString())
+				UE_LOG(LogTemp, Warning, TEXT("Unable to activate [%s] ability from context cast widget"), *CastAbility->GetName());
 			}
 			else
 				OnLumaCast().Broadcast();
 		}
 	}
 }
+
+// Local cast widget
 
 void ULocalCastWidget::SetLocalActor(ALocalCastActor* LocallyCastedActor)
 {

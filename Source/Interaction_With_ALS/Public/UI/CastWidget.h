@@ -32,11 +32,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetPreview(const TSoftObjectPtr<UTexture2D>& PreviewTexture);
 
-	UFUNCTION(BlueprintCallable)
-	void SetAbilityTag(const FGameplayTag& NewAbilityCastTag);
-
 	FOnLumaCastDelegate& OnLumaCast() { return OnLumaCastDelegate;}
-	
 protected:
 	UFUNCTION()
 	virtual void OnButtonClicked();
@@ -51,8 +47,22 @@ protected:
 	UImage* CastImage = nullptr;
 
 	FOnLumaCastDelegate OnLumaCastDelegate;
+};
+
+UCLASS()
+class UContextCastWidget : public UCastWidget
+{
+	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetContextAbility(const ULumaContextCastAbility* ContextCastAbility);
+protected:
+	virtual void OnButtonPressed() override;
+
+	// Pointer to the actual object
+	TWeakObjectPtr<const ULumaContextCastAbility> CastAbility = nullptr;
 private:
-	FGameplayTag AbilityCastTag;
+	FGameplayTagContainer AbilityTags;
 };
 
 UCLASS()
@@ -67,6 +77,4 @@ protected:
 
 	// Pointer to the actual object
 	TWeakObjectPtr<ALocalCastActor> CastedActor = nullptr;
-private:
-	using Super::SetAbilityTag;
 };

@@ -44,11 +44,12 @@ TArray<ULumaContextCastAbility*> ULumaSystemComponent::GetMostPrioritizedCasts()
 	OwnerAsc->GetActivatableGameplayAbilitySpecsByAllMatchingTags(Tags, Specs, false);
 
 	// Find context cast abilities
-	TArray<ULumaContextCastAbility*> Abilities{};
+	TArray<ULumaContextCastAbility*> InstancedAbilities{};
 	for(auto& Spec : Specs)
 	{
-		if(ULumaContextCastAbility* ContextCastAbility = Cast<ULumaContextCastAbility>(Spec->Ability.Get()))
-			Abilities.Add(ContextCastAbility);
+		// Get first instance of an ability and add it to an array
+		if(ULumaContextCastAbility* ContextCastAbility = Cast<ULumaContextCastAbility>(Spec->GetAbilityInstances().IsEmpty() ? nullptr : Spec->GetAbilityInstances()[0]))
+			InstancedAbilities.Add(ContextCastAbility);
 	}
 
 	// Build predicate for sorting
@@ -56,17 +57,17 @@ TArray<ULumaContextCastAbility*> ULumaSystemComponent::GetMostPrioritizedCasts()
 	{
 		return Lhs->GetEmotionRequirements().GetDistanceTo(OwnerEmotions) < Rhs->GetEmotionRequirements().GetDistanceTo(OwnerEmotions);
 	};
-	Algo::Sort(Abilities, SortPredicate);
+	Algo::Sort(InstancedAbilities, SortPredicate);
 	
 	// Make sure MaxCasts doesn't exceed all luma cast abilities number
-	const int32 MaxIndx = FMath::Max(0, FMath::Min(Abilities.Num(), MaxCasts));
+	const int32 MaxIndx = FMath::Max(0, FMath::Min(InstancedAbilities.Num(), MaxCasts));
 
 	TArray<ULumaContextCastAbility*> ReturnArray{};
 	ReturnArray.Reserve(MaxIndx);
 	// As abilities descs has been added using heap and predicate everything is already sorted, so just return MaxCasts casts
 	for (int32 i = 0; i < MaxIndx; ++i)
 	{
-		ReturnArray.Emplace(Abilities[i]);
+		ReturnArray.Emplace(InstancedAbilities[i]);
 	}
 	
 	return ReturnArray;
