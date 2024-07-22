@@ -3,14 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "LumaTypes.h"
+#include "GameplayTagContainer.h"
 #include "Blueprint/UserWidget.h"
 #include "CastWidget.generated.h"
 
+class ALocalCastActor;
+class ULumaContextCastAbility;
 struct FCastableAbilityDesc;
 enum class EEmotion : uint8;
 class UImage;
 class UButton;
+
+DECLARE_MULTICAST_DELEGATE(FOnLumaCastDelegate)
 
 /**
  * 
@@ -23,36 +27,54 @@ public:
 	void NativeConstruct() override;
 
 	UFUNCTION(BlueprintCallable)
-	void SetFromCastableAbilityDesc(FCastableObjectDesc AbilityDesc);
+	void SyncStyle();
 
 	UFUNCTION(BlueprintCallable)
-	void MatchButtonColorToCastType();
+	void SetPreview(const TSoftObjectPtr<UTexture2D>& PreviewTexture);
 
-	UFUNCTION(BlueprintCallable)
-	void MatchImageTexture();
-
-	UFUNCTION(BlueprintCallable)
-	void SyncShapeBetweenStyles();
+	FOnLumaCastDelegate& OnLumaCast() { return OnLumaCastDelegate;}
 protected:
-
 	UFUNCTION()
-	void OnButtonHovered();
-
-	UFUNCTION()
-	void OnButtonClicked();
-
-	UFUNCTION()
-	void OnButtonPressed();
+	virtual void OnButtonClicked();
 	
 	UFUNCTION()
-	void OnButtonUnHovered();
-	
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	virtual void OnButtonPressed();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (BindWidget))
 	UButton* CastSelectorButton = nullptr;
 
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (BindWidget))
 	UImage* CastImage = nullptr;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CastWidget)
-	FCastableObjectDesc CastableAbilityDesc{};
+	FOnLumaCastDelegate OnLumaCastDelegate;
+};
+
+UCLASS()
+class UContextCastWidget : public UCastWidget
+{
+	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetContextAbility(const ULumaContextCastAbility* ContextCastAbility);
+protected:
+	virtual void OnButtonPressed() override;
+
+	// Pointer to the actual object
+	TWeakObjectPtr<const ULumaContextCastAbility> CastAbility = nullptr;
+private:
+	FGameplayTagContainer AbilityTags;
+};
+
+UCLASS()
+class ULocalCastWidget : public UCastWidget
+{
+	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetLocalActor(ALocalCastActor* LocallyCastedActor);
+protected:
+	virtual void OnButtonPressed() override;
+
+	// Pointer to the actual object
+	TWeakObjectPtr<ALocalCastActor> CastedActor = nullptr;
 };

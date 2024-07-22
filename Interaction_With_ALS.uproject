@@ -11,6 +11,11 @@
 			"AdditionalDependencies": [
 				"GameplayAbilities"
 			]
+		},
+		{
+			"Name": "FunctionalUE5",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
@@ -66,6 +71,10 @@
 		},
 		{
 			"Name": "ModelingToolsEditorMode",
+			"Enabled": true
+		},
+		{
+			"Name": "UE5CoroGAS",
 			"Enabled": true
 		}
 	]

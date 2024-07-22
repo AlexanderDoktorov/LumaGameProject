@@ -8,6 +8,13 @@ namespace LumaGameplayTags
 {
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_LumaToGather)
 
+
+	// Luma Cast Abilties core tag
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_LumaCast);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_LumaCast_Local);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_LumaCast_Context);
+
+	
 	// Emotions set by callers data tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_Aggressiveness)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_Reticence)

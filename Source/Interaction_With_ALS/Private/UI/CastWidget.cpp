@@ -2,77 +2,106 @@
 
 
 #include "UI/CastWidget.h"
+
+#include "AbilitySystemGlobals.h"
 #include "LumaCharacterBase.h"
-#include "LumaPlayerController.h"
+#include "Abilities/LumaCastAbility.h"
+#include "Actors/LocalCastActor.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
+
+/********** BEGIN UCastWidget BEGIN **********/
 
 void UCastWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
-	CastSelectorButton->OnHovered.AddDynamic(this, &ThisClass::OnButtonHovered);
+	
 	CastSelectorButton->OnPressed.AddDynamic(this, &ThisClass::OnButtonPressed);
 	CastSelectorButton->OnClicked.AddDynamic(this, &ThisClass::OnButtonClicked);
-	CastSelectorButton->OnUnhovered.AddDynamic(this, &ThisClass::OnButtonUnHovered);
 	CastSelectorButton->SynchronizeProperties();
 }
 
-void UCastWidget::SetFromCastableAbilityDesc(FCastableObjectDesc AbilityDesc)
+void UCastWidget::SyncStyle()
 {
-	CastableAbilityDesc = AbilityDesc;
-
-	MatchImageTexture();
-	MatchButtonColorToCastType();
-}
-
-void UCastWidget::MatchButtonColorToCastType()
-{
-	if(CastableAbilityDesc.GetPrimaryEmotion() == EEmotion::None)
+	if(!CastSelectorButton)
 		return;
 
 	FButtonStyle ButtonStyle = CastSelectorButton->GetStyle();
-	ButtonStyle.Normal.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion);
-	ButtonStyle.Hovered.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion).ReinterpretAsLinear() * 0.55f;
-	ButtonStyle.Pressed.TintColor = GetCastColor(CastableAbilityDesc.PrimaryEmotion).ReinterpretAsLinear() * 0.15f;
+	ButtonStyle.Hovered = ButtonStyle.Normal;
+	ButtonStyle.Pressed = ButtonStyle.Normal;
+	ButtonStyle.Disabled = ButtonStyle.Normal;
+
+	FSlateColor NormalTint = ButtonStyle.Normal.TintColor;
+	float HoveredMultiplier = 0.7f;
+	float PressedMultiplier = 0.5f;
+	float DisabledMultiplier = 0.1f;
+
+	ButtonStyle.Hovered.TintColor = NormalTint.GetSpecifiedColor() * HoveredMultiplier;
+	ButtonStyle.Pressed.TintColor = NormalTint.GetSpecifiedColor() * PressedMultiplier;
+	ButtonStyle.Disabled.TintColor = NormalTint.GetSpecifiedColor() * DisabledMultiplier;
+
 	CastSelectorButton->SetStyle(ButtonStyle);
+	
 }
 
-void UCastWidget::MatchImageTexture()
+void UCastWidget::SetPreview(const TSoftObjectPtr<UTexture2D>& PreviewTexture)
 {
 	if(CastImage)
-		CastImage->SetBrushFromSoftTexture(CastableAbilityDesc.CastableObjectPreview);
-}
-
-void UCastWidget::SyncShapeBetweenStyles()
-{
-	FButtonStyle ButtonStyle = CastSelectorButton->GetStyle();
-	ButtonStyle.Hovered.DrawAs = ButtonStyle.Normal.DrawAs;
-	ButtonStyle.Pressed.DrawAs = ButtonStyle.Normal.DrawAs;
-	ButtonStyle.Disabled.DrawAs = ButtonStyle.Normal.DrawAs;
-
-	ButtonStyle.Hovered.OutlineSettings = ButtonStyle.Normal.OutlineSettings;
-	ButtonStyle.Pressed.OutlineSettings = ButtonStyle.Normal.OutlineSettings;
-	ButtonStyle.Disabled.OutlineSettings = ButtonStyle.Normal.OutlineSettings;
-}
-
-void UCastWidget::OnButtonHovered()
-{
-
+		CastImage->SetBrushFromSoftTexture(PreviewTexture);
 }
 
 void UCastWidget::OnButtonClicked()
 {
+	// By default does the same as pressed
 	OnButtonPressed();
 }
 
 void UCastWidget::OnButtonPressed()
 {
-	// Dispatch luma cast ability call to player controller
-	if(auto PlayerController = Cast<ALumaPlayerController>(GetOwningPlayer()))
-		PlayerController->Call_ActivateLumaCastAbility(CastableAbilityDesc);
+	// No default realization
 }
 
-void UCastWidget::OnButtonUnHovered()
+// Context cast widget
+void UContextCastWidget::SetContextAbility(const ULumaContextCastAbility* ContextCastAbility)
 {
+	CastAbility = ContextCastAbility;
+}
+
+void UContextCastWidget::OnButtonPressed()
+{
+	if(!CastAbility.IsValid())
+		return;
+	
+	if(auto Pawn = GetOwningPlayerPawn())
+	{
+		if(auto OwnerAsc = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn))
+		{
+			// Activate an ability by the spec handle from it
+			if(!OwnerAsc->TryActivateAbility(CastAbility->GetCurrentAbilitySpecHandle()))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Unable to activate [%s] ability from context cast widget"), *CastAbility->GetName());
+			}
+			else
+				OnLumaCast().Broadcast();
+		}
+	}
+}
+
+// Local cast widget
+
+void ULocalCastWidget::SetLocalActor(ALocalCastActor* LocallyCastedActor)
+{
+	CastedActor = LocallyCastedActor;
+}
+
+void ULocalCastWidget::OnButtonPressed()
+{
+	if(CastedActor.Get())
+	{
+		if(!CastedActor->HasBeenCasted())
+		{
+			CastedActor->PerformCast(GetOwningPlayerPawn());
+			OnLumaCast().Broadcast();
+		}
+	}
 }
