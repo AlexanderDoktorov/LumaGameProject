@@ -32,8 +32,12 @@ protected:
 	// Preview for cast widget
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LumaCastAbility)
 	TSoftObjectPtr<UTexture2D> AbilityPreview;
+
+	// Object Lifitime
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LumaCastAbility)
+	float ObjectLifitme = 0.f;
 	
-	// Preview for cast widget
+	// Cast time
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LumaCastAbility)
     float CastTime = 0.f;
 
