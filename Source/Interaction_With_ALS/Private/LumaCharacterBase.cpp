@@ -7,6 +7,7 @@
 #include "AttributeSets/EmotionsAttributeSet.h"
 #include "AttributeSets/LumaAttributeSet.h"
 #include "Objects/CastableObjectsDataAsset.h"
+#include <Kismet/GameplayStatics.h>
 
 ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializer) :
 	Super(
@@ -29,11 +30,7 @@ int32 ALumaCharacterBase::GetNumCapsules() const
 
 void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const
 {
-	// Get all actors of ALocallyCastedActor Class
-	TArray<ALocalCastActor*> LocalCasts;
-	if (UWorld* World = GEngine->GetWorldFromContextObject(this, EGetWorldErrorMode::LogAndReturnNull))
-		for (TActorIterator<ALocalCastActor> It(World, ALocalCastActor::StaticClass()); It; ++It)
-			LocalCasts.Add(*It);
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.4);
 
 	// Show local casts for player
 	for(auto& LocalCast : LocalCasts)
@@ -48,12 +45,8 @@ void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const
 
 void ALumaCharacterBase::OnLumaSelectorWidgetClosed() const
 {
-	// Get all actors of ALocallyCastedActor Class
-	TArray<ALocalCastActor*> LocalCasts;
-	if (UWorld* World = GEngine->GetWorldFromContextObject(this, EGetWorldErrorMode::LogAndReturnNull))
-		for (TActorIterator<ALocalCastActor> It(World, ALocalCastActor::StaticClass()); It; ++It)
-			LocalCasts.Add(*It);
-
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1);
+	
 	// Hide local casts for player
 	for(auto& LocalCast : LocalCasts)
 	{

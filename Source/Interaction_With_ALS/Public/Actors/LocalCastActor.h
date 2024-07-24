@@ -47,6 +47,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "LocalCastActor")
 	TSubclassOf<AActor> CastActorClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "LocalCastActor")
+	float VisibilityRadius;
 public:
 #if WITH_EDITOR
 	UFUNCTION(CallInEditor, Category = "LocalCastActor|Interaction")

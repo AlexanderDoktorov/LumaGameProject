@@ -29,6 +29,7 @@ public:
 	FORCEINLINE ULumaAbilitySystemComponent* GetLumaAbilitySystemComponent() const { return Cast<ULumaAbilitySystemComponent>(GetAbilitySystemComponent()); }
 	
 	int32 GetNumCapsules() const;
+	
 protected:
 	void OnLumaSelectorWidgetOpen() const;
 	void OnLumaSelectorWidgetClosed() const;
@@ -39,6 +40,9 @@ protected:
 	// All Luma Abilities Data
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UEmotionsAttributeSet> EmotionsAttributes = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TArray<class ALocalCastActor*> LocalCasts;
 	
 	virtual void BeginPlay() override;
 };
