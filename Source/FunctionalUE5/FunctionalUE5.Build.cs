@@ -10,7 +10,8 @@ public class FunctionalUE5 : ModuleRules
         {
             "Core", 
             "CoreUObject", 
-            "Engine"
+            "Engine",
+            "UnrealEd"
         }); 
 	}
 }

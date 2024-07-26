@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "FunctionalConcepts.h"
 #include "FunctionalBlueprintLibrary.generated.h"
+
+DECLARE_LOG_CATEGORY_EXTERN(LogFunctionalUE5, Log, All);
 
 /**
  * 
@@ -39,4 +42,29 @@ public:
 		
 		return CommonComponents;
 	}
+	template<ComponentConcept C = UActorComponent, FunctionConcept<C*> F>
+	static void ForEachComponent(const class AActor* Actor, F Function, bool bExcludeInvalidComponents = true)
+	{
+		check(Actor);
+		
+		TArray<C*> Components{};
+		Actor->GetComponents(C::StaticClass(), Components);
+		for(auto& Component : Components)
+		{
+			if(bExcludeInvalidComponents)
+				if(!IsValid(Component))
+					continue;
+
+			Function(Component);
+		}
+	}
+
+	UFUNCTION(BlueprintCallable)
+	static UBlueprint* CreateBlueprintAsset(const FString& TargetPathWithAssetName, UClass* ParentClass);
+
+	UFUNCTION(BlueprintCallable)
+	static bool CopyComponentsToBlueprintClass(UBlueprint* BlueprintClass, TSubclassOf<AActor> ActorClass);
+
+	UFUNCTION(BlueprintCallable)
+	static void CreatePreviewBlueprint(FString SourceActorPath);
 };

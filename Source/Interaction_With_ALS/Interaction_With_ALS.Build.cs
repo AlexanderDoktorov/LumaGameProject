@@ -23,7 +23,8 @@ public class Interaction_With_ALS : ModuleRules
 			"UE5Coro",
 			"UE5CoroGAS",
 			"UnrealEd",
-			"FunctionalUE5"
+			"FunctionalUE5",
+			"GeometryCollectionEngine"
 		});
 
 		// Uncomment if you are using Slate UI
