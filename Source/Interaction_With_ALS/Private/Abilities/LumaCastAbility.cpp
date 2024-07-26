@@ -8,7 +8,7 @@ ULumaContextCastAbility::ULumaContextCastAbility()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 
-	AbilityTags.AddTag(LumaGameplayTags::TAG_Ability_LumaCast_Context);
+	AbilityTags.AddTag(LumaGameplayTags::TAG_Ability_ContextCast);
 
 	/*
 	FAbilityTriggerData TriggerData{};
