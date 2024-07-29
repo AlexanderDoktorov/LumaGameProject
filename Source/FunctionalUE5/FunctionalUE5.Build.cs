@@ -11,7 +11,11 @@ public class FunctionalUE5 : ModuleRules
             "Core", 
             "CoreUObject", 
             "Engine",
-            "UnrealEd"
+            "UnrealEd",
+            "BlueprintGraph",
+            "KismetCompiler",
+            "GraphEditor",
+            "SlateCore"
         }); 
 	}
 }
