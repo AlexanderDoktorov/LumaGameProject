@@ -15,15 +15,6 @@ UCLASS()
 class FUNCTIONALUE5RUNTIME_API AFunctionalCharacterBase : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
-protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components | Ability System")
-	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components | Ability System")
-	TSubclassOf<UGameplayEffect> InitAttributesEffect;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components | Ability System")
-	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilites{};
 public:
 	AFunctionalCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
@@ -34,7 +25,16 @@ public:
 protected:
 	// Override this to assiing AbilitySystemComponent and attribute sets
 	virtual void InitializeAbilitySystem() PURE_VIRTUAL(AFunctionalCharacterBase::InitilizeAbilitySystem);
-	void GiveDefaultAbilities() const;
+	virtual void GiveDefaultAbilities() const;
 	void ApplyInitAttributeEffect() const;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components | Ability System")
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components | Ability System")
+	TSubclassOf<UGameplayEffect> InitAttributesEffect;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components | Ability System")
+	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilites{};
 };
 

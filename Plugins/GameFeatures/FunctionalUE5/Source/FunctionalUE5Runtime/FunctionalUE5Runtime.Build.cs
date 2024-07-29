@@ -42,7 +42,8 @@ public class FunctionalUE5Runtime : ModuleRules
 				"BlueprintGraph",
 				"KismetCompiler",
 				"GraphEditor",
-				"SlateCore"
+				"SlateCore",
+				"NavigationSystem"
 			}
 			);
 		

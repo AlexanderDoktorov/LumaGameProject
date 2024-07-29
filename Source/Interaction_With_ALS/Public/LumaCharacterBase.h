@@ -21,10 +21,10 @@ UCLASS()
 class INTERACTION_WITH_ALS_API ALumaCharacterBase : public AGAS_MainCharacterCpp
 {
 	GENERATED_BODY()
-
 	friend class ALumaPlayerController;
 public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	virtual void GiveDefaultAbilities() const override;
 
 	FORCEINLINE ULumaAbilitySystemComponent* GetLumaAbilitySystemComponent() const { return Cast<ULumaAbilitySystemComponent>(GetAbilitySystemComponent()); }
 	
@@ -39,6 +39,4 @@ protected:
 	// All Luma Abilities Data
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UEmotionsAttributeSet> EmotionsAttributes = nullptr;
-	
-	virtual void BeginPlay() override;
 };

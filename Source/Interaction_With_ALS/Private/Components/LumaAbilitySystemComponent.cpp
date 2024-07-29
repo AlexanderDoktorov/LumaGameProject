@@ -2,11 +2,35 @@
 
 
 #include "Components/LumaAbilitySystemComponent.h"
-
+#include "UI/LumaCastSelectorWidget.h"
+#include "UI/LumaHUD.h"
 
 ULumaAbilitySystemComponent::ULumaAbilitySystemComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void ULumaAbilitySystemComponent::OnGiveAbility(FGameplayAbilitySpec& AbilitySpec)
+{
+	Super::OnGiveAbility(AbilitySpec);
+
+	/*
+	// Update selector widget if character owner has it (particullary it's HUD) //
+	APawn* PawnAvatar = Cast<APawn>(GetAvatarActor());
+	if(!PawnAvatar)
+		return;
+
+	APlayerController* PlayerController = Cast<APlayerController>(PawnAvatar->GetController());
+	if(!PlayerController)
+		return;
+	
+	ALumaHUD* LumaHUD = Cast<ALumaHUD>(PlayerController->GetHUD());
+	if(!LumaHUD)
+		return;
+	
+	if(LumaHUD->GetLumaSelectorWidget())
+		LumaHUD->GetLumaSelectorWidget()->UpdateAbilities();
+	*/
 }
 
 void ULumaAbilitySystemComponent::BeginPlay()

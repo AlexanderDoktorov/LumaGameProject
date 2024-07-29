@@ -29,7 +29,8 @@ public class HelpfulFunctions : ModuleRules
 			new string[]
 			{
 				"Core",
-				"JakubCableComponent",
+				"JakubCableComponent", 
+				"FunctionalUE5Runtime",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

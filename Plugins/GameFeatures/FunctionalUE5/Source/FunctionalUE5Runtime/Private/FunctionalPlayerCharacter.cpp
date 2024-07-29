@@ -30,9 +30,9 @@ void AFunctionalPlayerCharacter::InitializeAbilitySystem()
 {
 	// Retrieve ASC from player state and assign it to local AbilitySystemComponent
 	
-	if(AFunctionalPlayerState* PlayerStateCore = GetPlayerState<AFunctionalPlayerState>())
+	if(AFunctionalPlayerState* PS = GetPlayerState<AFunctionalPlayerState>())
 	{
-		AbilitySystemComponent = PlayerStateCore->GetAbilitySystemComponent();
-		AbilitySystemComponent->InitAbilityActorInfo(PlayerStateCore, this);
+		AbilitySystemComponent = PS->GetAbilitySystemComponent();
+		AbilitySystemComponent->InitAbilityActorInfo(PS, this);
 	}
 }

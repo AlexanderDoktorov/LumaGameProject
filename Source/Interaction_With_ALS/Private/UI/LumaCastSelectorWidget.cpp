@@ -17,7 +17,13 @@ void ULumaCastSelectorWidget::NativeConstruct()
 	if(auto OwnerASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwningPlayerPawn()))
 	{
 		for(EEmotion EmotionType : TEnumRange<EEmotion>())
-			OwnerASC->GetGameplayAttributeValueChangeDelegate(UEmotionsAttributeSet::GetAttributeByEmotion(EmotionType)).AddUObject(this, &ThisClass::OnEmotionalAttributeChangeInternal);
+		{
+			FOnGameplayAttributeValueChange& Delegate = OwnerASC->GetGameplayAttributeValueChangeDelegate(UEmotionsAttributeSet::GetAttributeByEmotion(EmotionType));
+			Delegate.AddLambda([this](const FOnAttributeChangeData& AttributeChangeData)
+			{
+				UpdateAbilities();
+			});
+		}
 	}
 
 	if(auto Character = Cast<ACharacter>(GetOwningPlayerPawn()))
@@ -37,10 +43,6 @@ void ULumaCastSelectorWidget::NativeConstruct()
 	});
 }
 
-void ULumaCastSelectorWidget::OnEmotionalAttributeChangeInternal(const FOnAttributeChangeData& AttributeChangeData)
-{
-	OnEmotionalAttributeChange();
-}
 
 void ULumaCastSelectorWidget::OnCharacterOverlappedLocallyCastedActor(UPrimitiveComponent* OverlappedComponent,
 	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
@@ -68,4 +70,14 @@ void ULumaCastSelectorWidget::OnCharacterEndOverlappLocallyCastedActor(UPrimitiv
 		LocalCastWidget->SetLocalActor(nullptr);
 		LocalCastWidget->SetVisibility(ESlateVisibility::Collapsed);
 	}
+}
+
+UActorComponent* ULumaCastSelectorWidget::GetComponentByClassFromPawn(
+	TSubclassOf<UActorComponent> ComponentClass) const
+{
+	if(auto OwningPlayerControlledPawn = GetOwningPlayerPawn())
+	{
+		return OwningPlayerControlledPawn->GetComponentByClass(ComponentClass);
+	}
+	return nullptr;
 }

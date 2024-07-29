@@ -161,59 +161,13 @@ void AGAS_MainCharacterCpp::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-UAbilitySystemComponent* AGAS_MainCharacterCpp::GetAbilitySystemComponent() const
+void AGAS_MainCharacterCpp::GiveDefaultAbilities() const
 {
-	return AbilitySystemComponent;
-}
-
-void AGAS_MainCharacterCpp::InitializeAttributes()
-{
-	if (AbilitySystemComponent && DefaultAttributeEffect)
-	{
-		FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
-		EffectContext.AddSourceObject(this);
-
-		FGameplayEffectSpecHandle SpecHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributeEffect, 1, EffectContext);
-
-		if (SpecHandle.IsValid())
-		{
-			FActiveGameplayEffectHandle GHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-		}
-	}
-}
-
-void AGAS_MainCharacterCpp::GiveAbilities()
-{
-	//GEngine->AddOnScreenDebugMessage(0, 1, FColor::Cyan, "Pysk", true);
-	if (AbilitiesData && AbilitySystemComponent)
-	{
+	// Add abilities from DefaultAbilitiesArray from character
+	Super::GiveDefaultAbilities();
+	
+	if (AbilitiesData)
 		AbilitiesData->GiveAbilities(AbilitySystemComponent, this);
-	}
-}
-
-void AGAS_MainCharacterCpp::PossessedBy(AController* NewController)
-{
-	Super::PossessedBy(NewController);
-
-	if (AbilitySystemComponent->AbilityActorInfo.IsValid() == false)
-	{
-		GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, "GAS ERROR - AbilityActorInfo is NOT valid ", true);
-		return;
-	}
-	AbilitySystemComponent->AbilityActorInfo->InitFromActor(this, this, AbilitySystemComponent);
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-
-	InitializeAttributes();
-	GiveAbilities();
-
-}
-
-void AGAS_MainCharacterCpp::OnRep_PlayerState()
-{
-	Super::OnRep_PlayerState();
-
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-	InitializeAttributes();
 }
 
 void AGAS_MainCharacterCpp::TryCreateInputsGAS()

@@ -19,6 +19,24 @@ ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializ
 	EmotionsAttributes = CreateDefaultSubobject<UEmotionsAttributeSet>("Emotion attributes");
 }
 
+void ALumaCharacterBase::GiveDefaultAbilities() const
+{
+	Super::GiveDefaultAbilities();
+	
+	// Grant abilities, but only on the server	
+	if (GetLocalRole() != ROLE_Authority || !GetAbilitySystemComponent())
+		return;
+
+	if(!LumaAbilitiesDataAsset)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LumaAbilitiesDataAsset isn't specified for [%s]"), *GetName());
+		return;
+	}
+
+	// Give luma cast abilities
+	LumaAbilitiesDataAsset->GiveAbilitiesTo(GetAbilitySystemComponent(), const_cast<ALumaCharacterBase*>(this));
+}
+
 int32 ALumaCharacterBase::GetNumCapsules() const
 {
 	if(!GetAbilitySystemComponent())
@@ -62,22 +80,4 @@ void ALumaCharacterBase::OnLumaSelectorWidgetClosed() const
 		if(!LocalCast->HasBeenCasted())
 			LocalCast->OnLumaSelectorWidgetClosed();
 	}
-}
-
-void ALumaCharacterBase::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// Grant abilities, but only on the server	
-	if (GetLocalRole() != ROLE_Authority || !GetAbilitySystemComponent())
-		return;
-
-	if(!LumaAbilitiesDataAsset)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("LumaAbilitiesDataAsset isn't specified for [%s]"), *GetName());
-		return;
-	}
-
-	// Give luma cast abilities
-	LumaAbilitiesDataAsset->GiveAbilitiesTo(GetAbilitySystemComponent(), this);
 }

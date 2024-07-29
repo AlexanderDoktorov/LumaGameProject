@@ -24,18 +24,18 @@ class INTERACTION_WITH_ALS_API ULumaCastSelectorWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	virtual void NativeConstruct() override;
-
-	void OnEmotionalAttributeChangeInternal(const FOnAttributeChangeData& AttributeChangeData);
-
 	UFUNCTION()
 	void OnCharacterOverlappedLocallyCastedActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
 	void OnCharacterEndOverlappLocallyCastedActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-	
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	void OnEmotionalAttributeChange();
+		
+	UFUNCTION(BlueprintImplementableEvent)
+    void UpdateAbilities();
 protected:
+	UFUNCTION(BlueprintCallable, meta = (ComponentClass = "/Script/Engine.ActorComponent"), meta = (DeterminesOutputType = "ComponentClass"))
+	UActorComponent* GetComponentByClassFromPawn(TSubclassOf<UActorComponent> ComponentClass) const;
+	
 	UPROPERTY(BlueprintReadOnly, Category=LumaCastSelectorWidget, meta = (BindWidget))
 	ULocalCastWidget* LocalCastWidget = nullptr;
 };

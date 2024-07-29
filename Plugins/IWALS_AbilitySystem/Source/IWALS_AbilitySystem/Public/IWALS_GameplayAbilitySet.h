@@ -63,7 +63,7 @@ class IWALS_ABILITYSYSTEM_API UIWALS_GameplayAbilitySet : public UDataAsset
 	UPROPERTY(EditAnywhere, Category = AbilitySet)
 		TArray<FGameplayAbilityBindIWALS>	Abilities;
 
-	void GiveAbilities(UAbilitySystemComponent* AbilitySystemComponent, AActor* TargetActor) const;
+	void GiveAbilities(UAbilitySystemComponent* AbilitySystemComponent,const AActor* TargetActor) const;
 
 	bool HasAbility(UAbilitySystemComponent* AbilitySystemComp, TSubclassOf<UGameplayAbility> AbilityClass) const;
 };
