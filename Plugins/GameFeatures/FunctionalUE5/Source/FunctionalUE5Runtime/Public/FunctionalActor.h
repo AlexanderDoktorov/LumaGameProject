@@ -8,7 +8,7 @@
 #include "FunctionalActor.generated.h"
 
 UCLASS()
-class FUNCTIONALUE5_API AFunctionalActor : public AActor
+class FUNCTIONALUE5RUNTIME_API AFunctionalActor : public AActor
 {
 	GENERATED_BODY()
 

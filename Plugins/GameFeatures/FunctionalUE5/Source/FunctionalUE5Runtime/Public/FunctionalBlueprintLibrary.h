@@ -13,7 +13,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogFunctionalUE5, Log, All);
  * 
  */
 UCLASS()
-class FUNCTIONALUE5_API UFunctionalBlueprintLibrary : public UBlueprintFunctionLibrary
+class FUNCTIONALUE5RUNTIME_API UFunctionalBlueprintLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 public:

@@ -31,7 +31,7 @@ struct FGetPinNames
  * 
  */
 UCLASS()
-class FUNCTIONALUE5_API UK2Node_GetUFunctionsNames : public UK2Node
+class FUNCTIONALUE5RUNTIME_API UK2Node_GetUFunctionsNames : public UK2Node
 {
 	GENERATED_BODY()
 public:

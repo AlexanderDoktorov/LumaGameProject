@@ -11,6 +11,9 @@ public class Interaction_With_ALSEditorTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		bOverrideBuildEnvironment = true;
 
-		ExtraModuleNames.AddRange( new string[] { "Interaction_With_ALS" } );
+		ExtraModuleNames.AddRange( new string[]
+		{
+			"Interaction_With_ALS"
+		});
 	}
 }
