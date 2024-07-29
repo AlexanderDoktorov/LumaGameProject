@@ -110,7 +110,10 @@ bool UContextCastWidget::TryActivateCastAbility()
 	// Activate an ability by the spec handle from it
 	if(!OwnerAsc->TryActivateAbility(CastAbility->GetCurrentAbilitySpecHandle()))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Unable to activate [%s] ability with [%s] spec handle from context cast widget"), *CastAbility->GetName(), *CastAbility->GetCurrentAbilitySpecHandle().ToString());
+#ifdef UE_BUILD_DEBUG
+		if(CastAbility->GetCooldownTimeRemaining() > 0.f)
+			UE_LOG(LogTemp, Log, TEXT("[%s] ability with [%s] spec handle is on cooldown"), *CastAbility->GetName(), *CastAbility->GetCurrentAbilitySpecHandle().ToString());
+#endif
 		return false;
 	}
 	else

@@ -20,7 +20,6 @@ public:
 	virtual void ApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const override;
 	void AddAttributeCost(const FGameplayModifierInfo& ModifierInfo);
 	FGameplayModifierInfo GetModInfoByAttribute(const FGameplayAttribute& Attribute) const;
-
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Cost)
 	TArray<FGameplayModifierInfo> ModifierInfos{};
