@@ -6,6 +6,7 @@
 #include "FunctionalPlayerState.h"
 
 AFunctionalPlayerCharacter::AFunctionalPlayerCharacter(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 }
 

@@ -2,8 +2,10 @@
 
 
 #include "Components/LumaAbilitySystemComponent.h"
-#include "UI/LumaCastSelectorWidget.h"
-#include "UI/LumaHUD.h"
+
+#include "EnhancedInputComponent.h"
+#include "Abilities/GameplayAbilityBase.h"
+#include "GameFramework/PlayerState.h"
 
 ULumaAbilitySystemComponent::ULumaAbilitySystemComponent()
 {
@@ -14,23 +16,25 @@ void ULumaAbilitySystemComponent::OnGiveAbility(FGameplayAbilitySpec& AbilitySpe
 {
 	Super::OnGiveAbility(AbilitySpec);
 
-	/*
-	// Update selector widget if character owner has it (particullary it's HUD) //
-	APawn* PawnAvatar = Cast<APawn>(GetAvatarActor());
-	if(!PawnAvatar)
+	// If avatar actor is a pawn, we can bind input to it's input component
+	APlayerState* PS = Cast<APlayerState>(GetOwnerActor());
+	if(!PS || !PS->GetPlayerController())
 		return;
 
-	APlayerController* PlayerController = Cast<APlayerController>(PawnAvatar->GetController());
-	if(!PlayerController)
+	const UGameplayAbilityBase* BaseAbility = Cast<UGameplayAbilityBase>(AbilitySpec.Ability);
+	if(!BaseAbility)
 		return;
-	
-	ALumaHUD* LumaHUD = Cast<ALumaHUD>(PlayerController->GetHUD());
-	if(!LumaHUD)
-		return;
-	
-	if(LumaHUD->GetLumaSelectorWidget())
-		LumaHUD->GetLumaSelectorWidget()->UpdateAbilities();
-	*/
+
+	// Bind input action for ability if it has one
+	if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PS->GetPlayerController()->InputComponent))
+	{
+		FGameplayAbilitySpecHandle AbilityHandle = AbilitySpec.Handle;
+		EnhancedInputComponent->BindActionValueLambda(BaseAbility->IA_ActivateAbility, ETriggerEvent::Triggered, [this, AbilityHandle](const FInputActionValue& Value)
+		{
+			// Activate ability from it's handle
+			TryActivateAbility(AbilityHandle);
+		});
+	}
 }
 
 void ULumaAbilitySystemComponent::BeginPlay()

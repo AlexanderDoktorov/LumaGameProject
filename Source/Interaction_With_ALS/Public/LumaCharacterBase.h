@@ -24,7 +24,7 @@ class INTERACTION_WITH_ALS_API ALumaCharacterBase : public AGAS_MainCharacterCpp
 	friend class ALumaPlayerController;
 public:
 	ALumaCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-	virtual void GiveDefaultAbilities() const override;
+	virtual void GiveDefaultAbilities() override;
 
 	FORCEINLINE ULumaAbilitySystemComponent* GetLumaAbilitySystemComponent() const { return Cast<ULumaAbilitySystemComponent>(GetAbilitySystemComponent()); }
 	

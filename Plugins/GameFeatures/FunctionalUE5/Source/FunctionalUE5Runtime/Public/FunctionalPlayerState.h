@@ -7,6 +7,8 @@
 #include "GameFramework/PlayerState.h"
 #include "FunctionalPlayerState.generated.h"
 
+
+static const FName PlayerAbilitySystemComponentName = FName("PlayerAbilitySystem");
 /**
  * 
  */
@@ -15,7 +17,7 @@ class FUNCTIONALUE5RUNTIME_API AFunctionalPlayerState : public APlayerState, pub
 {
 	GENERATED_BODY()
 public:
-	AFunctionalPlayerState();
+	AFunctionalPlayerState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 private:
 	UPROPERTY()

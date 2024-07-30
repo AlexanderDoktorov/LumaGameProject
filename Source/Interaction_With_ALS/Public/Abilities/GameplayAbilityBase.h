@@ -6,12 +6,15 @@
 #include "Abilities/GameplayAbility.h"
 #include "GameplayAbilityBase.generated.h"
 
+class UInputAction;
+
 /**
  * 
  */
 UCLASS()
 class INTERACTION_WITH_ALS_API UGameplayAbilityBase : public UGameplayAbility
 {
+	friend class ULumaAbilitySystemComponent;
 	GENERATED_BODY()
 public:
 	UGameplayAbilityBase(const FObjectInitializer& ObjectInitilizer = FObjectInitializer::Get());
@@ -23,4 +26,7 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Cost)
 	TArray<FGameplayModifierInfo> ModifierInfos{};
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UInputAction* IA_ActivateAbility = nullptr;
 };

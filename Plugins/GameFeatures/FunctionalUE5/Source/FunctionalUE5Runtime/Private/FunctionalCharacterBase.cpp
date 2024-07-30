@@ -2,7 +2,6 @@
 
 
 #include "FunctionalCharacterBase.h"
-
 #include "AbilitySystemComponent.h"
 #include "GameplayAbilitySpec.h"
 
@@ -23,7 +22,7 @@ UAbilitySystemComponent* AFunctionalCharacterBase::GetAbilitySystemComponent() c
 	return AbilitySystemComponent;
 }
 
-void AFunctionalCharacterBase::GiveDefaultAbilities() const
+void AFunctionalCharacterBase::GiveDefaultAbilities()
 {
 	check(AbilitySystemComponent);
 
@@ -31,8 +30,7 @@ void AFunctionalCharacterBase::GiveDefaultAbilities() const
 		return;
 	for (const auto& AbilityClass : DefaultAbilites)
 	{
-		const FGameplayAbilitySpec AbilitySpec(AbilityClass, 1);
-		AbilitySystemComponent->GiveAbility(AbilitySpec);
+		AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, AbilityClass.GetDefaultObject()->GetAbilityLevel(), INDEX_NONE, this));
 	}
 }
 

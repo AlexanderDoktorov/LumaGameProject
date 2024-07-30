@@ -25,7 +25,7 @@ public:
 protected:
 	// Override this to assiing AbilitySystemComponent and attribute sets
 	virtual void InitializeAbilitySystem() PURE_VIRTUAL(AFunctionalCharacterBase::InitilizeAbilitySystem);
-	virtual void GiveDefaultAbilities() const;
+	virtual void GiveDefaultAbilities();
 	void ApplyInitAttributeEffect() const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components | Ability System")

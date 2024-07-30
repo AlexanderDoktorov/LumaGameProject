@@ -8,10 +8,7 @@
 #include "AttributeSets/LumaAttributeSet.h"
 #include "Objects/CastableObjectsDataAsset.h"
 
-ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializer) :
-	Super(
-		ObjectInitializer.SetDefaultSubobjectClass("Attributes", ULumaAttributeSet::StaticClass())
-		.SetDefaultSubobjectClass("AbilitySystemComp", ULumaAbilitySystemComponent::StaticClass()))
+ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -19,7 +16,7 @@ ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializ
 	EmotionsAttributes = CreateDefaultSubobject<UEmotionsAttributeSet>("Emotion attributes");
 }
 
-void ALumaCharacterBase::GiveDefaultAbilities() const
+void ALumaCharacterBase::GiveDefaultAbilities()
 {
 	Super::GiveDefaultAbilities();
 	
@@ -34,7 +31,7 @@ void ALumaCharacterBase::GiveDefaultAbilities() const
 	}
 
 	// Give luma cast abilities
-	LumaAbilitiesDataAsset->GiveAbilitiesTo(GetAbilitySystemComponent(), const_cast<ALumaCharacterBase*>(this));
+	LumaAbilitiesDataAsset->GiveAbilitiesTo(GetAbilitySystemComponent(), this);
 }
 
 int32 ALumaCharacterBase::GetNumCapsules() const

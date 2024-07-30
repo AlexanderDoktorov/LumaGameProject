@@ -1,6 +1,3 @@
-
-
-
 #include "GAS_MainCharacterCpp.h"
 #include "GameplayTagsManager.h"
 
@@ -9,25 +6,7 @@ AGAS_MainCharacterCpp::AGAS_MainCharacterCpp(const FObjectInitializer& ObjectIni
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComp");
-	AbilitySystemComponent->SetIsReplicated(true);
-	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
-
 	Attributes = CreateDefaultSubobject<UIWALS_BaseAttributeSet>("Attributes");
-}
-
-// Called when the game starts or when spawned
-void AGAS_MainCharacterCpp::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void AGAS_MainCharacterCpp::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
 FGameplayTag AGAS_MainCharacterCpp::ConvertLiteralNameToTag(FName TagName)
@@ -155,13 +134,7 @@ bool AGAS_MainCharacterCpp::SwitchOnOwnedTagsWithIgnore(const FGameplayTag& NewS
 	return true;
 }
 
-// Called to bind functionality to input
-void AGAS_MainCharacterCpp::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
-void AGAS_MainCharacterCpp::GiveDefaultAbilities() const
+void AGAS_MainCharacterCpp::GiveDefaultAbilities()
 {
 	// Add abilities from DefaultAbilitiesArray from character
 	Super::GiveDefaultAbilities();

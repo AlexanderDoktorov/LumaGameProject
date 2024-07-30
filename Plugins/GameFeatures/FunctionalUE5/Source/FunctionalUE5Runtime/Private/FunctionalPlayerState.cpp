@@ -4,11 +4,12 @@
 #include "FunctionalPlayerState.h"
 #include "AbilitySystemComponent.h"
 
-AFunctionalPlayerState::AFunctionalPlayerState()
+AFunctionalPlayerState::AFunctionalPlayerState(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	NetUpdateFrequency = 100.f;
 	
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("PlayerAbilitySystem");
+	AbilitySystemComponent = ObjectInitializer.CreateDefaultSubobject<UAbilitySystemComponent>(this, PlayerAbilitySystemComponentName);
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 }

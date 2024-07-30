@@ -16,7 +16,7 @@ public:
 	// Sets default values for this character's properties
 	AGAS_MainCharacterCpp(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 protected:
-	virtual void GiveDefaultAbilities() const override;
+	virtual void GiveDefaultAbilities() override;
 	
 public:
 	//Define Base Variables For ALS Character
@@ -71,14 +71,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Cached Variables", meta = (AllowPrivateAccess = "True"))
 	FGameplayAbilitySpecHandle AbilityHandle;
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Abilities")
 	UIWALS_GameplayAbilitySet* AbilitiesData;
 	
@@ -99,10 +91,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Abilities", meta = (DisplayName = "Switch On Owned Tags With Ignore", Keywords = "Gameplay Tag"))
 	virtual bool SwitchOnOwnedTagsWithIgnore(const FGameplayTag& NewState, const FGameplayTagContainer& DoNotEdit);
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Pawn|Input", meta = (DisplayName = "Try Create Inputs Binds For GAS", Keywords = "Inputs Player"))
 	virtual void TryCreateInputsGAS();
 };
