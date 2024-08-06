@@ -212,7 +212,7 @@ public:
 		static void ClassToActorsArray(const UObject* WorldContextObject, TArray<UClass*> ActorsClass, TArray<AActor*> SingleActorToIgnore, TArray<AActor*>& ReturnArray);
 
 	//ENG: The function's task is to add an offset to the target point so as to eliminate the collision with other AI controllers. It may happen that several controllers will reach to one point. This function tries to eliminate this situation.
-	//PL : Zadaniem funckji jest dodanie przesuniêcia wzglêdem punktu celu, tak aby wyeliminowaæ kolizjê wzglêdemi innych kontrolerów AI.Mo¿e siê zda¿yæ taka sytuacja ¿e kilka kotrolerów bêdzie do¿yæ do jednego punktu.Ta funkcja stara siê wyeliminowaæ tak¹ sytuacjê.
+	//PL : Zadaniem funckji jest dodanie przesuniï¿½cia wzglï¿½dem punktu celu, tak aby wyeliminowaï¿½ kolizjï¿½ wzglï¿½demi innych kontrolerï¿½w AI.Moï¿½e siï¿½ zdaï¿½yï¿½ taka sytuacja ï¿½e kilka kotrolerï¿½w bï¿½dzie doï¿½yï¿½ do jednego punktu.Ta funkcja stara siï¿½ wyeliminowaï¿½ takï¿½ sytuacjï¿½.
 	UFUNCTION(BlueprintPure, Category = "JakubW_FunctionsLibrary| Navigation", meta = (WorldContext = "WorldContextObject", DisplayName = "Fix Move Point When Is Busy ", Keywords = "AI Navigation"))
 		static FVector FixMovePointWhenIs(UObject* WorldContextObject, FVector TargetPoint, ACharacter* TargetCharacter, UClass* CharactersArray, float OffsetRadius=60, int MaxIteractions=6, float MinAccetableDistance=25);
 
@@ -257,8 +257,8 @@ public:
 		static bool AnimSlotIsActivatedByTaget(UObject* WorldContextObject, UAnimInstance* Target, FName SlotName);
 
 	//Get Us Enemy By Using Actor Tags. An actor checking whether "ActorToCheck" is to be treated as an enemy. When ActorToCheck have Tag with EN_[ClassName] then return = true
-	UFUNCTION(BlueprintPure, Category = "JakubW_FunctionsLibrary| Character", meta = (WorldContext = "WorldContextObject", DisplayName = "Get Is Enemy Value", Keywords = "Character AI"))
-		static bool GetIsEnemyState(UObject* WorldContextObject, AActor* Checker = nullptr, AActor* ActorToCheck = nullptr);
+	UFUNCTION(BlueprintPure, Category = "JakubW_FunctionsLibrary| Character", meta = (DisplayName = "Get Is Enemy Value", Keywords = "Character AI"))
+		static bool GetIsEnemyState(AActor* Checker, const AActor* ActorToCheck);
 
 	UFUNCTION(BlueprintCallable, Category = "JakubW_FunctionsLibrary| Collision", meta = (WorldContext = "WorldContextObject", DisplayName = "Find Nearest Collision By Cylinder", Keywords = "Collision"))
 		static bool FindNearestCollisionByCylinder(FVector& OutCircleCenter, float& OutCircleRadius, FVector& OutNormal, UObject* WorldContextObject, FTransform OriginTransform, TArray<AActor*> ToIgnore,

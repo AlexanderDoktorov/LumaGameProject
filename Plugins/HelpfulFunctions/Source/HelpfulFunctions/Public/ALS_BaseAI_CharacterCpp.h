@@ -9,21 +9,21 @@
 UENUM(BlueprintType)
 enum class CALS_Gait : uint8
 {
-	Walking UMETA(DisplayName = "Walking"),
-	Running UMETA(DisplayName = "Running"),
-	Sprinting UMETA(DisplayName = "Sprinting"),
+	Walking			UMETA(DisplayName = "Walking"),
+	Running			UMETA(DisplayName = "Running"),
+	Sprinting		UMETA(DisplayName = "Sprinting"),
 };
 
 UENUM(BlueprintType)
 enum class CALS_MovementState : uint8
 {
-	None UMETA(DisplayName = "None"),
-	Grounded UMETA(DisplayName = "Grounded"),
-	InAir UMETA(DisplayName = "In Air"),
-	Mantling UMETA(DisplayName = "Mantling"),
-	Ragdoll UMETA(DisplayName = "Ragdoll"),
-	Crawl UMETA(DisplayName = "Crawl"),
-	Prone UMETA(DisplayName = "Prone")
+	None			UMETA(DisplayName = "None"),
+	Grounded		UMETA(DisplayName = "Grounded"),
+	InAir			UMETA(DisplayName = "In Air"),
+	Mantling		UMETA(DisplayName = "Mantling"),
+	Ragdoll			UMETA(DisplayName = "Ragdoll"),
+	Crawl           UMETA(DisplayName = "Crawl"),
+	Prone           UMETA(DisplayName = "Prone")
 };
 
 UENUM(BlueprintType)
@@ -102,20 +102,15 @@ class HELPFULFUNCTIONS_API AALS_BaseAI_CharacterCpp : public AFunctionalAICharac
 public:
 	// Sets default values for this character's properties
 	AALS_BaseAI_CharacterCpp();
+
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
 	FVector PrevVelocityC = FVector(0, 0, 0);
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
 	float PrevAimYawC = 0.0f;
-
-public:
-	// Called every frame
+	
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI Config",
 		meta = (AllowedClasses = "ALS_DamageConfigData"))
@@ -188,58 +183,22 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "True"))
 	FCALSMovementSettings CurrentMovementSettingsC;
 
-	UFUNCTION(BlueprintPure, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Is Character", Keywords = "ALS Character"))
-	bool IsCharacter();
+	bool CanUpdateRotation() const;
+	bool CalcCanSprint() const;
+	
+	void CalculateGroundedRotation();
+	void SmoothedCharRotation(FRotator Target, float TargetInterpSpeedConst, float ActorInterpSpeedSmooth, bool UpdateControl);
+	void LimitRotationFast(float AimYawMin, float AimYawMax, float InterpSpeed);
 
-	UFUNCTION(BlueprintCallable, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Update Grounded Rotation Fast", Keywords =
-			"ALS Character"))
-	virtual void CalculateGroundedRotation();
+	float CalcGroundedRotationRate() const;
+	float GetMappedSpeedFast() const;
 
-	UFUNCTION(BlueprintCallable, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Smoothed Character Rotation Fast", Keywords =
-			"ALS Character"))
-	virtual void SmoothedCharRotation(FRotator Target, float TargetInterpSpeedConst, float ActorInterpSpeedSmooth,
-	                                  bool UpdateControl);
+	UFUNCTION(BlueprintPure, Category = "ALS Character", meta = (DisplayName = "Get Allowed Gait Fast"))
+	CALS_Gait GetAllowedGaitFast() const;
 
-	UFUNCTION(BlueprintCallable, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Limit Rotation Fast", Keywords = "ALS Character"))
-	virtual void LimitRotationFast(float AimYawMin, float AimYawMax, float InterpSpeed);
+	UFUNCTION(BlueprintPure, Category = "ALS Character", meta = (DisplayName = "Get Actual Gait Fast"))
+	CALS_Gait GetActualGaitFast(CALS_Gait AllowedGait) const;
 
-	UFUNCTION(BlueprintPure, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Can Update Moving Rotation Fast", Keywords =
-			"ALS Character"))
-	virtual bool CanUpdateRotation();
-
-	UFUNCTION(BlueprintPure, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Calculate Grounded Rotation Rate Fast", Keywords =
-			"ALS Character"))
-	virtual float CalcGroundedRotationRate();
-
-	UFUNCTION(BlueprintPure, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Get Mapped Speed Fast", Keywords = "ALS Character"))
-	virtual float GetMappedSpeedFast();
-
-	UFUNCTION(BlueprintPure, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Can Sprint Fast", Keywords = "ALS Character"))
-	virtual bool CalcCanSprint();
-
-	UFUNCTION(BlueprintCallable, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Update Dynamic Movement Settings Fast", Keywords =
-			"ALS Character"))
-	virtual void UpdateMovementSettings(CALS_Gait AllowedGait, FCALSMovementSettings CurrentMovement);
-
-	UFUNCTION(BlueprintPure, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Get Allowed Gait Fast", Keywords = "ALS Character"))
-	virtual CALS_Gait GetAllowedGaitFast();
-
-	UFUNCTION(BlueprintPure, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Get Actual Gait Fast", Keywords = "ALS Character"))
-	virtual CALS_Gait GetActualGaitFast(CALS_Gait AllowedGait);
-
-	UFUNCTION(BlueprintCallable, Category = "ALS Character",
-		meta = (WorldContext = "WorldContextObject", DisplayName = "Find Cover Fast", Keywords = "ALS Character"))
-	virtual void FindCoverFast(FVector StartLocation, FVector StartDirection, int DebugIndex, bool& CanCover,
-	                           float& WallHeigh, FVector& Impact, FVector& Normal);
+	UFUNCTION(BlueprintCallable, Category = "ALS Character", meta = (DisplayName = "Update Dynamic Movement Settings Fast"))
+	void UpdateMovementSettings(CALS_Gait AllowedGait, FCALSMovementSettings CurrentMovement);
 };
