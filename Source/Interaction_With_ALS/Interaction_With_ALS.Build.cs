@@ -22,7 +22,10 @@ public class Interaction_With_ALS : ModuleRules
 			"EnhancedInput",
 			"UnrealEd",
 			"GeometryCollectionEngine",
-			"FunctionalUE5Runtime"
+			"FunctionalUE5Runtime",
+			"FunctionalUE5TeamsRuntime", 
+			"HelpfulFunctions",
+			"AIModule"
 		});
 
 		// Uncomment if you are using Slate UI

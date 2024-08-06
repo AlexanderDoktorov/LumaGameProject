@@ -30,6 +30,7 @@ public:
 	
 	int32 GetNumCapsules() const;
 protected:
+	virtual void BeginPlay() override;
 	void OnLumaSelectorWidgetOpen() const;
 	void OnLumaSelectorWidgetClosed() const;
 

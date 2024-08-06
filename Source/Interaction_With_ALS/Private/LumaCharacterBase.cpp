@@ -2,6 +2,7 @@
 
 #include "LumaCharacterBase.h"
 #include "EngineUtils.h"
+#include "LumaTeamSubsystem.h"
 #include "Components/LumaAbilitySystemComponent.h"
 #include "Actors/LocalCastActor.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
@@ -40,6 +41,21 @@ int32 ALumaCharacterBase::GetNumCapsules() const
 		return -1;
 	
 	return FMath::RoundToInt(GetAbilitySystemComponent()->GetNumericAttribute(ULumaAttributeSet::GetLumaAttribute()));
+}
+
+void ALumaCharacterBase::BeginPlay()
+{
+	if(UGameInstance* GameInstance = GetGameInstance())
+	{
+		ULumaTeamSubsystem* TeamSubsystem = GameInstance->GetSubsystem<ULumaTeamSubsystem>();
+		TeamSubsystem->AddToPlayersTeam(this);
+	}
+
+	// Logs team for this player
+	// LumaTeam Team = LumaTeamManager::Get().GetTeamFor(this);
+	// UE_LOG(LogTemp, Warning, TEXT("Team of [%s] is [%s]"), *GetName(), *AsString(Team.TeamID));
+	
+	Super::BeginPlay();
 }
 
 void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const

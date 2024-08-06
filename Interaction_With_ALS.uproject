@@ -79,6 +79,10 @@
 		{
 			"Name": "SkeletalMeshModelingTools",
 			"Enabled": true
+		},
+		{
+			"Name": "FunctionalUE5Teams",
+			"Enabled": true
 		}
 	]
 }

@@ -3,13 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
+#include "ALS_BaseAI_CharacterCpp.h"
 #include "LumaAICharacter.generated.h"
 
 UCLASS()
-class INTERACTION_WITH_ALS_API ALumaAICharacter : public AActor
+class INTERACTION_WITH_ALS_API ALumaAICharacter : public AALS_BaseAI_CharacterCpp
 {
 	GENERATED_BODY()
 public:
 	ALumaAICharacter();
+protected:
+	virtual void BeginPlay() override;
 };

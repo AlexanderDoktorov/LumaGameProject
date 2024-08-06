@@ -2,11 +2,22 @@
 
 
 #include "LumaAICharacter.h"
+#include "LumaTeamSubsystem.h"
 
 
 ALumaAICharacter::ALumaAICharacter()
 {
+	
+}
 
+void ALumaAICharacter::BeginPlay()
+{
+	if(UGameInstance* GameInstance = GetGameInstance())
+	{
+		ULumaTeamSubsystem* TeamSubsystem = GameInstance->GetSubsystem<ULumaTeamSubsystem>();
+		TeamSubsystem->AddToAITeam(this);
+	}
+	Super::BeginPlay();
 }
 
 
