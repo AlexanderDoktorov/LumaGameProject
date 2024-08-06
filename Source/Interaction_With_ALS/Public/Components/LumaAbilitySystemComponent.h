@@ -13,6 +13,7 @@ class INTERACTION_WITH_ALS_API ULumaAbilitySystemComponent : public UAbilitySyst
 	GENERATED_BODY()
 public:
 	ULumaAbilitySystemComponent();
+	virtual void OnGiveAbility(FGameplayAbilitySpec& AbilitySpec) override;
 protected:
 	virtual void BeginPlay() override;
 };

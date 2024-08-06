@@ -8,9 +8,11 @@ namespace LumaGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_LumaToGather, "Data.LumaToGather");
 
 	// Luma Cast Abilities
-	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast, "Ability.LumaCast");
-	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast_Local, "Ability.LumaCast.Local");
-	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LumaCast_Context, "Ability.LumaCast.Context");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_LocalCast, "Ability.LumaCast.Local");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_ContextCast, "Ability.LumaCast.Context");
+
+	// Cooldown tags
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_ContextCast_ProximityMine_Cooldown, "Ability.ContextCast.ProximityMine.Cooldown");
 
 	// Emotions set by callers data tags
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Aggressiveness,		"Data.Aggressiveness")
@@ -18,9 +20,12 @@ namespace LumaGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_SelfPreservation,	"Data.SelfPreservation")
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Curiosity,			"Data.Curiosity")
 
+	// Events
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Event_Explosion_ProximityMine, "Event.Explosion.ProximityMine");
+	UE_DEFINE_GAMEPLAY_TAG(TAG_Event_LumaCast, "Event.LumaCast");
+
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Interaction_PickItem_Luma, "Interaction.PickItem.Luma");
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Action_LumaCast, "Action.LumaCast");
-	UE_DEFINE_GAMEPLAY_TAG(TAG_Event_LumaCast, "Event.LumaCast");
 	UE_DEFINE_GAMEPLAY_TAG(TAG_Action_SpawnCapsule, "Action.SpawnCapsule");
 }
 

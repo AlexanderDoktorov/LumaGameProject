@@ -11,11 +11,6 @@
 			"AdditionalDependencies": [
 				"GameplayAbilities"
 			]
-		},
-		{
-			"Name": "FunctionalUE5",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
@@ -75,6 +70,18 @@
 		},
 		{
 			"Name": "UE5CoroGAS",
+			"Enabled": true
+		},
+		{
+			"Name": "HDRIBackdrop",
+			"Enabled": true
+		},
+		{
+			"Name": "SkeletalMeshModelingTools",
+			"Enabled": true
+		},
+		{
+			"Name": "FunctionalUE5Teams",
 			"Enabled": true
 		}
 	]

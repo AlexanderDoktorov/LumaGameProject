@@ -20,10 +20,12 @@ public class Interaction_With_ALS : ModuleRules
 			"GameplayTags",
 			"GameplayTasks",
 			"EnhancedInput",
-			"UE5Coro",
-			"UE5CoroGAS",
 			"UnrealEd",
-			"FunctionalUE5"
+			"GeometryCollectionEngine",
+			"FunctionalUE5Runtime",
+			"FunctionalUE5TeamsRuntime", 
+			"HelpfulFunctions",
+			"AIModule"
 		});
 
 		// Uncomment if you are using Slate UI

@@ -26,7 +26,7 @@ bool UIWALS_GameplayAbilitySet::HasAbility(UAbilitySystemComponent* AbilitySyste
 	return false;
 }
 
-void UIWALS_GameplayAbilitySet:: GiveAbilities(UAbilitySystemComponent* AbilitySystemComponent, AActor* TargetActor) const
+void UIWALS_GameplayAbilitySet::GiveAbilities(UAbilitySystemComponent* AbilitySystemComponent, AActor* TargetActor) const
 {
 	if (TargetActor)
 	{
@@ -34,7 +34,8 @@ void UIWALS_GameplayAbilitySet:: GiveAbilities(UAbilitySystemComponent* AbilityS
 		{
 			if (BindInfo.GameplayAbilityClass && !HasAbility(AbilitySystemComponent, BindInfo.GameplayAbilityClass))
 			{
-				AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(BindInfo.GameplayAbilityClass, 1, (int32)BindInfo.Command, TargetActor));
+				AbilitySystemComponent->GiveAbility(
+					FGameplayAbilitySpec(BindInfo.GameplayAbilityClass, 1, (int32)BindInfo.Command, TargetActor));
 			}
 		}
 	}

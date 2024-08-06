@@ -8,12 +8,16 @@ namespace LumaGameplayTags
 {
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_LumaToGather)
 
-
 	// Luma Cast Abilties core tag
-	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_LumaCast);
-	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_LumaCast_Local);
-	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_LumaCast_Context);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_LocalCast);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_ContextCast);
 
+	// Cooldown tags
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_ContextCast_ProximityMine_Cooldown);
+
+	// Events
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Event_Explosion_ProximityMine);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Event_LumaCast)
 	
 	// Emotions set by callers data tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_Aggressiveness)
@@ -23,7 +27,6 @@ namespace LumaGameplayTags
 
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Interaction_PickItem_Luma)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Action_LumaCast)
-	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Event_LumaCast)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Action_SpawnCapsule)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_LumaCast)
 }

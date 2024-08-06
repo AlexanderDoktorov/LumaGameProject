@@ -14,8 +14,7 @@ public class Interaction_With_ALSTarget : TargetRules
 
 		ExtraModuleNames.AddRange( new string[]
 		{
-			"Interaction_With_ALS",
-			"FunctionalUE5"
+			"Interaction_With_ALS"
 		});
 	}
 }

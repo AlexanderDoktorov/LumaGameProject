@@ -29,7 +29,9 @@ public class HelpfulFunctions : ModuleRules
 			new string[]
 			{
 				"Core",
-				"JakubCableComponent",
+				"JakubCableComponent", 
+				"FunctionalUE5Runtime",
+				"AIModule"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -53,7 +55,7 @@ public class HelpfulFunctions : ModuleRules
 			}
 			);
 		// INCLUDE AI SYSTEM
-		PrivateDependencyModuleNames.AddRange(new string[] { "AIModule", "NavigationSystem" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "NavigationSystem" });
 
 	}
 }

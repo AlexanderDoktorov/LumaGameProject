@@ -26,7 +26,7 @@ TArray<ULumaContextCastAbility*> ULumaSystemComponent::GetMostPrioritizedCasts()
 	auto OwnerAsc = GetAbilitySystemComponentFromOwner();
 	if(!OwnerAsc)
 		return {};
-
+	
 	// Get owner emotions to compare with when building sorted array
 	FEmotionDescContainer OwnerEmotions{};
 	for(EEmotion Emotion : TEnumRange<EEmotion>())
@@ -40,7 +40,7 @@ TArray<ULumaContextCastAbility*> ULumaSystemComponent::GetMostPrioritizedCasts()
 	// Gather all luma abilities specs from owner ASC and sort them by predicate
 	// Sort abilities by distance
 	TArray<FGameplayAbilitySpec*> Specs{};
-	FGameplayTagContainer Tags { LumaGameplayTags::TAG_Ability_LumaCast_Context };
+	FGameplayTagContainer Tags { LumaGameplayTags::TAG_Ability_ContextCast };
 	OwnerAsc->GetActivatableGameplayAbilitySpecsByAllMatchingTags(Tags, Specs, false);
 
 	// Find context cast abilities

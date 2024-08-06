@@ -2,6 +2,7 @@
 
 #include "LumaCharacterBase.h"
 #include "EngineUtils.h"
+#include "LumaTeamSubsystem.h"
 #include "Components/LumaAbilitySystemComponent.h"
 #include "Actors/LocalCastActor.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
@@ -9,15 +10,30 @@
 #include "Objects/CastableObjectsDataAsset.h"
 #include <Kismet/GameplayStatics.h>
 
-ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializer) :
-	Super(
-		ObjectInitializer.SetDefaultSubobjectClass("Attributes", ULumaAttributeSet::StaticClass())
-		.SetDefaultSubobjectClass("AbilitySystemComp", ULumaAbilitySystemComponent::StaticClass()))
+ALumaCharacterBase::ALumaCharacterBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Add new attribute set so ability system && luma system component can manage emotional state of the owner
 	EmotionsAttributes = CreateDefaultSubobject<UEmotionsAttributeSet>("Emotion attributes");
+}
+
+void ALumaCharacterBase::GiveDefaultAbilities()
+{
+	Super::GiveDefaultAbilities();
+	
+	// Grant abilities, but only on the server	
+	if (GetLocalRole() != ROLE_Authority || !GetAbilitySystemComponent())
+		return;
+
+	if(!LumaAbilitiesDataAsset)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LumaAbilitiesDataAsset isn't specified for [%s]"), *GetName());
+		return;
+	}
+
+	// Give luma cast abilities
+	LumaAbilitiesDataAsset->GiveAbilitiesTo(GetAbilitySystemComponent(), this);
 }
 
 int32 ALumaCharacterBase::GetNumCapsules() const
@@ -26,6 +42,21 @@ int32 ALumaCharacterBase::GetNumCapsules() const
 		return -1;
 	
 	return FMath::RoundToInt(GetAbilitySystemComponent()->GetNumericAttribute(ULumaAttributeSet::GetLumaAttribute()));
+}
+
+void ALumaCharacterBase::BeginPlay()
+{
+	if(UGameInstance* GameInstance = GetGameInstance())
+	{
+		ULumaTeamSubsystem* TeamSubsystem = GameInstance->GetSubsystem<ULumaTeamSubsystem>();
+		TeamSubsystem->AddToPlayersTeam(this);
+	}
+
+	// Logs team for this player
+	// LumaTeam Team = LumaTeamManager::Get().GetTeamFor(this);
+	// UE_LOG(LogTemp, Warning, TEXT("Team of [%s] is [%s]"), *GetName(), *AsString(Team.TeamID));
+	
+	Super::BeginPlay();
 }
 
 void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const
@@ -55,22 +86,4 @@ void ALumaCharacterBase::OnLumaSelectorWidgetClosed() const
 		if(!LocalCast->HasBeenCasted())
 			LocalCast->OnLumaSelectorWidgetClosed();
 	}
-}
-
-void ALumaCharacterBase::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// Grant abilities, but only on the server	
-	if (GetLocalRole() != ROLE_Authority || !GetAbilitySystemComponent())
-		return;
-
-	if(!LumaAbilitiesDataAsset)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("LumaAbilitiesDataAsset isn't specified for [%s]"), *GetName());
-		return;
-	}
-
-	// Give luma cast abilities
-	LumaAbilitiesDataAsset->GiveAbilitiesTo(GetAbilitySystemComponent(), this);
 }

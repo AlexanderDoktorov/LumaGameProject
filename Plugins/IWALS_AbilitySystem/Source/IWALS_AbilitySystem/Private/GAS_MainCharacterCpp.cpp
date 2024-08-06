@@ -1,6 +1,3 @@
-
-
-
 #include "GAS_MainCharacterCpp.h"
 #include "GameplayTagsManager.h"
 
@@ -9,25 +6,7 @@ AGAS_MainCharacterCpp::AGAS_MainCharacterCpp(const FObjectInitializer& ObjectIni
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComp");
-	AbilitySystemComponent->SetIsReplicated(true);
-	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
-
 	Attributes = CreateDefaultSubobject<UIWALS_BaseAttributeSet>("Attributes");
-}
-
-// Called when the game starts or when spawned
-void AGAS_MainCharacterCpp::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void AGAS_MainCharacterCpp::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
 FGameplayTag AGAS_MainCharacterCpp::ConvertLiteralNameToTag(FName TagName)
@@ -155,65 +134,13 @@ bool AGAS_MainCharacterCpp::SwitchOnOwnedTagsWithIgnore(const FGameplayTag& NewS
 	return true;
 }
 
-// Called to bind functionality to input
-void AGAS_MainCharacterCpp::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AGAS_MainCharacterCpp::GiveDefaultAbilities()
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
-UAbilitySystemComponent* AGAS_MainCharacterCpp::GetAbilitySystemComponent() const
-{
-	return AbilitySystemComponent;
-}
-
-void AGAS_MainCharacterCpp::InitializeAttributes()
-{
-	if (AbilitySystemComponent && DefaultAttributeEffect)
-	{
-		FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
-		EffectContext.AddSourceObject(this);
-
-		FGameplayEffectSpecHandle SpecHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributeEffect, 1, EffectContext);
-
-		if (SpecHandle.IsValid())
-		{
-			FActiveGameplayEffectHandle GHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-		}
-	}
-}
-
-void AGAS_MainCharacterCpp::GiveAbilities()
-{
-	//GEngine->AddOnScreenDebugMessage(0, 1, FColor::Cyan, "Pysk", true);
-	if (AbilitiesData && AbilitySystemComponent)
-	{
+	// Add abilities from DefaultAbilitiesArray from character
+	Super::GiveDefaultAbilities();
+	
+	if (AbilitiesData)
 		AbilitiesData->GiveAbilities(AbilitySystemComponent, this);
-	}
-}
-
-void AGAS_MainCharacterCpp::PossessedBy(AController* NewController)
-{
-	Super::PossessedBy(NewController);
-
-	if (AbilitySystemComponent->AbilityActorInfo.IsValid() == false)
-	{
-		GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, "GAS ERROR - AbilityActorInfo is NOT valid ", true);
-		return;
-	}
-	AbilitySystemComponent->AbilityActorInfo->InitFromActor(this, this, AbilitySystemComponent);
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-
-	InitializeAttributes();
-	GiveAbilities();
-
-}
-
-void AGAS_MainCharacterCpp::OnRep_PlayerState()
-{
-	Super::OnRep_PlayerState();
-
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-	InitializeAttributes();
 }
 
 void AGAS_MainCharacterCpp::TryCreateInputsGAS()

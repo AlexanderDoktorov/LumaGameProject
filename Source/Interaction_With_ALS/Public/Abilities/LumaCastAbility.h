@@ -7,6 +7,7 @@
 #include "LumaTypes.h"
 #include "LumaCastAbility.generated.h"
 
+class UContextCastWidget;
 enum class EEmotion : uint8;
 
 /**
@@ -28,12 +29,23 @@ public:
 		const ULumaContextCastAbility* LumaCastAbility0, const ULumaContextCastAbility* LumaCastAbility1, const FEmotionDescContainer& ActorEmotions);
 	FORCEINLINE TSoftObjectPtr<UTexture2D> GetAbilityPreview() const { return AbilityPreview; }
 	FORCEINLINE FEmotionDescContainer GetEmotionRequirements() const { return EmotionRequirements; }
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FORCEINLINE TSubclassOf<UContextCastWidget> GetContextWidgetClass() const { return ContextWidgetClass; }
 protected:
+	// Widget that will display this ability
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LumaCastAbility)
+	TSubclassOf<UContextCastWidget> ContextWidgetClass;
+	
 	// Preview for cast widget
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LumaCastAbility)
 	TSoftObjectPtr<UTexture2D> AbilityPreview;
+
+	// Object Lifitime
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LumaCastAbility)
+	float ObjectLifitme = 0.f;
 	
-	// Preview for cast widget
+	// Cast time
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LumaCastAbility)
     float CastTime = 0.f;
 

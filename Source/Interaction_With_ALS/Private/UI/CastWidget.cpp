@@ -10,12 +10,10 @@
 #include "Components/Button.h"
 #include "Components/Image.h"
 
-/********** BEGIN UCastWidget BEGIN **********/
-
 void UCastWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	
+
 	CastSelectorButton->OnPressed.AddDynamic(this, &ThisClass::OnButtonPressed);
 	CastSelectorButton->OnClicked.AddDynamic(this, &ThisClass::OnButtonClicked);
 	CastSelectorButton->SynchronizeProperties();
@@ -41,7 +39,6 @@ void UCastWidget::SyncStyle()
 	ButtonStyle.Disabled.TintColor = NormalTint.GetSpecifiedColor() * DisabledMultiplier;
 
 	CastSelectorButton->SetStyle(ButtonStyle);
-	
 }
 
 void UCastWidget::SetPreview(const TSoftObjectPtr<UTexture2D>& PreviewTexture)
@@ -61,10 +58,20 @@ void UCastWidget::OnButtonPressed()
 	// No default realization
 }
 
-// Context cast widget
+//////////////////////////////////////////////////////////////////////////
+// Context Cast Widget
+//////////////////////////////////////////////////////////////////////////
+
+
 void UContextCastWidget::SetContextAbility(const ULumaContextCastAbility* ContextCastAbility)
 {
 	CastAbility = ContextCastAbility;
+
+	// Set preview from ability
+	if(ContextCastAbility)
+	{
+		SetPreview(ContextCastAbility->GetAbilityPreview());
+	}
 }
 
 void UContextCastWidget::OnButtonPressed()
@@ -87,7 +94,38 @@ void UContextCastWidget::OnButtonPressed()
 	}
 }
 
+bool UContextCastWidget::TryActivateCastAbility()
+{
+	if(!CastAbility.IsValid())
+		return false;
+
+	APawn* Pawn = GetOwningPlayerPawn();
+	if(!Pawn)
+		return false;
+
+	auto OwnerAsc = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn);
+	if(!OwnerAsc)
+		return false;
+	
+	// Activate an ability by the spec handle from it
+	if(!OwnerAsc->TryActivateAbility(CastAbility->GetCurrentAbilitySpecHandle()))
+	{
+#ifdef UE_BUILD_DEBUG
+		if(CastAbility->GetCooldownTimeRemaining() > 0.f)
+			UE_LOG(LogTemp, Log, TEXT("[%s] ability with [%s] spec handle is on cooldown"), *CastAbility->GetName(), *CastAbility->GetCurrentAbilitySpecHandle().ToString());
+#endif
+		return false;
+	}
+	else
+		OnLumaCast().Broadcast();
+	
+	return true;
+}
+
+
+//////////////////////////////////////////////////////////////////////////
 // Local cast widget
+//////////////////////////////////////////////////////////////////////////
 
 void ULocalCastWidget::SetLocalActor(ALocalCastActor* LocallyCastedActor)
 {

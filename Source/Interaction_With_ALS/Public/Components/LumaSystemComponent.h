@@ -43,6 +43,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void HandleEmotionalSourceAbsence(UEmotionSourceComponent* EmotionSourceComponent);
 protected:
+	template<class T = UAbilitySystemComponent>
+	requires std::is_base_of_v<UAbilitySystemComponent, T>
+	T* GetAbilitySystemComponentFromOwner() const;
+	
 	// Emotional Sources that are affecting owner right now
 	TArray<UEmotionSourceComponent*> AffectingEmotionalSources{};
 
@@ -53,14 +57,14 @@ protected:
 	// Max amount of luma casts that owner can select from 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = LumaSystemComponent, meta = (ClampMin = 0))
 	int32 MaxCasts = 3;
-private:
-	template<class T = UAbilitySystemComponent>
-	requires std::is_base_of_v<UAbilitySystemComponent, T>
-	T* GetAbilitySystemComponentFromOwner() const
-	{
-		if constexpr(std::is_same_v<T, ULumaSystemComponent>)
-			return UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner());
-		else
-			return Cast<T>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner()));
-	}
 };
+
+// Inlines
+template <class T> requires std::is_base_of_v<UAbilitySystemComponent, T>
+T* ULumaSystemComponent::GetAbilitySystemComponentFromOwner() const
+{
+	if constexpr(std::is_same_v<T, ULumaSystemComponent>)
+		return UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner());
+	else
+		return Cast<T>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner()));
+}

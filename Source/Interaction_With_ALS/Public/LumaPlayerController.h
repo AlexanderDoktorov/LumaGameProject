@@ -23,7 +23,9 @@ public:
 	ALumaPlayerController() = default;
 	
 	void Call_PickUpCapsule();
-	void SwitchLumaSelectorWidget(const FInputActionValue& ActionValue);
+	void OpenLumaSelector();
+	void CloseLumaSelector();
+	void Call_LumaSelectorCallbacks(bool bSelectorOpened) const;
 	
 protected:
 	virtual void SetupInputComponent() override;

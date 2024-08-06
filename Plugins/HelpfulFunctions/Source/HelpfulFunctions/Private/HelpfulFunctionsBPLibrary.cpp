@@ -1710,17 +1710,15 @@ bool UHelpfulFunctionsBPLibrary::AnimSlotIsActivatedByTaget(UObject* WorldContex
 	return false;
 }
 
+
+
 // ***************************************************************** GET ENEMY STATE BY USING ACTOR TAGS *****************************************************************
-bool UHelpfulFunctionsBPLibrary::GetIsEnemyState(UObject* WorldContextObject, AActor* Checker, AActor* ActorToCheck)
+bool UHelpfulFunctionsBPLibrary::GetIsEnemyState(AActor* Checker, const AActor* ActorToCheck)
 {
-	AActor* TargetChar = ActorToCheck;
-	if (IsValid(TargetChar) == false)
-	{
-		TargetChar = Cast<AActor>(WorldContextObject);
-	}
-	if (IsValid(TargetChar) == false || IsValid(Checker) == false) return false;
+	if (!IsValid(ActorToCheck) || !IsValid(Checker))
+		return false;
 	
-	FString ClassName = UKismetSystemLibrary::GetClassDisplayName(TargetChar->GetClass());
+	FString ClassName = UKismetSystemLibrary::GetClassDisplayName(ActorToCheck->GetClass());
 	ClassName = ClassName.Left(ClassName.Len() - 2);
 	ClassName = "EN_" + ClassName;
 	FName ClassNameFName(*ClassName);
@@ -1873,33 +1871,33 @@ void UHelpfulFunctionsBPLibrary::ApplyPendulumForce(ACharacter* Character, const
 	FVector CurrentPosition = Character->GetActorLocation();
 	FVector ToAnchor = AnchorPoint - CurrentPosition;
 
-	// Obliczanie si³y w poziomie
+	// Obliczanie siï¿½y w poziomie
 	FVector HorizontalForce = ToAnchor;
-	HorizontalForce.Z = 0; // Usuwamy sk³adow¹ pionow¹
+	HorizontalForce.Z = 0; // Usuwamy skï¿½adowï¿½ pionowï¿½
 	float HorizontalDistance = HorizontalForce.Size();
 	FVector HorizontalDirection = HorizontalForce.GetSafeNormal();
 	float HorizontalDistanceError = HorizontalDistance - DesiredDistance;
 	FVector CorrectiveHorizontalForce = HorizontalDirection * HorizontalStrengthMultiplier * HorizontalDistanceError;
 
-	// Obliczanie si³y w pionie
-	float VerticalDistanceError = ToAnchor.Z; // Po¿¹dana odleg³oœæ pionowa to 0, wiêc b³¹d to po prostu ToAnchor.Z
+	// Obliczanie siï¿½y w pionie
+	float VerticalDistanceError = ToAnchor.Z; // Poï¿½ï¿½dana odlegï¿½oï¿½ï¿½ pionowa to 0, wiï¿½c bï¿½ï¿½d to po prostu ToAnchor.Z
 	FVector CorrectiveVerticalForce = FVector::UpVector * VerticalStrengthMultiplier * VerticalDistanceError;
 
-	// Obliczanie t³umienia
+	// Obliczanie tï¿½umienia
 	FVector Velocity = Character->GetVelocity();
 	FVector DampingForce = -Velocity * DampingRatio * Character->GetCharacterMovement()->Mass;
 
-	// Oddzielamy si³y t³umienia
+	// Oddzielamy siï¿½y tï¿½umienia
 	FVector DampingForceHorizontal = DampingForce;
-	DampingForceHorizontal.Z = 0; // T³umienie pionowe bêdzie oddzielnie
+	DampingForceHorizontal.Z = 0; // Tï¿½umienie pionowe bï¿½dzie oddzielnie
 
-	// £¹czymy si³y w poziomie
+	// ï¿½ï¿½czymy siï¿½y w poziomie
 	FVector FinalHorizontalForce = CorrectiveHorizontalForce + DampingForceHorizontal;
 
-	// Si³a koñcowa - si³y w poziomie plus koryguj¹ca si³a w pionie (uwzglêdniaj¹c grawitacjê)
+	// Siï¿½a koï¿½cowa - siï¿½y w poziomie plus korygujï¿½ca siï¿½a w pionie (uwzglï¿½dniajï¿½c grawitacjï¿½)
 	FVector FinalForce = FinalHorizontalForce + CorrectiveVerticalForce;
 
-	// Aplikowanie si³y
+	// Aplikowanie siï¿½y
 	Character->GetCharacterMovement()->AddForce(FinalForce);
 	GEngine->AddOnScreenDebugMessage(-1, 0, FColor::Green, FinalForce.ToString());
 }
@@ -1913,13 +1911,13 @@ float UHelpfulFunctionsBPLibrary::CustomInterpTo(float Current, float Target, fl
 		return Target;
 	}
 
-	// Obliczanie procentowej odleg³oœci od celu
+	// Obliczanie procentowej odlegï¿½oï¿½ci od celu
 	const float Alpha = FMath::Clamp(Distance / (Target - StartSpeed), 0.0f, 1.0f);
 
-	// Obliczanie aktualnej prêdkoœci interpolacji na podstawie procentowej odleg³oœci do celu
-	const float InterpSpeed = FMath::Lerp(StartSpeed, EndSpeed, Alpha * Alpha); // Kwadrat Alpha, aby dodaæ efekt przyspieszenia
+	// Obliczanie aktualnej prï¿½dkoï¿½ci interpolacji na podstawie procentowej odlegï¿½oï¿½ci do celu
+	const float InterpSpeed = FMath::Lerp(StartSpeed, EndSpeed, Alpha * Alpha); // Kwadrat Alpha, aby dodaï¿½ efekt przyspieszenia
 
-	// Obliczanie nowej wartoœci
+	// Obliczanie nowej wartoï¿½ci
 	const float InterpStep = InterpSpeed * DeltaTime;
 	return Current + FMath::Clamp(Distance, -InterpStep, InterpStep);
 }
@@ -1928,23 +1926,23 @@ float UHelpfulFunctionsBPLibrary::CustomInterpTo(float Current, float Target, fl
 
 FVector UHelpfulFunctionsBPLibrary::VInterpToWithDelay(const FVector& Current, const FVector& Target, float DeltaTime, float InterpSpeed)
 {
-	// Zabezpieczenie przed dzieleniem przez zero i nieprawid³owymi wartoœciami
+	// Zabezpieczenie przed dzieleniem przez zero i nieprawidï¿½owymi wartoï¿½ciami
 	if (DeltaTime == 0.f || InterpSpeed <= 0.f)
 	{
 		return Current;
 	}
 
-	// Obliczanie si³y interpolacji dla ka¿dej sk³adowej niezale¿nie
+	// Obliczanie siï¿½y interpolacji dla kaï¿½dej skï¿½adowej niezaleï¿½nie
 	auto InterpSingle = [DeltaTime, InterpSpeed](float CurrentSingle, float TargetSingle) -> float {
 		const float Distance = TargetSingle - CurrentSingle;
 
-		// Sprawdzanie, czy jesteœmy wystarczaj¹co blisko celu
+		// Sprawdzanie, czy jesteï¿½my wystarczajï¿½co blisko celu
 		if (FMath::IsNearlyZero(Distance))
 		{
 			return TargetSingle;
 		}
 
-		// 'Alpha' kontroluje kszta³t krzywej interpolacji
+		// 'Alpha' kontroluje ksztaï¿½t krzywej interpolacji
 		const float Alpha = FMath::Clamp(DeltaTime * InterpSpeed, 0.f, 1.f);
 
 		// Implementacja funkcji sigmoidalnej
@@ -1953,7 +1951,7 @@ FVector UHelpfulFunctionsBPLibrary::VInterpToWithDelay(const FVector& Current, c
 		return CurrentSingle + Distance * ScaledAlpha;
 		};
 
-	// Interpolacja dla ka¿dej osi niezale¿nie
+	// Interpolacja dla kaï¿½dej osi niezaleï¿½nie
 	return FVector(
 		InterpSingle(Current.X, Target.X),
 		InterpSingle(Current.Y, Target.Y),
