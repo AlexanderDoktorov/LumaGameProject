@@ -21,8 +21,3 @@ void AFunctionalAICharacter::BeginPlay()
 	ApplyInitAttributeEffect();
 }
 
-void AFunctionalAICharacter::InitializeAbilitySystem()
-{
-	
-}
-

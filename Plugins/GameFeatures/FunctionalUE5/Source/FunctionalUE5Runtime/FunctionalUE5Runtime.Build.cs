@@ -27,7 +27,7 @@ public class FunctionalUE5Runtime : ModuleRules
 			new string[]
 			{
 				"Core", 
-				"GameplayAbilities",
+				"GameplayAbilities"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

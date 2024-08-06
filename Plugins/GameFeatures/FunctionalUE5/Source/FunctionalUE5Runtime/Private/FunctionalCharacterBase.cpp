@@ -28,9 +28,11 @@ void AFunctionalCharacterBase::GiveDefaultAbilities()
 
 	if(!HasAuthority())
 		return;
+	
 	for (const auto& AbilityClass : DefaultAbilites)
 	{
-		AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, AbilityClass.GetDefaultObject()->GetAbilityLevel(), INDEX_NONE, this));
+		if(AbilityClass)
+			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, 1 /* AbilityClass.GetDefaultObject()->GetAbilityLevel() */, INDEX_NONE, this));
 	}
 }
 

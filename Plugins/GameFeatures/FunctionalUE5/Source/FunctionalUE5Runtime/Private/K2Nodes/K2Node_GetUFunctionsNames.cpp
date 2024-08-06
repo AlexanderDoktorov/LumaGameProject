@@ -42,7 +42,7 @@ void UK2Node_GetUFunctionsNames::ExpandNode(FKismetCompilerContext& CompilerCont
 	// Create a call function node
 	UK2Node_CallFunction* CallGetClassFunctionsNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
 	CallGetClassFunctionsNode->FunctionReference.SetExternalMember(
-		GET_FUNCTION_NAME_CHECKED(ThisClass, GetClassFunctionsNames), ThisClass::StaticClass());
+		GET_FUNCTION_NAME_CHECKED(ThisClass, GetUFunctionsNames), ThisClass::StaticClass());
 	CallGetClassFunctionsNode->AllocateDefaultPins();
 	
 	// Connect inputs
@@ -104,7 +104,7 @@ FText UK2Node_GetUFunctionsNames::GetTooltipText() const
 	return LOCTEXT("K2Node_GetUFunctionsNames_Tooltip", "Returns the array of methods of a specified class");
 }
 
-TArray<FString> UK2Node_GetUFunctionsNames::GetClassFunctionsNames(UClass* Class, const bool& bIncludeSuper)
+TArray<FString> UK2Node_GetUFunctionsNames::GetUFunctionsNames(UClass* Class, const bool& bIncludeSuper)
 {
 	TArray<FString> FunctionNames{};
 	if (Class)
@@ -117,7 +117,5 @@ TArray<FString> UK2Node_GetUFunctionsNames::GetClassFunctionsNames(UClass* Class
 	}
 	return FunctionNames;
 }
-
-
 
 #undef LOCTEXT_NAMESPACE

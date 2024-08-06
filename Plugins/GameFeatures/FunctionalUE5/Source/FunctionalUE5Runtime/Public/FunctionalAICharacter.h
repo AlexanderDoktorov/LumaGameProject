@@ -14,5 +14,4 @@ public:
 	AFunctionalAICharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 protected:
 	virtual void BeginPlay() override;
-	virtual void InitializeAbilitySystem() override;
 };

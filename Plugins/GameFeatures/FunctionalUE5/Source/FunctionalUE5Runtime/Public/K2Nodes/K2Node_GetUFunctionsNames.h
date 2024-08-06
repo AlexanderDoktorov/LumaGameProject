@@ -28,7 +28,7 @@ struct FGetPinNames
 };
 
 /**
- * 
+ * Returns array of names of reflected functions (UFUNCTIONS) of specific class
  */
 UCLASS()
 class FUNCTIONALUE5RUNTIME_API UK2Node_GetUFunctionsNames : public UK2Node
@@ -48,7 +48,7 @@ public:
 	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
 private:
 	UFUNCTION(BlueprintCallable, BlueprintInternalUseOnly, meta = (AutoCreateRefTerm = "bIncludeSuper"))
-	static TArray<FString> GetClassFunctionsNames(UClass* Class, const bool& bIncludeSuper);
+	static TArray<FString> GetUFunctionsNames(UClass* Class, const bool& bIncludeSuper);
 
 	mutable FNodeTextCache CachedNodeTitle;
 };
