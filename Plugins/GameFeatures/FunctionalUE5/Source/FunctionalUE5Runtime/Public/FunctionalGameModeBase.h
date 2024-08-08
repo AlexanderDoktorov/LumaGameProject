@@ -20,7 +20,7 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayerSpawn)
 	TSubclassOf<APawn> PlayerSpawnPawn;
-
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = PlayerSpawn)
-	uint8 bSpawnAfterLogin : 1 = 1;
+	uint8 bSpawnPawnAtPlayerStart : 1 = 1; 
 };

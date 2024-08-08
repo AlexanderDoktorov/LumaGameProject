@@ -8,7 +8,8 @@
 
 void AFunctionalGameModeBase::OnPostLogin(AController* NewPlayer)
 {
-	if(!bSpawnAfterLogin || !PlayerSpawnPawn)
+	/*
+	if(!bSpawnPawnAtPlayerStart || !PlayerSpawnPawn)
 		return;
 
 	APawn* SpawnedPawn  = nullptr;
@@ -36,4 +37,5 @@ void AFunctionalGameModeBase::OnPostLogin(AController* NewPlayer)
 			NewPlayer->Possess(SpawnedPawn);
 		}
 	}
+	*/
 }

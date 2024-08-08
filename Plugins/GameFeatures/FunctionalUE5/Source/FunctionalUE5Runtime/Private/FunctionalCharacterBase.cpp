@@ -24,13 +24,12 @@ UAbilitySystemComponent* AFunctionalCharacterBase::GetAbilitySystemComponent() c
 
 void AFunctionalCharacterBase::GiveDefaultAbilities()
 {
-	check(AbilitySystemComponent);
-
 	if(!HasAuthority())
 		return;
 	
 	for (const auto& AbilityClass : DefaultAbilites)
 	{
+		check(AbilitySystemComponent);
 		if(AbilityClass)
 			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, 1 /* AbilityClass.GetDefaultObject()->GetAbilityLevel() */, INDEX_NONE, this));
 	}
