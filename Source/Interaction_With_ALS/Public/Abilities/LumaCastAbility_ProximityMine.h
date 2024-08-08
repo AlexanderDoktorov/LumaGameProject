@@ -17,7 +17,7 @@ class INTERACTION_WITH_ALS_API ULumaCastAbility_ProximityMine : public ULumaCont
 public:
 	ULumaCastAbility_ProximityMine() = default;
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	float GetSpawnHeightOffset() const;
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

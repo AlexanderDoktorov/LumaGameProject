@@ -12,19 +12,19 @@ AFunctionalPlayerCharacter::AFunctionalPlayerCharacter(const FObjectInitializer&
 
 void AFunctionalPlayerCharacter::PossessedBy(AController* NewController)
 {
+	Super::PossessedBy(NewController);
+	
 	InitializeAbilitySystem();
 	GiveDefaultAbilities();
 	ApplyInitAttributeEffect();
-	
-	Super::PossessedBy(NewController);
 }
 
 void AFunctionalPlayerCharacter::OnRep_PlayerState()
 {
+	Super::OnRep_PlayerState();
+	
 	InitializeAbilitySystem();
 	ApplyInitAttributeEffect();
-	
-	Super::OnRep_PlayerState();
 }
 
 void AFunctionalPlayerCharacter::InitializeAbilitySystem()
