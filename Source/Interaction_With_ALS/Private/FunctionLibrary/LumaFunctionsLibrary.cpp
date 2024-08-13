@@ -4,24 +4,30 @@
 #include "FunctionLibrary/LumaFunctionsLibrary.h"
 #include "LumaGameStateBase.h"
 
-bool ULumaFunctionsLibrary::IsActorEnemyFor(const ALumaGameStateBase* LumaGameState, AActor* ActorFromTeam,AActor* ActorFromOtherTeam)
+bool ULumaFunctionsLibrary::IsActorEnemyFor(AActor* ActorFromTeam,AActor* ActorFromOtherTeam)
 {
 	check(ActorFromTeam && ActorFromOtherTeam);
+
+	const ALumaGameStateBase* LumaGameState = ActorFromTeam->GetWorld()->GetGameState<ALumaGameStateBase>();
+	if(!IsValid(LumaGameState))
+		LumaGameState =  ActorFromOtherTeam->GetWorld()->GetGameState<ALumaGameStateBase>();
+	
 	if(!IsValid(LumaGameState))
 	{
-		UE_LOG(LogGameState, Error, TEXT("LumaGameState is NULL and passed to IsEnemyActorFor(), make sure world uses correct game state"));
+		UE_LOG(LogGameState, Error, TEXT("LumaGameState is NULL for both actors passed to IsEnemyActorFor(), make sure world uses correct game state"));
 		UE_LOG(LogGameState, Error, TEXT("Name of ActorFromTeam = %s, Name of ActorFromOtherTeam = %s"), *ActorFromTeam->GetName(), *ActorFromOtherTeam->GetName());
 		return false;
 	}
 	return LumaGameState->GetLumaTeamManager().GetTeamAttitudeFor(ActorFromTeam, ActorFromOtherTeam) == FunctionalTeams::ETeamAttitude::Hostile;
 }
 
-void ULumaFunctionsLibrary::AddActorToTeam(ALumaGameStateBase* LumaGameState, AActor* Actor, ELumaTeam LumaTeam)
+void ULumaFunctionsLibrary::AddActorToTeam(AActor* Actor, ELumaTeam LumaTeam)
 {
 	check(Actor);
+	ALumaGameStateBase* LumaGameState = Actor->GetWorld()->GetGameState<ALumaGameStateBase>();
 	if(!IsValid(LumaGameState))
 	{
-		UE_LOG(LogGameState, Error, TEXT("LumaGameState is NULL and passed to AddActorToTeam(), make sure world uses correct game state"));
+		UE_LOG(LogGameState, Error, TEXT("LumaGameState is NULL for actor passed to AddActorToTeam(), make sure world uses correct game state"));
 		UE_LOG(LogGameState, Error, TEXT("Name of Actor = %s, Name of LumaTeam = %s"), *Actor->GetName(), *AsString(LumaTeam));
 		return;
 	}
