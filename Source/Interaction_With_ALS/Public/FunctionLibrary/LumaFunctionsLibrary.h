@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "LumaTeamSubsystem.h"
 #include "LumaFunctionsLibrary.generated.h"
 
 /**
@@ -15,4 +16,11 @@ class INTERACTION_WITH_ALS_API ULumaFunctionsLibrary : public UBlueprintFunction
 public:
 	UFUNCTION(BlueprintPure)
 	static bool IsActorEnemyFor(AActor* ActorFromTeam, AActor* ActorFromOtherTeam);
+
+	// Add actor to luma team using ULumaTeamSubsystem (GameInstance Subsystem)
+	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = Actor))
+	static void AddActorToTeam(AActor* Actor, ELumaTeam LumaTeam);
+
+	//UFUNCTION(BlueprintCallable)
+	//static void SetTeamAttitudeForOtherTeam(ELumaTeam TeamToSetBehavior, ELumaTeam OtherTeam);
 };

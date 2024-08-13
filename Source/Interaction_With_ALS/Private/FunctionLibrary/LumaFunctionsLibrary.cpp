@@ -15,3 +15,13 @@ bool ULumaFunctionsLibrary::IsActorEnemyFor(AActor* ActorFromTeam,AActor* ActorF
 	UE_LOG(LogTemp, Error, TEXT("Unable to find GameInstance for [%s]"), *ActorFromTeam->GetName());
 	return false;
 }
+
+void ULumaFunctionsLibrary::AddActorToTeam(AActor* Actor, ELumaTeam LumaTeam)
+{
+	check(Actor);
+	if(UGameInstance* GameInstance = Actor->GetGameInstance())
+	{
+		ULumaTeamSubsystem* TeamSubsystem = GameInstance->GetSubsystem<ULumaTeamSubsystem>();
+		TeamSubsystem->GetLumaTeamManager().RegisterAsTeamMember(Actor, LumaTeam);
+	}
+}

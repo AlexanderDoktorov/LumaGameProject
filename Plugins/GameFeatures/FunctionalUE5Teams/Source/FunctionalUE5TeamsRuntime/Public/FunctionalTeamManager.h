@@ -121,9 +121,9 @@ namespace FunctionalTeams
 		TeamManager_(const TArray<T>& InitialTeams) : Teams(InitialTeams) {}
 		TeamManager_(TArray<T>&& InitialTeams) : Teams(Forward<TArray<T>>(InitialTeams)) {};
 
-		static T MakeTeam(const team_id_type& ID)
+		static team_type MakeTeam(const team_id_type& ID)
 		{
-			return T(ID);
+			return team_type(ID);
 		}
 
 		ETeamAttitude GetTeamAttitudeFor(const team_member_type& TeamMember, const team_member_type& OtherTeamMember)
