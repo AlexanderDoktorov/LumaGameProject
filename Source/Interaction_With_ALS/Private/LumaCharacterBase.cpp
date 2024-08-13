@@ -2,7 +2,7 @@
 
 #include "LumaCharacterBase.h"
 #include "EngineUtils.h"
-#include "LumaTeamSubsystem.h"
+#include "LumaGameStateBase.h"
 #include "Components/LumaAbilitySystemComponent.h"
 #include "Actors/LocalCastActor.h"
 #include "AttributeSets/EmotionsAttributeSet.h"
@@ -45,17 +45,12 @@ int32 ALumaCharacterBase::GetNumCapsules() const
 
 void ALumaCharacterBase::BeginPlay()
 {
-	if(UGameInstance* GameInstance = GetGameInstance())
-	{
-		ULumaTeamSubsystem* TeamSubsystem = GameInstance->GetSubsystem<ULumaTeamSubsystem>();
-		TeamSubsystem->AddToPlayersTeam(this);
-	}
-
-	// Logs team for this player
-	// LumaTeam Team = LumaTeamManager::Get().GetTeamFor(this);
-	// UE_LOG(LogTemp, Warning, TEXT("Team of [%s] is [%s]"), *GetName(), *AsString(Team.TeamID));
-	
 	Super::BeginPlay();
+	
+	if(auto LumaGameState = GetWorld()->GetGameState<ALumaGameStateBase>())
+	{
+		LumaGameState->AddActorToPlayersTeam(this);
+	}
 }
 
 void ALumaCharacterBase::OnLumaSelectorWidgetOpen() const

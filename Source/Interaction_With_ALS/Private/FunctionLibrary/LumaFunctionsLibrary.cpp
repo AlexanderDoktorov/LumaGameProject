@@ -2,26 +2,28 @@
 
 
 #include "FunctionLibrary/LumaFunctionsLibrary.h"
-#include "LumaTeamSubsystem.h"
+#include "LumaGameStateBase.h"
 
-bool ULumaFunctionsLibrary::IsActorEnemyFor(AActor* ActorFromTeam,AActor* ActorFromOtherTeam)
+bool ULumaFunctionsLibrary::IsActorEnemyFor(const ALumaGameStateBase* LumaGameState, AActor* ActorFromTeam,AActor* ActorFromOtherTeam)
 {
 	check(ActorFromTeam && ActorFromOtherTeam);
-	if(UGameInstance* GameInstance = ActorFromTeam->GetGameInstance())
+	if(!IsValid(LumaGameState))
 	{
-		ULumaTeamSubsystem* TeamSubsystem = GameInstance->GetSubsystem<ULumaTeamSubsystem>();
-		return TeamSubsystem->GetLumaTeamManager().GetTeamAttitudeFor(ActorFromTeam, ActorFromOtherTeam) == FunctionalTeams::ETeamAttitude::Hostile;
+		UE_LOG(LogGameState, Error, TEXT("LumaGameState is NULL and passed to IsEnemyActorFor(), make sure world uses correct game state"));
+		UE_LOG(LogGameState, Error, TEXT("Name of ActorFromTeam = %s, Name of ActorFromOtherTeam = %s"), *ActorFromTeam->GetName(), *ActorFromOtherTeam->GetName());
+		return false;
 	}
-	UE_LOG(LogTemp, Error, TEXT("Unable to find GameInstance for [%s]"), *ActorFromTeam->GetName());
-	return false;
+	return LumaGameState->GetLumaTeamManager().GetTeamAttitudeFor(ActorFromTeam, ActorFromOtherTeam) == FunctionalTeams::ETeamAttitude::Hostile;
 }
 
-void ULumaFunctionsLibrary::AddActorToTeam(AActor* Actor, ELumaTeam LumaTeam)
+void ULumaFunctionsLibrary::AddActorToTeam(ALumaGameStateBase* LumaGameState, AActor* Actor, ELumaTeam LumaTeam)
 {
 	check(Actor);
-	if(UGameInstance* GameInstance = Actor->GetGameInstance())
+	if(!IsValid(LumaGameState))
 	{
-		ULumaTeamSubsystem* TeamSubsystem = GameInstance->GetSubsystem<ULumaTeamSubsystem>();
-		TeamSubsystem->GetLumaTeamManager().RegisterAsTeamMember(Actor, LumaTeam);
+		UE_LOG(LogGameState, Error, TEXT("LumaGameState is NULL and passed to AddActorToTeam(), make sure world uses correct game state"));
+		UE_LOG(LogGameState, Error, TEXT("Name of Actor = %s, Name of LumaTeam = %s"), *Actor->GetName(), *AsString(LumaTeam));
+		return;
 	}
+	LumaGameState->GetLumaTeamManager().RegisterAsTeamMember(Actor, LumaTeam);
 }

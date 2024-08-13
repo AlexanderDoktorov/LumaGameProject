@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameplayTagContainer.h"
 #include "LumaTypes.generated.h"
 
 class ULumaCastAbility;
@@ -161,3 +160,34 @@ struct FEmotionDescContainer
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EmotionDescContainer, meta = (NoElementDuplicate))
 	TArray<FEmotionDesc> EmotionDescs{};
 };
+
+//////////////////////////////////////////////////////////////////
+/// Luma Teams
+
+UENUM()
+enum class ELumaTeam : uint8
+{
+	TeamNeutral,
+	TeamAI,
+	TeamPlayers,
+	Team2,
+	Team3,
+};
+
+static FString AsString(const ELumaTeam& LumaTeam)
+{
+	switch (LumaTeam) {
+	case ELumaTeam::TeamNeutral:
+		return "TeamNeutral";
+	case ELumaTeam::TeamAI:
+		return "TeamAI";
+	case ELumaTeam::TeamPlayers:
+		return "TeamPlayers";
+	case ELumaTeam::Team2:
+		return "Team2";
+	case ELumaTeam::Team3:
+		return "Team3";
+	}
+	
+	return "UnknownTeam";
+}

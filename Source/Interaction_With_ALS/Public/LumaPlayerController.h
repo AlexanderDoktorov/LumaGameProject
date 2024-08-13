@@ -22,6 +22,7 @@ class INTERACTION_WITH_ALS_API ALumaPlayerController : public APlayerController
 public:
 	ALumaPlayerController() = default;
 	
+	
 	void Call_PickUpCapsule();
 	void OpenLumaSelector();
 	void CloseLumaSelector();

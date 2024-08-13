@@ -2,6 +2,7 @@
 
 
 #include "LumaAIController.h"
+#include "LumaGameStateBase.h"
 #include "FunctionLibrary/LumaFunctionsLibrary.h"
 
 
@@ -14,6 +15,6 @@ ALumaAIController::ALumaAIController()
 
 bool ALumaAIController::IsPawnEnemyFor(AActor* OtherActor)
 {
-	return ULumaFunctionsLibrary::IsActorEnemyFor(GetPawn(), OtherActor);
+	return ULumaFunctionsLibrary::IsActorEnemyFor(GetWorld()->GetGameState<ALumaGameStateBase>(),GetPawn(), OtherActor);
 }
 
