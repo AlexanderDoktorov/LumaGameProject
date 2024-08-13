@@ -41,24 +41,27 @@ namespace FunctionalTeams
 
 		// Return the attitude for other team
 		// If this team is Neutral for all, return ETeamAttitude::Neutral
-		ETeamAttitude GetAttitudeFor(const FunctionalTeam& OtherTeam) const
+		ETeamAttitude GetAttitudeTowards(const FunctionalTeam& OtherTeam) const
 		{
-			if(IsNeutralForAll())
-			{
-				return ETeamAttitude::Neutral;
-			}
+			return GetTeamAttitudeTowards(*this, OtherTeam);
+		}
+		void SetAttitudeTowards(const FunctionalTeam& OtherTeam, ETeamAttitude NewAttitude)
+		{
+			if(AttitudeOverrides.Contains(&OtherTeam))
+				AttitudeOverrides[&OtherTeam] = NewAttitude;
 			else
-			{
-				return GetTeamAttitudeFor(*this, OtherTeam);
-			}
+				AttitudeOverrides.Emplace(&OtherTeam, MoveTemp(NewAttitude));
 		}
 
 		// By default returns Hostile if id's are different and Friendly if same
-		virtual ETeamAttitude GetTeamAttitudeFor(const FunctionalTeam& WhatTeam, const FunctionalTeam& TeamToCheckAgainst) const
+		virtual ETeamAttitude GetTeamAttitudeTowards(const FunctionalTeam& WhatTeam, const FunctionalTeam& TeamToCheckAgainst) const
 		{
 			// If any of teams is Neutral, attitude is neutral
 			if(WhatTeam.IsNeutralForAll() || TeamToCheckAgainst.IsNeutralForAll())
 				return ETeamAttitude::Neutral;
+
+			if(AttitudeOverrides.Contains(&TeamToCheckAgainst))
+				return AttitudeOverrides[&TeamToCheckAgainst];
 			
 			return TeamComparatorFunction(WhatTeam, TeamToCheckAgainst);
 		}
@@ -76,7 +79,6 @@ namespace FunctionalTeams
 		{
 			TeamID = Forward<team_id_type>(Value);
 		}
-
 		void SetIsNeutral(const bool& bNewIsNeutral)
 		{
 			bIsNeutralForAll = bNewIsNeutral;
@@ -96,6 +98,11 @@ namespace FunctionalTeams
 		
 		static team_comparator_type DefaultTeamComparator;
 	private:
+		// if attitude is defined in this map - use it
+		// contains team_id and attitude towards that team
+		TMap<const FunctionalTeam*, ETeamAttitude> AttitudeOverrides{};
+
+		// only invalid if contructed with null_team_t
 		bool bIsValid = true;
 	};
 
@@ -126,31 +133,49 @@ namespace FunctionalTeams
 			return team_type(ID);
 		}
 
-		ETeamAttitude GetTeamAttitudeFor(const team_member_type& TeamMember, const team_member_type& OtherTeamMember)
+		ETeamAttitude GetTeamAttitudeFor(const team_member_type& TeamMember, const team_member_type& OtherTeamMember) const
 		{
 			auto Team1 = GetTeamFor(TeamMember);
 			auto Team2 = GetTeamFor(OtherTeamMember);
 			ensure(Team1.IsValidTeam() && Team2.IsValidTeam());
-			return Team1.GetAttitudeFor(Team2);
+			return Team1.GetAttitudeTowards(Team2);
+		}
+
+		void SetTeamAttitueTowards(const team_id_type& TeamToChangeAttitudeID, const team_id_type& TowardsTeamID, ETeamAttitude NewAttitude, bool bCreateTeamsIfNull = false)
+		{
+			if(bCreateTeamsIfNull)
+			{
+				team_type& TeamToChangeAttitude = GetTeamCreateIfNull(TeamToChangeAttitudeID);
+				team_type& TowardsTeam = GetTeamCreateIfNull(TowardsTeamID);
+				TeamToChangeAttitude.SetAttitudeTowards(TowardsTeam, NewAttitude);
+				return;
+			}
+
+			team_type* TeamToChangeAttitude = GetTeamByID(TeamToChangeAttitudeID);
+			team_type* TowardsTeam = GetTeamByID(TowardsTeamID);
+			if(!TeamToChangeAttitude || !TowardsTeam)
+				return;
+
+			TeamToChangeAttitude->SetAttitudeTowards(*TowardsTeam, NewAttitude);
 		}
 
 		// If there is no team with id from TeamDesc, create new and add actor to it
 		void RegisterAsTeamMember(const team_member_type& NewMember, const team_id_type& TeamID)
 		{
-			T& Team = GetTeamCreateIfNull(TeamID);
+			team_type& Team = GetTeamCreateIfNull(TeamID);
 			Team.EmplaceMember(NewMember);
 		}
 		void RegisterAsTeamMember(team_member_type&& NewMember, const team_id_type& TeamID)
 		{
-			T& Team = GetTeamCreateIfNull(TeamID);
+			team_type& Team = GetTeamCreateIfNull(TeamID);
 			Team.EmplaceMember(Forward<team_member_type>(NewMember));
 		}
 
 		// Retrieves team for team member
 		// If has not team, returns NullTeam
-		T GetTeamFor(const team_member_type& TeamMember)
+		team_type GetTeamFor(const team_member_type& TeamMember) const
 		{
-			for(T& Team : Teams)
+			for(const team_type& Team : Teams)
 			{
 				if(Team.HasMember(TeamMember))
 				{
@@ -177,6 +202,10 @@ namespace FunctionalTeams
 
 		// returns team if found by ID or NullTeam
 		// you should check if it is valid
+		[[nodiscard]] const T* GetTeamByID(const team_id_type& TeamID) const
+		{
+			return const_cast<TeamManager_*>(this)->GetTeamByID(TeamID);
+		}
 		[[nodiscard]] T* GetTeamByID(const team_id_type& TeamID)
 		{
 			return Teams.FindByPredicate([&TeamID](const T& Team)
