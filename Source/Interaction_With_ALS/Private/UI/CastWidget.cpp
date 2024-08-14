@@ -49,8 +49,7 @@ void UCastWidget::SetPreview(const TSoftObjectPtr<UTexture2D>& PreviewTexture)
 
 void UCastWidget::OnButtonClicked()
 {
-	// By default does the same as pressed
-	OnButtonPressed();
+	// No default realization
 }
 
 void UCastWidget::OnButtonPressed()
@@ -79,18 +78,15 @@ void UContextCastWidget::OnButtonPressed()
 	if(!CastAbility.IsValid())
 		return;
 	
-	if(auto Pawn = GetOwningPlayerPawn())
+	if(auto OwnerAsc = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(GetOwningPlayerPawn()))
 	{
-		if(auto OwnerAsc = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn))
+		// Activate an ability by the spec handle from it
+		if(!OwnerAsc->TryActivateAbility(CastAbility->GetCurrentAbilitySpecHandle()))
 		{
-			// Activate an ability by the spec handle from it
-			if(!OwnerAsc->TryActivateAbility(CastAbility->GetCurrentAbilitySpecHandle()))
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Unable to activate [%s] ability from context cast widget"), *CastAbility->GetName());
-			}
-			else
-				OnLumaCast().Broadcast();
+			UE_LOG(LogTemp, Warning, TEXT("Unable to activate [%s] ability from context cast widget"), *CastAbility->GetName());
 		}
+		else
+			OnLumaCast().Broadcast();
 	}
 }
 

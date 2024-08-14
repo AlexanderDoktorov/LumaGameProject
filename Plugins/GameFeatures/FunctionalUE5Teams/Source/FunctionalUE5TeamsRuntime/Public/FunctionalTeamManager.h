@@ -222,20 +222,3 @@ namespace FunctionalTeams
 		TArray<T> Teams{};
 	};
 }
-/*
-#define DECLARE_TEAM_MANAGER(ModuleAPI, idType) \
-UINTERFACE() \
-class UFunctionalTeamsInterface##idType## : public UInterface \
-{ \
-	GENERATED_BODY() \
-}; \
-class ModuleAPI IFunctionalTeamsInterface##idType## \
-{ \
-	GENERATED_BODY() \
-public: \
-	using TeamDescType = FunctionalTeams::TeamDesc_<idType>; \
-	virtual TeamDescType GetTeamDesc() const = 0; \
-}; \
-using FunctionalTeamManager_##idType## = FunctionalTeams::TeamManager_<IFunctionalTeamsInterface##idType##, idType>; \
-using FunctionalTeamDesc_##idType## = FunctionalTeams::TeamDesc_<idType>; \
-*/
